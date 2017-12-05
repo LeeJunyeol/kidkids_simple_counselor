@@ -11,29 +11,48 @@
 	<style>
 		@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
+		body {
+			font-family: 'Noto Sans KR', sans-serif;
+		}
+
 		header {
 			border-bottom-style: ridge;
 			border-bottom-color: slateblue;
 			border-bottom-width: 3.5px;
-			font-family: 'Noto Sans KR', sans-serif;
 		}
 
-		header > div.head {
+		header>div.head {
 			width: 1024px;
-			height: 130px; 
-			padding-left: 20px; 
-			padding-right: 20px; 
-			display: flex; 
-			align-items: flex-end; 
+			height: 130px;
+			padding-left: 20px;
+			padding-right: 20px;
+			display: flex;
+			align-items: flex-end;
 			justify-content: space-between;
 		}
 
-		header > div.head > .logo {
-			height: 60px; 
-			display: flex; 
+		header > div.head > .title {
+			display: flex;
+			align-items: flex-start;
+			align-items: center;
+			flex-direction: column;
+			position: relative;
+		}
+
+		header > div.head > .user-control.btn-group {
+			width: 205px;
+			height: 60px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		header>div.head>.logo {
+			height: 60px;
+			display: flex;
 			align-items: center;
 		}
-		
+
 		header a {
 			color: rgb(54, 54, 54);
 			font-size: 18px;
@@ -44,27 +63,59 @@
 			opacity: 0.7;
 		}
 
-		article #board-header {
-			height: 80px;
+		article {
+			width: 1024px;
 			padding-left: 20px;
 			padding-right: 20px;
 		}
 
-		article #board-header > div > h2 {
-			font-size: 25px;
+		article #board-header {
+			height: 60px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			padding-left: 20px;
+			padding-right: 20px;
+			border: 1px solid #ddd;
+			border-radius: 13px;
+			display: flex; 
+			align-items: baseline; 
+			justify-content: space-between;
+		}
+
+		article #board-header>div.title {
+			font-size: 13px;
+			font-weight: 700;
+			height: 50px;
+			width: 100px;
+		}
+
+		article #board-header>div>h2 {
+			font-size: 22px;
 			font-weight: 600;
 		}
 
-		article #board-header > div {
-			font-size: 13px;
-			font-weight: 700;
+		article #board-header .btn-order {
+			width: 100px;
+			display: flex;
+			justify-content: space-between;
 		}
 
-		article .board > .list-group-item {
-
+		article div.board ul.list-group > li.list-group-item {
+			border: none;
+			border-bottom: 1px solid #ddd !important;
+			padding-left: 20px;
+			padding-right: 20px;
+			padding-top: 5px;
+			padding-bottom: 5px;
+			margin-bottom: 1px;
+		}
+		article div.board ul.list-group > li.list-group-item > p {
+			margin-bottom: 5px;
 		}
 
-
+		article div.board ul.list-group > li.list-group-item > p > .list-head {
+			font-size: 20px;
+		}
 	</style>
 </head>
 
@@ -83,13 +134,14 @@
 					</ul>
 				</nav>
 			</div>
-			<div style="display: flex; align-items: flex-start; align-items: center; flex-direction: column; position: relative;">
+			<div class="title">
 				<h1 style="z-index: 1">키드키즈 고민상담소!</h1>
 				<a href="/" id="logo">
-					<img id="logoimg" src="images/smarty-cat.png" style="width: 100px; height: 100px; position: absolute; top: -50px; left: 100px;" />
+					<img id="logoimg" src="images/smarty-cat.png" style="width: 100px; height: 100px; position: absolute; top: -50px; left: 100px;"
+					/>
 				</a>
 			</div>
-			<div class="btn-group" style="width: 205px; height: 60px; display: flex; align-items: center; justify-content: space-between;">
+			<div class="btn-group user-control" style="width: 205px; height: 60px; display: flex; align-items: center; justify-content: space-between;">
 				<button class="btn search btn-default">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 				</button>
@@ -99,91 +151,67 @@
 		</div>
 	</header>
 	<div id="main">
-		<article class="center-block" style="width: 1024px; padding-left: 20px; padding-right: 20px;">
-			<div id="board-header" class="test1" style="display: flex; align-items: center; justify-content: space-between;">
-				<div style="height: 50px; width: 100px; display: flex; align-items: flex-end; justify-content: space-between;">
+		<article class="center-block">
+			<div id="board-header">
+				<div class="title">
 					<h2>전체 질문</h2>
 				</div>
-				<div style="height: 50px; width: 100px; display: flex; align-items: flex-end; justify-content: space-between;">
+				<div class="btn-order">
 					<a href="#">최신순</a>
 					<a href="#">조회순</a>
 				</div>
 			</div>
-			<div class="board list-group">
-				<a href="#" class="list-group-item">
-					<h4 class="list-group-item-heading">1. 질문입니다.</h4>
-					<p class="list-group-item-text">...</p>
-				</a>
-				<a href="#" class="list-group-item">
-					<h4 class="list-group-item-heading">2. 질문입니다.</h4>
-					<p class="list-group-item-text">...</p>
-				</a>
-				<a href="#" class="list-group-item">
-					<h4 class="list-group-item-heading">3. 질문입니다.</h4>
-					<p class="list-group-item-text">...</p>
-				</a>
+			<div class="board">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<span class="badge">14</span>
+						<p>
+							<a href="#" class="list-head">질문</a><br>
+							<div style="display: flex;">
+								<span class="author" style="margin-right: 10px;">이준열</span><span class="date">2017-12-04</span>
+								<ul class="tags" style="list-style: none;">
+									<li class="tags" style="float: left;"><span class="label label-info">태그1</span></li>
+									<li class="tags" style="float: left;"><span class="label label-info">태그2</span></li>
+									<li class="tags" style="float: left;"><span class="label label-info">태그3</span></li>
+								</ul>
+							</div>
+						</p>
+					</li>
+					<li class="list-group-item">
+						<span class="badge">14</span>
+						<p>
+							<a href="#" class="list-head">질문</a><br>
+							<div style="display: flex;">
+								<span class="author" style="margin-right: 10px;">이준열</span><span class="date">2017-12-04</span>
+								<ul class="tags" style="list-style: none;">
+									<li class="tags" style="float: left;"><span class="label label-info">태그1</span></li>
+									<li class="tags" style="float: left;"><span class="label label-info">태그2</span></li>
+									<li class="tags" style="float: left;"><span class="label label-info">태그3</span></li>
+								</ul>
+							</div>
+						</p>
+					</li>
+					<li class="list-group-item">
+						<span class="badge">14</span>
+						<p>
+							<a href="#" class="list-head">질문</a><br>
+							<div style="display: flex;">
+								<span class="author" style="margin-right: 10px;">이준열</span><span class="date">2017-12-04</span>
+								<ul class="tags" style="list-style: none;">
+									<li class="tags" style="float: left;"><span class="label label-info">태그1</span></li>
+									<li class="tags" style="float: left;"><span class="label label-info">태그2</span></li>
+									<li class="tags" style="float: left;"><span class="label label-info">태그3</span></li>
+								</ul>
+							</div>
+						</p>
+					</li>
+				</ul>
 			</div>
 		</article>
 	</div>
-
-
-
-	<div class="panel panel-default">
-		<!-- Default panel contents -->
-		<div class="panel-heading text-center">
-
-			<h2 style="margin-bottom: 30px;">질문 목록</h2>
-
-			<form class="form-inline" style="display: flex; justify-content: space-around;">
-				<div class="form-group">
-					<label for="ID(문자열)">User ID</label>
-					<input type="text" class="form-control" id="inputUserID" placeholder="ID">
-				</div>
-				<div class="form-group">
-					<label for="카테고리">Category</label>
-					<input type="text" class="form-control" id="inputCategory" placeholder="육아">
-				</div>
-				<div class="form-group">
-					<label for="제목">Title</label>
-					<input type="text" class="form-control" id="inputTitle" placeholder="질문입니다.">
-				</div>
-				<div class="form-group">
-					<label for="내용">Content</label>
-					<input type="text" class="form-control" id="inputContent" placeholder="내용입니다.">
-				</div>
-				<div class="form-group">
-					<label for="조회수">View</label>
-					<input type="number" class="form-control" id="inputView" placeholder="조회수">
-				</div>
-				<button type="submit" class="btn btn-default add">추가</button>
-			</form>
-
-		</div>
-
-		<!-- Table -->
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th class="text-center">question_id</th>
-					<th class="text-center">user_id</th>
-					<th class="text-center">category</th>
-					<th class="text-center">title</th>
-					<th class="text-center">content</th>
-					<th class="text-center">view</th>
-					<th class="text-center">create_date</th>
-					<th class="text-center">modify_date</th>
-					<th class="text-center">수정</th>
-					<th class="text-center">삭제</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-	</div>
-
 	<div class="footer-clean">
 		<footer>
-			<div class="container">
+			<div class="container" style="width: 1024px; padding-left: 30px; padding-right: 30px;">
 				<div class="row">
 					<div class="col-md-3 col-sm-4 item">
 						<h3>Services</h3>
@@ -240,7 +268,7 @@
 						<a href="#">
 							<i class="icon ion-social-instagram"></i>
 						</a>
-						<p class="copyright">Company Name © 2016</p>
+						<p class="copyright">EK 키드키즈 © 2017</p>
 					</div>
 				</div>
 			</div>

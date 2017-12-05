@@ -3,7 +3,9 @@ body {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
+
 /* 헤더 */
+
 header {
     border-bottom-style: ridge;
     border-bottom-color: slateblue;
@@ -28,6 +30,17 @@ header>div.head>.title {
     position: relative;
 }
 
+header>div.head>.title>h1 {
+    z-index: 1;
+}
+
+header>div.head>.title #logoimg {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: -50px;
+    left: 100px;
+}
 
 header>div.head>.user-control.btn-group {
     width: 205px;
@@ -57,12 +70,15 @@ article {
     width: 1024px;
     padding-left: 20px;
     padding-right: 20px;
+    margin-bottom: 60px;
 }
 
+
 /* 로그인 창 */
+
 .modal-footer {
     padding: 15px 30px;
-    display: flex; 
+    display: flex;
     justify-content: space-between;
     align-items: center;
 }
@@ -77,4 +93,8 @@ article {
 
 .modal-footer::after {
     content: none;
+}
+
+footer {
+    color: white;
 }

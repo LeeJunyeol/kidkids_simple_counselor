@@ -19,17 +19,58 @@
             min-width: 640px;
         }
 
-        div.wrapper>div.container {
+        div.wrapper>div.question {
             width: 100%;
             border: none;
             border-radius: 2px;
             padding-bottom: 24px;
             box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
         }
+
+        div.wrapper>div.reply-box {
+            width: 100%;
+        }
+
+        div.wrapper>div.reply-box>.reply-card {
+            width: 100%;
+            border: none;
+            border-radius: 2px;
+            padding-bottom: 24px;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+            margin-top: 15px;
+        }
+
+        .reply-title-group {
+            display: flex;
+            justify-content: space-between
+        }
+
+        .reply-title-group>.page-header h3>.label {
+            padding: .0em .4em .0em;
+        }
+
+        .reply-title-group .vote-group {
+            width: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: center;
+        }
+
+        .reply-title-group .page-header {
+            margin: 0;
+            border-bottom: none;
+        }
+
+        .reply-title-group .page-header small {
+            font-size: .5em;
+        }
+
+        .reply-content-group {}
     </style>
 </head>
 
 <body>
+    <!-- 헤더 -->
     <header>
         <div class="head center-block">
             <div class="logo">
@@ -45,13 +86,12 @@
                 </nav>
             </div>
             <div class="title">
-                <h1 style="z-index: 1">키드키즈 고민상담소!</h1>
+                <h1>키드키즈 고민상담소!</h1>
                 <a href="/" id="logo">
-                    <img id="logoimg" src="../images/smarty-cat.png" style="width: 100px; height: 100px; position: absolute; top: -50px; left: 100px;"
-                    />
+                    <img id="logoimg" src="../images/smarty-cat.png" />
                 </a>
             </div>
-            <div class="btn-group user-control" style="width: 205px; height: 60px; display: flex; align-items: center; justify-content: space-between;">
+            <div class="btn-group user-control">
                 <button class="btn search btn-default">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                 </button>
@@ -63,18 +103,120 @@
     <div id="main">
         <article class="center-block" style="max-width: 1024px;">
             <div class="wrapper">
-                <div class="container" style="height: 250px;">
-
-
+                <div class="question container" style="height: 250px;">
+                    <h3>Q. 질문입니다.</h3>
+                    <p>
+                        이러쿵 저러쿵 하면 될까요?
+                    </p>
+                    <button class="btn">답글달기</button>
+                    <button class="btn">의견 남기기</button>
                 </div>
 
-                <div class="reply container" style="margin-top: 30px; height: 100px">
+                <div class="reply-box">
+                    <div class="reply-card container">
+                        <div class="reply-title-group">
+                            <div class="page-header">
+                                <h3 class="reply title">
+                                    <span class="label label-default">7</span> 답변입니다.
+                                    <small>by 이준열</small>
+                                </h3>
+                            </div>
 
+                            <div class="vote-group">
+                                <span class="vote glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                                <span class="vote glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="reply-content-group">
+                            <p>
+                                이렇게 해보세요.
+                            </p>
+                        </div>
+                        <div class="reply-footer-group">
+                            <button class="btn">의견 남기기</button>
+                        </div>
+                        <div class="opinion-list" style="margin-top: 10px;">
+                            <ul style="list-style: none; -webkit-padding-start: 0; border: 2px solid;">
+                                <li style="border-bottom: 1px solid; padding: 10px 10px 5px 5px;">
+                                    <div class="opinion-card-header" style="display: flex; justify-content: space-between;">
+                                        <div style="width: 100%">
+                                            <p class="opinion">
+                                                의견입니다.
+                                            </p>
+                                        </div>
+                                        <div class="edit-btn-group" style="float: right; width: 50px;">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="opinion-card-footer">
+                                        <span class="author">
+                                            작성자
+                                        </span>
+                                        <span>
+                                            작성일자
+                                        </span>
+                                    </div>
+                                </li>
+                                <li style="border-bottom: 1px solid; padding: 10px 10px 5px 5px;">
+                                    <div class="opinion-card-header" style="display: flex; justify-content: space-between;">
+                                        <div style="width: 100%">
+                                            <p class="opinion">
+                                                의견입니다.
+                                            </p>
+                                        </div>
+                                        <div class="edit-btn-group" style="float: right; width: 50px;">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="opinion-card-footer">
+                                        <span class="author">
+                                            작성자
+                                        </span>
+                                        <span>
+                                            작성일자
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
 
+                    </div>
+
+                    <div class="reply-card container">
+                        <div class="reply-title-group">
+                            <div class="page-header">
+                                <h3 class="reply title">
+                                    <span class="label label-default">3</span> 답변입니다.
+                                    <small>by 이준열</small>
+                                </h3>
+                            </div>
+
+                            <div class="vote-group">
+                                <span class="vote glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                                <span class="vote glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="reply-content-group">
+                            <p>
+                                저렇게 해보세요.
+                            </p>
+                        </div>
+                        <div class="reply-footer-group">
+                            <button class="btn">의견 남기기</button>
+                        </div>
+                        <div class="opinion-list">
+                            <ul style="list-style: none;">
+                                <li></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </article>
     </div>
+    <!-- 푸터 -->
     <div class="footer-clean">
         <footer>
             <div class="container" style="width: 1024px; padding-left: 30px; padding-right: 30px;">

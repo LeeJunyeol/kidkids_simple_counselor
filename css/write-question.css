@@ -1,0 +1,80 @@
+div.wrapper {
+    padding-bottom: 50px;
+    padding-top: 80px;
+    padding-left: 50px;
+    padding-right: 50px;
+    min-width: 640px;
+}
+
+div.wrapper>div.container {
+    width: 100%;
+    border: none;
+    border-radius: 2px;
+    padding-bottom: 24px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+div.wrapper>div.container>.write>textarea {
+    border: none;
+    resize: none;
+    width: 100%;
+}
+
+div.wrapper>div.container>.write {
+    border-bottom: 2px solid #ddd;
+    padding: 20px;
+}
+
+div.wrapper>div.container>.write.content {
+    font-size: 16px;
+}
+
+div.wrapper>div.container>.write.tags {
+    display: flex;
+    font-size: 16px;
+    border-bottom: none;
+    align-content: stretch;
+}
+
+div.wrapper>div.container>.write.tags div {
+    height: 35px;
+}
+
+div.wrapper>div.container>.write.tags span>strong {
+    margin-right: 10px;
+    height: 100%;
+}
+
+div.wrapper>div.container>.write.tags div.input-tag-area {
+    width: 100%;
+    height: 100%;
+}
+
+div.wrapper>div.container>.write.tags div.input-tag-area input {
+    width: 100%;
+    height: 100%;
+}
+
+div.wrapper>div.container>.write.tags ul {
+    list-style: none;
+}
+
+div.wrapper>div.container>.write.header>textarea {
+    font-size: 30px;
+}
+
+div.submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.submit>button {
+    width: 100%;
+    height: 55px;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 2em;
+    background: rgb(149, 138, 223);
+    color: white;
+}

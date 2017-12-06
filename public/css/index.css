@@ -1,12 +1,5 @@
-article {
-    width: 1024px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
 article #board-header {
     height: 60px;
-    margin-top: 10px;
     margin-bottom: 10px;
     padding-left: 20px;
     padding-right: 20px;
@@ -35,7 +28,7 @@ article #board-header .btn-order {
     justify-content: space-between;
 }
 
-article div.board ul.list-group>li.list-group-item {
+article div.board>ul.list-group>li.list-group-item {
     border: none;
     border-bottom: 1px solid #ddd !important;
     padding-left: 30px;
@@ -43,22 +36,36 @@ article div.board ul.list-group>li.list-group-item {
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: 1px;
-    
 }
 
-article div.board ul.list-group>li.list-group-item>p {
+article div.board>ul.list-group>li.list-group-item>p {
     margin-bottom: 5px;
 }
 
-article div.board ul.list-group>li.list-group-item>p>.list-head {
+article div.board>ul.list-group>li.list-group-item .list-head {
     font-size: 20px;
 }
 
-article div.board ul.list-group>li.list-group-item>div {
+article div.board>ul.list-group>li.list-group-item div.list-footer{
+    display: flex;
+}
+article div.board>ul.list-group>li.list-group-item div.list-footer>.author{
+    margin-right: 10px;
+}
+
+
+article div.board>ul.list-group>li.list-group-item div.list-footer>ul{
+    list-style: none;
+}
+
+article div.board>ul.list-group>li.list-group-item div.list-footer>ul>li.tags{
+    float: left;
+}    
+
+article div.board>ul.list-group>li.list-group-item>div {
     margin-top: 20px;
 }
 
 span.label {
     font-weight: normal;
 }
-

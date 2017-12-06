@@ -9,9 +9,7 @@
 	<link href="../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 	<link href="../css/Footer-Clean.css" rel="stylesheet">
 	<link href="../css/common.css" rel="stylesheet">
-	<link href="../css/index.css" rel="stylesheet">
-	<style>
-	</style>
+	<link href="../css/write-question.css" rel="stylesheet">
 </head>
 
 <body>
@@ -33,7 +31,7 @@
 			<div class="title">
 				<h1>키드키즈 고민상담소!</h1>
 				<a href="/" id="logo">
-					<img id="logoimg" src="../images/smarty-cat.png"/>
+					<img id="logoimg" src="../images/smarty-cat.png" />
 				</a>
 			</div>
 			<div class="btn-group user-control">
@@ -47,88 +45,110 @@
 	</header>
 	<!-- 메인 -->
 	<div id="main">
-		<article class="center-block">
-			<div id="board-header">
-				<div class="title">
-					<h2>전체 질문</h2>
+		<div class="wrapper center-block">
+			<!-- 카테고리 링크 -->
+			<aside class="category-aside">
+				<div class="category-box">
+					<div class="head category-head">
+						<h3>카테고리</h3>
+					</div>
+
+					<div class="category-item">
+						<div>육아
+							<br>/건강</div>
+					</div>
+					<div class="category-item">
+						<div>교육
+							<br>/놀이</div>
+					</div>
+					<div class="category-item">
+						<div>안전</div>
+					</div>
+					<div class="category-item">
+						<div>음식</div>
+					</div>
+					<div class="category-item">
+						<div>기타</div>
+					</div>
 				</div>
-				<div class="btn-order">
-					<a href="#">최신순</a>
-					<a href="#">조회순</a>
+			</aside>
+
+			<!-- 메인 -->
+			<article class="index">
+				<div class="wrapper">
+					<div class="container">
+						<div class="write header">
+							<textarea placeholder="제목" style="font-size: 30px;"></textarea>
+						</div>
+						<div class="write content">
+							<textarea placeholder="내용을 입력하세요." style="width: 100%;"></textarea>
+						</div>
+						<div class="write tags">
+							<div>
+								<span>
+									<strong>태 그: </strong>
+								</span>
+							</div>
+							<div class="input-tag-area">
+								<input type="text" placeholder="입력(최대 10개)" style="border: none;" hidden>
+								<ul class="tags" style="list-style: none;">
+									<li class="tags" style="float: left;">
+										<span class="label label-default">태그1</span>
+									</li>
+									<li class="tags" style="float: left;">
+										<span class="label label-default">태그2</span>
+									</li>
+									<li class="tags" style="float: left;">
+										<span class="label label-default">태그3</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="submit">
+							<button class="btn btn-default" type="submit">등록</button>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="board">
-				<ul class="list-group">
-					<li class="list-group-item">
-						<span class="badge">14</span>
-						<p>
-							<a href="#" class="list-head">질문</a>
-							<br>
-							<div style="display: flex;">
-								<span class="author" style="margin-right: 10px;">이준열</span>
-								<span class="date">2017-12-04</span>
-								<ul class="tags" style="list-style: none;">
-									<li class="tags" style="float: left;">
-										<span class="label label-info">태그1</span>
-									</li>
-									<li class="tags" style="float: left;">
-										<span class="label label-info">태그2</span>
-									</li>
-									<li class="tags" style="float: left;">
-										<span class="label label-info">태그3</span>
-									</li>
-								</ul>
-							</div>
-						</p>
-					</li>
-					<li class="list-group-item">
-						<span class="badge">14</span>
-						<p>
-							<a href="#" class="list-head">질문</a>
-							<br>
-							<div style="display: flex;">
-								<span class="author" style="margin-right: 10px;">이준열</span>
-								<span class="date">2017-12-04</span>
-								<ul class="tags" style="list-style: none;">
-									<li class="tags" style="float: left;">
-										<span class="label label-info">태그1</span>
-									</li>
-									<li class="tags" style="float: left;">
-										<span class="label label-info">태그2</span>
-									</li>
-									<li class="tags" style="float: left;">
-										<span class="label label-info">태그3</span>
-									</li>
-								</ul>
-							</div>
-						</p>
-					</li>
-					<li class="list-group-item">
-						<span class="badge">14</span>
-						<p>
-							<a href="#" class="list-head">질문</a>
-							<br>
-							<div style="display: flex;">
-								<span class="author" style="margin-right: 10px;">이준열</span>
-								<span class="date">2017-12-04</span>
-								<ul class="tags" style="list-style: none;">
-									<li class="tags" style="float: left;">
-										<span class="label label-info">태그1</span>
-									</li>
-									<li class="tags" style="float: left;">
-										<span class="label label-info">태그2</span>
-									</li>
-									<li class="tags" style="float: left;">
-										<span class="label label-info">태그3</span>
-									</li>
-								</ul>
-							</div>
-						</p>
-					</li>
-				</ul>
-			</div>
-		</article>
+			</article>
+			<aside class="rank-aside">
+				<div class="rank-box">
+					<div class="head rank-head">
+						<h3>지식 랭킹</h3>
+					</div>
+					<div>
+						<table class="rank-table">
+							<thead>
+								<tr>
+									<th class="rank-table-head rank">순위</th>
+									<th class="rank-table-head id">아이디</th>
+									<th class="rank-table-head score">점수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="rank-table-item rank">1</td>
+									<td class="rank-table-item id">PHP</td>
+									<td class="rank-table-item score">100</td>
+								</tr>
+								<tr>
+									<td class="rank-table-item rank">2</td>
+									<td class="rank-table-item id">JS</td>
+									<td class="rank-table-item score">80</td>
+								</tr>
+								<tr>
+									<td class="rank-table-item rank">3</td>
+									<td class="rank-table-item id">mySQL</td>
+									<td class="rank-table-item score">77</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</aside>
+
+		</div>
 	</div>
+
 	<!-- 푸터 -->
 	<div class="footer-clean">
 		<footer>

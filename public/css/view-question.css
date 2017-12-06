@@ -1,0 +1,56 @@
+div.wrapper>div.question {
+    width: 100%;
+    border: none;
+    border-radius: 2px;
+    padding-bottom: 24px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+div.wrapper>div.reply-box {
+    width: 100%;
+}
+
+div.wrapper>div.reply-box>.reply-card {
+    width: 100%;
+    border: none;
+    border-radius: 2px;
+    padding-bottom: 24px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    margin-top: 15px;
+}
+
+.reply-title-group {
+    display: flex;
+    justify-content: space-between
+}
+
+.reply-title-group>.page-header h3>.label {
+    padding: .0em .4em .0em;
+}
+
+.reply-title-group .vote-group {
+    width: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.reply-title-group .page-header {
+    margin: 0;
+    border-bottom: none;
+    position: relative;
+}
+
+.reply-title-group .page-header>span.special {
+    position: absolute;
+    top: -5px;
+    left: -20px;
+    height: 20px;
+    font-size: 12px;
+    font-weight: normal;
+    background: #FF9800;
+}
+
+.reply-title-group .page-header small {
+    font-size: .5em;
+}

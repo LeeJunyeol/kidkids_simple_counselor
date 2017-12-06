@@ -1,0 +1,105 @@
+﻿-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
+
+-- user Table Create SQL
+CREATE TABLE user
+(
+    `user_id`    VARCHAR(45)    NOT NULL, 
+    `name`       VARCHAR(50)    NOT NULL, 
+    `password`   VARCHAR(45)    NOT NULL, 
+    `user_type`  ENUM           NOT NULL, 
+    PRIMARY KEY (user_id)
+);
+
+
+-- answer_vote Table Create SQL
+CREATE TABLE answer_vote
+(
+    `answer_id`  INT    NULL, 
+    `vote_id`    INT    NOT NULL
+);
+
+
+-- question Table Create SQL
+CREATE TABLE question
+(
+    `question_id`  INT             NOT NULL    AUTO_INCREMENT, 
+    `user_id`      VARCHAR(45)     NOT NULL, 
+    `category`     VARCHAR(100)    NULL, 
+    `title`        VARCHAR(200)    NOT NULL, 
+    `content`      TEXT            NOT NULL, 
+    `view`         INT             NOT NULL, 
+    `create_date`  DATETIME        NOT NULL, 
+    `modify_date`  DATETIME        NOT NULL, 
+    PRIMARY KEY (question_id)
+);
+
+ALTER TABLE question ADD CONSTRAINT FK_question_user_id_user_user_id FOREIGN KEY (user_id)
+ REFERENCES user (user_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+-- answer Table Create SQL
+CREATE TABLE answer
+(
+    `answer_id`    INT            NOT NULL    AUTO_INCREMENT, 
+    `question_id`  INT            NOT NULL, 
+    `user_id`      VARCHAR(45)    NOT NULL, 
+    `content`      TEXT           NOT NULL, 
+    `vote_cnt`     INT            NOT NULL, 
+    `create_date`  DATETIME       NOT NULL, 
+    `modify_date`  DATETIME       NOT NULL, 
+    `label`        ENUM           NOT NULL, 
+    PRIMARY KEY (answer_id)
+);
+
+ALTER TABLE answer ADD CONSTRAINT FK_answer_question_id_question_question_id FOREIGN KEY (question_id)
+ REFERENCES question (question_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE answer ADD CONSTRAINT FK_answer_user_id_user_user_id FOREIGN KEY (user_id)
+ REFERENCES user (user_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE answer ADD CONSTRAINT FK_answer_answer_id_answer_vote_answer_id FOREIGN KEY (answer_id)
+ REFERENCES answer_vote (answer_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+-- comment Table Create SQL
+CREATE TABLE comment
+(
+    `commnet_id`   INT            NOT NULL    AUTO_INCREMENT, 
+    `user_id`      VARCHAR(45)    NOT NULL, 
+    `answer_id`    INT            NULL, 
+    `content`      TEXT           NOT NULL, 
+    `parent_idx`   INT            NULL, 
+    `level`        INT            NOT NULL, 
+    `seq`          INT            NOT NULL, 
+    `create_date`  DATETIME       NOT NULL, 
+    `modify_date`  DATETIME       NOT NULL, 
+    PRIMARY KEY (commnet_id)
+);
+
+ALTER TABLE comment ADD CONSTRAINT FK_comment_user_id_user_user_id FOREIGN KEY (user_id)
+ REFERENCES user (user_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE comment ADD CONSTRAINT FK_comment_answer_id_answer_answer_id FOREIGN KEY (answer_id)
+ REFERENCES answer (answer_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+-- Vote Table Create SQL
+CREATE TABLE Vote
+(
+    `vote_id`    INT            NOT NULL    AUTO_INCREMENT, 
+    `answer_id`  INT            NULL, 
+    `user_id`    VARCHAR(45)    NULL, 
+    `vote`       INT            NULL, 
+    PRIMARY KEY (vote_id)
+);
+
+ALTER TABLE Vote ADD CONSTRAINT FK_Vote_answer_id_answer_answer_id FOREIGN KEY (answer_id)
+ REFERENCES answer (answer_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE Vote ADD CONSTRAINT FK_Vote_user_id_user_user_id FOREIGN KEY (user_id)
+ REFERENCES user (user_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE Vote ADD CONSTRAINT FK_Vote_vote_id_answer_vote_vote_id FOREIGN KEY (vote_id)
+ REFERENCES answer_vote (vote_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+

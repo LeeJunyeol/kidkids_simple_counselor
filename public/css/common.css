@@ -1,0 +1,191 @@
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 본문 */
+#main>div.wrapper {
+    padding-bottom: 50px;
+    padding-top: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    min-width: 640px;
+}
+
+article {
+    padding-top: 30px;
+    max-width: 1024px;
+    width: 1024px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+/* 헤더 */
+
+header {
+    border-bottom-style: ridge;
+    border-bottom-color: #5CBC00;
+    border-bottom-width: 3.5px;
+}
+
+header>div.head {
+    width: 1024px;
+    height: 130px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+header>div.head>.title {
+    display: flex;
+    align-items: flex-start;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+header>div.head>.title>h1 {
+    z-index: 1;
+}
+
+header>div.head>.title #logoimg {
+    width: 180px;
+    height: 150px;
+    position: absolute;
+    top: -70px;
+    left: 65px;
+}
+
+header>div.head>.user-control.btn-group {
+    width: 205px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header>div.head>.logo {
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+header a.btn {
+    color: rgb(54, 54, 54);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+header #logoimg {
+    opacity: 0.7;
+}
+
+/* 로그인 창 */
+
+.modal-footer {
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-dialog {
+    margin-top: 150px;
+}
+
+.modal-footer::before {
+    content: none;
+}
+
+.modal-footer::after {
+    content: none;
+}
+
+footer {
+    color: white;
+}
+
+#main>.wrapper {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* aside 공통 */
+
+aside {
+    width: 190px;
+    padding-top: 30px;
+}
+
+aside>div {
+    width: 100%;
+    padding: 13px;
+    background: white;
+    border-radius: 20%;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+aside>div>div.head {
+    width: 100%;
+    text-align: center;
+}
+
+
+/* 우수 답변자 */
+
+aside>div>div.rank-head {
+    color: white;
+}
+
+aside>div.rank-box {
+    background: #5CBC00;
+}
+
+.rank-box>div {
+    width: 100%;
+}
+
+.rank-box>div>.rank-table {
+    width: 100%;
+    border-radius: 10%;
+    background: white;
+}
+
+.rank-box>div>.rank-table .rank-table-head {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    /* background: white; */
+    text-align: center;
+}
+
+.rank-box>div>.rank-table .rank-table-item {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    /* background: white; */
+    text-align: center;
+}
+
+
+/* 카테고리 */
+
+.category-box>.category-item {
+    width: 48%;
+    height: 65px;
+    background: #5CBC00;
+    padding: 2px;
+    display: flex;
+    border-radius: 20%;
+    justify-content: center;
+    margin: 1px 1px 3px 1px;
+    align-items: center;
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+}
+

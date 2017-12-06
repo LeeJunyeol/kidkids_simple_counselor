@@ -1,11 +1,3 @@
-div.wrapper {
-    padding-bottom: 50px;
-    padding-top: 80px;
-    padding-left: 50px;
-    padding-right: 50px;
-    min-width: 640px;
-}
-
 div.wrapper>div.container {
     width: 100%;
     border: none;

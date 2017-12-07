@@ -27,3 +27,31 @@
         </div>
     </div>
 </header>
+<div id="main">
+        <div class="wrapper center-block">
+            <!-- 카테고리 링크 -->
+            <aside class="category-aside">
+                <div class="category-box">
+                    <div class="head category-head">
+                        <h3>카테고리</h3>
+                    </div>
+
+                    <div class="category-item">
+                        <div>육아
+                            <br>/건강</div>
+                    </div>
+                    <div class="category-item">
+                        <div>교육
+                            <br>/놀이</div>
+                    </div>
+                    <div class="category-item">
+                        <div>안전</div>
+                    </div>
+                    <div class="category-item">
+                        <div>음식</div>
+                    </div>
+                    <div class="category-item">
+                        <div>기타</div>
+                    </div>
+                </div>
+            </aside>

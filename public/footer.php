@@ -1,3 +1,43 @@
+			<aside class="rank-aside">
+				<div class="rank-box">
+					<div class="head rank-head">
+						<h3>지식 랭킹</h3>
+					</div>
+					<div>
+						<table class="rank-table">
+							<thead>
+								<tr>
+									<th class="rank-table-head rank">순위</th>
+									<th class="rank-table-head id">아이디</th>
+									<th class="rank-table-head score">점수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="rank-table-item rank">1</td>
+									<td class="rank-table-item id">PHP</td>
+									<td class="rank-table-item score">100</td>
+								</tr>
+								<tr>
+									<td class="rank-table-item rank">2</td>
+									<td class="rank-table-item id">JS</td>
+									<td class="rank-table-item score">80</td>
+								</tr>
+								<tr>
+									<td class="rank-table-item rank">3</td>
+									<td class="rank-table-item id">mySQL</td>
+									<td class="rank-table-item score">77</td>
+								</tr>
+							</tbody>
+
+						</table>
+					</div>
+
+				</div>
+			</aside>
+		</div>
+	</div>
+
 	<!-- 푸터 -->
 	<div class="footer-clean">
 		<footer>

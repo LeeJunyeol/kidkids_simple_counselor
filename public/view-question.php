@@ -16,45 +16,18 @@
 <?php
 require_once "header.php";
 ?>
-    <div id="main">
-        <div class="wrapper center-block">
-            <!-- 카테고리 링크 -->
-            <aside class="category-aside">
-                <div class="category-box">
-                    <div class="head category-head">
-                        <h3>카테고리</h3>
-                    </div>
-
-                    <div class="category-item">
-                        <div>육아
-                            <br>/건강</div>
-                    </div>
-                    <div class="category-item">
-                        <div>교육
-                            <br>/놀이</div>
-                    </div>
-                    <div class="category-item">
-                        <div>안전</div>
-                    </div>
-                    <div class="category-item">
-                        <div>음식</div>
-                    </div>
-                    <div class="category-item">
-                        <div>기타</div>
-                    </div>
-                </div>
-            </aside>
-
             <!-- 메인 -->
             <article class="center-block">
                 <div class="wrapper">
                     <div class="question container">
-                        <h3>Q. 질문입니다.</h3>
+                    <script type="text/handlebars-template" id="question-template">
+                        <h3>Q. {{title}}.</h3>
                         <p>
-                            이러쿵 저러쿵 하면 될까요?
+                            {{content}}
                         </p>
                         <button class="btn">답글달기</button>
                         <button class="btn">의견 남기기</button>
+                    </script>
                     </div>
 
                     <div class="reply-box">
@@ -164,50 +137,13 @@ require_once "header.php";
                     </div>
                 </div>
             </article>
-            <aside class="rank-aside">
-                <div class="rank-box">
-                    <div class="head rank-head">
-                        <h3>지식 랭킹</h3>
-                    </div>
-                    <div>
-                        <table class="rank-table">
-                            <thead>
-                                <tr>
-                                    <th class="rank-table-head rank">순위</th>
-                                    <th class="rank-table-head id">아이디</th>
-                                    <th class="rank-table-head score">점수</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="rank-table-item rank">1</td>
-                                    <td class="rank-table-item id">PHP</td>
-                                    <td class="rank-table-item score">100</td>
-                                </tr>
-                                <tr>
-                                    <td class="rank-table-item rank">2</td>
-                                    <td class="rank-table-item id">JS</td>
-                                    <td class="rank-table-item score">80</td>
-                                </tr>
-                                <tr>
-                                    <td class="rank-table-item rank">3</td>
-                                    <td class="rank-table-item id">mySQL</td>
-                                    <td class="rank-table-item score">77</td>
-                                </tr>
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-            </aside>
-        </div>
-    </div>
 
 <?php
 require_once "footer.php";
 ?>
     <script src="<?php echo _NODE ?>/jquery/dist/jquery.js"></script>
 	<script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
 	<script src="<?php echo _JS ?>/view-question.js"></script>
 	<script src="<?php echo _JS ?>/common.js"></script>
 </body>

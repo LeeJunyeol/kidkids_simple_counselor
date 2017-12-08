@@ -1,13 +1,14 @@
 article #board-header {
     height: 60px;
+    background: white;
     margin-bottom: 10px;
     padding-left: 20px;
     padding-right: 20px;
-    border: 1px solid #ddd;
-    border-radius: 13px;
     display: flex;
     align-items: baseline;
     justify-content: space-between;
+    border-right: 1px solid #ddd !important;
+    border-bottom: 1px solid #ddd !important;
 }
 
 article #board-header>div.title {
@@ -30,12 +31,13 @@ article #board-header .btn-order {
 
 article div.board>ul.list-group>li.list-group-item {
     border: none;
+    border-right: 1px solid #ddd !important;
     border-bottom: 1px solid #ddd !important;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 15px;
     padding-bottom: 15px;
-    margin-bottom: 1px;
+    margin-bottom: 3px;
 }
 
 article div.board>ul.list-group>li.list-group-item>p {
@@ -68,4 +70,8 @@ article div.board>ul.list-group>li.list-group-item>div {
 
 span.label {
     font-weight: normal;
+}
+
+#pageNav {
+    margin-top: -20px;
 }

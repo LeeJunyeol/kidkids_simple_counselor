@@ -1,3 +1,8 @@
+<?php
+
+require_once "config.php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,11 +32,11 @@ require_once "header.php";
 				<a href="#">조회순</a>
 			</div>
 		</div>
-		<div class="board">
-			<ul class="list-group">
+		<div class="question board">
+			<ul class="question list-group">
 				<script type="text/handlebars-template" id="questions-template">
 					{{#each this}}
-					<li class="list-group-item" data-id={{question_id}}>
+					<li class="question list-group-item" data-id={{question_id}}>
 						<span class="view-cnt badge">{{view}}</span>
 						<p>
 							<a href="#" class="list-head">{{title}}</a>
@@ -79,10 +84,11 @@ require_once "header.php";
 require_once "footer.php";
 ?>
 	<script src="<?php echo _NODE ?>/jquery/dist/jquery.js"></script>
+	<script src="<?php echo _NODE ?>/jquery.redirect/jquery.redirect.js"></script>
 	<script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
-	<script src="<?php echo _JS ?>/index.js"></script>
 	<script src="<?php echo _JS ?>/common.js"></script>
+	<script src="<?php echo _JS ?>/index.js"></script>
 
 </body>
 

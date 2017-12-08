@@ -20,13 +20,15 @@ switch($_SERVER['REQUEST_METHOD']){
 
         $stmt = $conn->query("SELECT count(*) FROM questions;");
         $rowCount = $stmt->fetch(PDO::FETCH_NUM);
-        $rowCount[0];
         
         echo json_encode([
             'count'=> $rowCount,
             'data'=> $results
         ]);
         return;        
+    }
+    if(isset($_GET['category'])){
+
     }
     // SELECT ALL
     if(!isset($_GET['id'])){        
@@ -48,11 +50,13 @@ switch($_SERVER['REQUEST_METHOD']){
         $row = $stmt->fetchObject();
 
         require_once "Answer.php";
-        $answers = getJoinOnAnswerByQuestionId($conn, $id);
-
+        $answers = getByQuestionId($conn, $id);
+        $opinions = getJoinOnAnswerByQuestionId($conn, $id);
+        
         echo json_encode([
             "question" => $row,
-            "answers" => $answers
+            "answers" => $answers,
+            "opinions" => $opinions
         ]);
         return;
     }

@@ -1,5 +1,11 @@
 RewriteEngine on
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-l
-RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+
+ErrorDocument 404     /ksc/public/404.php
+
+RewriteRule ^home$ public/home.php
+RewriteRule ^write\/?$ public/write.php
+RewriteRule ^question/([0-9]+)$ public/question.php?question_id=$1;

@@ -38,7 +38,11 @@ $(document).ready(function () {
             getQuestions(currentPageNum);
         })
 
-        $("div.board>ul.list-group").on("click", "")
+        $("div.board>ul.list-group").on("click", "li.question",function(e){
+            e.preventDefault();
+            var questionId = $(this).data("id");
+            $.redirect("question/" + questionId, {"question_id": questionId});
+        })
     }
 
     function getQuestions(page) {
@@ -55,7 +59,7 @@ $(document).ready(function () {
 
             var arr = [];
 
-            for (lastPageNum = 0; lastPageNum <= parseInt(result['count']) / 5; lastPageNum++) {
+            for (lastPageNum = 0; lastPageNum < parseInt(result['count']) / 5; lastPageNum++) {
                 arr.push(lastPageNum + 1);
             }
 

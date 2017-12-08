@@ -1,3 +1,7 @@
+div.wrapper div.container {
+    background: white;
+}
+
 div.wrapper>div.question {
     width: 100%;
     border: none;

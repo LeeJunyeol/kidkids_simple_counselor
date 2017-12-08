@@ -1,8 +1,10 @@
 var QUESTION_URL = "http://localhost/ksc/api/Controllers/Question.php";
 
 $(document).ready(function () {
-    var questionTemplateScript = $("#question-template").html();
-    var questionTemplate = Handlebars.compile(questionTemplateScript);
+
+    var questionTemplate = handlebarsHelper("#question-template");
+    var answerTemplate = handlebarsHelper("#answer-template");
+    var opinionTemplate = handlebarsHelper("#opinion-template");
 
     init();
 
@@ -16,18 +18,39 @@ $(document).ready(function () {
         }).then(function (res) {
             var result = JSON.parse(res);
             var question = result['question'];
+            var answers = result['answers'];
+            var opinions = result['opinions'];
+
+            console.log(question);
+            console.log(answers);
 
             $("div.question.container").html(questionTemplate(question));
-            // $("div.board > ul.list-group").html(questionTemplate(result['data']));
-
-            // var arr = [];
-
-            // for (lastPageNum = 0; lastPageNum <= parseInt(result['count']) / 5; lastPageNum++) {
-            //     arr.push(lastPageNum + 1);
-            // }
-
-            // $("ul.pagination").html(paginationTemplate(arr));
+            $("div.reply-box").html(answerTemplate(answers));
+            $("div.opinion-list>ul").html(opinionTemplate(opinions));
         })
     }
+
+
+    $("div.reply-box").on("click", ".btn.view-opinions", function (e) {
+        var $replyContainer = $(this).closest(".reply-card.container");
+        var answerId = $replyContainer.find(".reply-footer-group").data("id");
+        $(this).text("의견 숨기기");
+        $(this).hasClass("")
+
+        $.ajax("http://localhost/ksc/api/Controllers/Opinion.php", {
+            type: "GET",
+            contentType: "application/json",
+            data: {
+                id: answerId
+            }
+        }).then(function (res) {
+            var result = JSON.parse(res);
+            if(result['success']){
+                var opinions = result['opinions'];
+                $replyContainer.find("ul").html(opinionTemplate(opinions));
+                $replyContainer.find("ul").removeClass("hide");
+            }
+        });
+    });
 
 });

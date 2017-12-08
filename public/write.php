@@ -1,3 +1,8 @@
+<?php
+
+require_once "config.php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +22,7 @@
 require_once "header.php";
 ?>
 	<!-- 메인 -->
-	<article class="index">
+	<article class="write">
 		<div class="wrapper">
 			<div class="container">
 				<div class="write category">

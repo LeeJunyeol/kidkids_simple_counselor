@@ -1,4 +1,25 @@
 			<aside class="rank-aside">
+				<div class="category-box">
+                    <div class="head category-head">
+                        <h3>카테고리</h3>
+                    </div>
+
+                    <div class="category-item">
+                        <div><a href="#">육아/건강</a></div>
+                    </div>
+                    <div class="category-item">
+                        <div><a href="#">교육/놀이</a></div>
+                    </div>
+                    <div class="category-item">
+                        <div><a href="#">안전</a></div>
+                    </div>
+                    <div class="category-item">
+                        <div><a href="#">음식</a></div>
+                    </div>
+                    <div class="category-item">
+                        <div><a href="#">기타</a></div>
+                    </div>
+                </div>
 				<div class="rank-box">
 					<div class="head rank-head">
 						<h3>지식 랭킹</h3>

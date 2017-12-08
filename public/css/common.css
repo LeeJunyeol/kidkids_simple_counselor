@@ -1,20 +1,19 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 body {
     font-family: 'Noto Sans KR', sans-serif;
+    background: #F5F5F5;
 }
 
 /* 본문 */
 #main>div.wrapper {
     padding-bottom: 50px;
-    padding-top: 30px;
-    padding-left: 50px;
     padding-right: 50px;
-    min-width: 860px;
+    max-width: 1260px;
 }
 
 article {
     padding-top: 30px;
-    width: 1024px;
+    width: 100%;
     padding-left: 50px;
     padding-right: 50px;
 }
@@ -22,13 +21,15 @@ article {
 /* 헤더 */
 
 header {
+    background: white;
     border-bottom-style: ridge;
     border-bottom-color: #5CBC00;
     border-bottom-width: 3.5px;
 }
 
 header>div.head {
-    width: 1024px;
+    width: 65.5%;
+    max-width: 1100px;
     height: 130px;
     padding-left: 20px;
     padding-right: 20px;
@@ -69,12 +70,20 @@ header>div.head>.logo {
     height: 60px;
     display: flex;
     align-items: center;
+    /* align-items: flex-end; */
 }
 
-header a.btn {
-    color: rgb(54, 54, 54);
+header a.btn.question {
+    /* background-color: #BCE308;
+    border-top-left-radius: 40%;
+    border-top-right-radius: 40%;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0; */
+    /* width: 120px;
+    color: white;
     font-size: 16px;
     font-weight: 500;
+    letter-spacing: 2px; */
 }
 
 header #logoimg {
@@ -116,36 +125,42 @@ footer {
 /* aside 공통 */
 
 aside {
-    width: 190px;
+    width: 180px;
     padding-top: 30px;
 }
 
 aside>div {
     width: 100%;
     min-width: 140px;
-    padding: 13px;
     background: white;
-    border-radius: 20%;
+    padding: 15px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 aside>div>div.head {
     width: 100%;
-    text-align: center;
+    color: #1DB51A;
 }
 
+aside>div>div.head>h3 {
+    margin-top: 0;
+    font-size: 18px;
+}
 
 /* 우수 답변자 */
 
-aside>div>div.rank-head {
+/* aside>div>div.rank-head {
     color: white;
-}
-
-aside>div.rank-box {
-    background: #5CBC00;
-}
+    background: #1DB51A;
+    border-right: 13px solid #1DB51A;
+    border-left: 13px solid #1DB51A;
+    border-top: 13px solid #1DB51A;
+    border-top-left-radius: 20%;
+    border-top-right-radius: 20%;
+} */
 
 .rank-box>div {
     width: 100%;
@@ -153,42 +168,31 @@ aside>div.rank-box {
 
 .rank-box>div>.rank-table {
     width: 100%;
-    border-radius: 10%;
-    background: white;
 }
 
 .rank-box>div>.rank-table .rank-table-head {
     padding-top: 7px;
     padding-bottom: 7px;
-    /* background: white; */
     text-align: center;
 }
 
 .rank-box>div>.rank-table .rank-table-item {
     padding-top: 7px;
     padding-bottom: 7px;
-    /* background: white; */
     text-align: center;
+    font-weight: bold;
 }
 
 
 /* 카테고리 */
 .category-box>.category-item {
-    width: 48%;
-    height: 65px;
-    background: #5CBC00;
-    padding: 2px;
-    display: flex;
-    border-radius: 20%;
-    justify-content: center;
-    margin: 1px 1px 3px 1px;
-    align-items: center;
+    width: 100%;
+    margin-top: 15px;
     font-size: 15px;
-    color: white;
     font-weight: bold;
 }
 
-@media (max-width: 1259px){
+@media (max-width: 1360px){
     aside {
         display: none;
     }

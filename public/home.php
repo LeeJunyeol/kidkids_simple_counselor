@@ -25,7 +25,12 @@ require_once "header.php";
 	<article class="index">
 		<div id="board-header">
 			<div class="title">
-				<h2>전체 질문</h2>
+				<h2><?php 
+				if(isset($_GET['category'])){
+					echo $_GET['category'];
+					} else {
+						echo "전체 질문";
+					} ?></h2>
 			</div>
 			<div class="btn-order">
 				<a href="#">최신순</a>

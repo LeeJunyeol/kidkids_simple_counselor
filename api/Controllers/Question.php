@@ -1,57 +1,52 @@
 <?php
 
 require_once "../Config/Database.php";
-$DB = new Database();
-$conn = $DB->getConnection();
+require_once '../Models/QuestionModel.php';
+require_once '../Models/AnswerModel.php';
+
+$conn = Database::getConnection();
+
+$questionModel = new QuestionModel($conn);
+$answerModel = new AnswerModel($conn);
 
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
-    // BY PAGE AND COUNT ALL
-    if(isset($_GET['page'])){
+    // 카테고리별 출력
+    if(isset($_GET['category']) && isset($_GET['page'])){
+        $limit = $_GET['page'] * 5;
+        $offset = $limit - 5;
+
+        $category = $_GET['category'];
+        $results = $questionModel->getByCategoryForPage($category, $offset, $limit);
+        $rowCount = $questionModel->countByCategory($category);
+        
+        echo json_encode([
+            'count'=> $rowCount,
+            'data'=> $results
+        ]);
+        return;
+    }
+    // 전체 출력
+    if(!isset($_GET['category']) && isset($_GET['page'])){
         // 5개씩 보여준다.
         $limit = $_GET['page'] * 5;
         $offset = $limit - 5;
-        $stmt = $conn->prepare("SELECT * FROM questions LIMIT $offset, $limit");
-        $stmt->execute();
-        $results = array();
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $results[] = $row;
-        }
 
-        $stmt = $conn->query("SELECT count(*) FROM questions;");
-        $rowCount = $stmt->fetch(PDO::FETCH_NUM);
-        
+        $results = $questionModel->getForPage($offset, $limit);
+        $rowCount = $questionModel->count();
+
         echo json_encode([
             'count'=> $rowCount,
             'data'=> $results
         ]);
         return;        
     }
-    if(isset($_GET['category'])){
-
-    }
-    // SELECT ALL
-    if(!isset($_GET['id'])){        
-        $results = array();
-
-        $stmt = $conn->query("SELECT * FROM questions");
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $results[] = $row;
-        }
-        echo json_encode($results);
-        return;
-    // SELECT ONE AND ANSWERS
-    } else {
-        $stmt = $conn->prepare("SELECT q.question_id, q.user_id, q.category, q.title, q.content, q.view, q.create_date, q.modify_date, q.tags
-         FROM questions as q WHERE question_id=:question_id");
+    // 질문에 대한 답변과 그에 달린 의견 전부를 불러온다.
+    if(isset($_GET['id'])){
         $id  = $_GET['id'];
-        $stmt->bindParam(':question_id', $id);
-        $stmt->execute();
-        $row = $stmt->fetchObject();
-
-        require_once "Answer.php";
-        $answers = getByQuestionId($conn, $id);
-        $opinions = getJoinOnAnswerByQuestionId($conn, $id);
+        $question = $questionModel->getById($id);
+        $answers = $answerModel->getByQuestionId($id);
+        $opinions = $answerModel->getJoinOnAnswerByQuestionId($id);
         
         echo json_encode([
             "question" => $row,

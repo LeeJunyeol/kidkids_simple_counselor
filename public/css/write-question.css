@@ -56,6 +56,11 @@ div.wrapper>div.container>.write.header>textarea {
     font-size: 30px;
 }
 
+div.wrapper>div.container>.write.content>textarea {
+    width: 100%;
+}
+    
+
 div.submit {
     display: flex;
     align-items: center;

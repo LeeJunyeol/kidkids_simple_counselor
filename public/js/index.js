@@ -12,15 +12,20 @@ $(document).ready(function () {
     var currentPageNum = 1;
     var lastPageNum = 1;
 
+    var category = $("div.title>h2").text();
+
     init();
 
     function init() {
-        getQuestions(1);
-
+        if(category === "전체 질문"){
+            category = undefined;
+        }
+        getQuestions(1, category);
+        
         $("#pageNav").on("click", "li.previous", function (e) {
             if (currentPageNum > 1) {
                 currentPageNum--;
-                getQuestions(currentPageNum);
+                getQuestions(currentPageNum, category);
             } else {
                 alert("첫 페이지입니다.");
             }
@@ -28,30 +33,35 @@ $(document).ready(function () {
         $("#pageNav").on("click", "li.next", function (e) {
             if (currentPageNum < lastPageNum) {
                 currentPageNum++;
-                getQuestions(currentPageNum);
+                getQuestions(currentPageNum, category);
             } else {
                 alert("마지막 페이지입니다.");
             }
         })
         $("#pageNav").on("click", "li.pageNum", function (e) {
             currentPageNum = parseInt($(e.currentTarget).data("num"));
-            getQuestions(currentPageNum);
+            getQuestions(currentPageNum, category);
         })
 
-        $("div.board>ul.list-group").on("click", "li.question",function(e){
+        $("div.board>ul.list-group").on("click", "li.question>p>a", function (e) {
             e.preventDefault();
-            var questionId = $(this).data("id");
-            $.redirect("question/" + questionId, {"question_id": questionId});
+            var questionId = $(this).closest("li").data("id");
+            $.redirect("question/" + questionId, {
+                "question_id": questionId
+            });
         })
     }
 
-    function getQuestions(page) {
+    function getQuestions(page, category) {
+        var dataObj = {};
+        dataObj['page'] = page;
+        if(category !== undefined){
+            dataObj['category'] = category;
+        }
         $.ajax("http://localhost/ksc/api/Controllers/Question.php", {
             type: "GET",
             contentType: "application/json",
-            data: {
-                page: page
-            }
+            data: dataObj
         }).then(function (res) {
             var result = JSON.parse(res);
 

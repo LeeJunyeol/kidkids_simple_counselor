@@ -1,8 +1,7 @@
 <?php
 
 require_once "../Config/Database.php";
-$DB = new Database();
-$conn = $DB->getConnection();
+$conn = Database::getConnection();
 
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':

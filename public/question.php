@@ -15,6 +15,10 @@ require_once "config.php";
     <link href="<?php echo _CSS?>/Footer-Clean.css" rel="stylesheet">
     <link href="<?php echo _CSS?>/common.css" rel="stylesheet">
     <link href="<?php echo _CSS?>/view-question.css" rel="stylesheet">
+    <style>
+        
+
+    </style>
 </head>
 
 <body>
@@ -24,17 +28,27 @@ require_once "header.php";
             <!-- 메인 -->
             <article class="view" data-id="<?php echo $_POST["question_id"]?>">
                 <div class="wrapper">
-                    <div class="question container">
+                    <div id="question-container" class="question container hide">
                     <script type="text/handlebars-template" id="question-template">
-                        <h3>Q. {{title}}.</h3>
+                        <h3>Q. {{title}}</h3>
                         <p>
                             {{content}}
                         </p>
-                        <button class="btn">답글달기</button>
-                        <button class="btn">의견 남기기</button>
+                        <button class="btn btn-default reply">답글달기</button>
+                        <button class="btn btn-default">의견 남기기</button>
                     </script>
                     </div>
-
+                    <div id="write-box" class="container" style="display: none">
+                        <div class="write header">
+                            <textarea placeholder="제목"></textarea>
+                        </div>
+                        <div class="write content">
+                            <textarea placeholder="내용을 입력하세요."></textarea>
+                        </div>
+                        <div class="submit">
+        					<button id="btn-post-reply" class="btn btn-default" type="submit">등록</button>
+		        		</div>
+                    </div>
                     <div class="reply-box">
                         <script type="text/handlebars-template" id="answer-template">
                         {{#each this}}
@@ -60,8 +74,8 @@ require_once "header.php";
                                 </p>
                             </div>
                             <div class="reply-footer-group" data-id={{answer_id}}>
-                                <button class="btn write-opinion">의견 남기기</button>
-                                <button class="btn view-opinions">의견 보이기</button>
+                                <button class="btn btn-default write-opinion">의견 남기기</button>
+                                <button class="btn btn-default view-opinions">의견 보이기</button>
                             </div>
                             <div class="opinion-list" style="margin-top: 10px;">
                                 <ul class="opinion-list hide" style="list-style: none; -webkit-padding-start: 0; border: 2px solid;">
@@ -95,38 +109,6 @@ require_once "header.php";
                         </li>
                         {{/each}}
                         </script>
-
-
-                        <div class="reply-card container">
-                            <div class="reply-title-group">
-                                <div class="page-header">
-                                    <span class="label label-success special">전문가</span>
-
-                                    <h3 class="reply title">
-                                        <span class="label label-default">3</span> 답변입니다.
-                                        <small>by 이준열</small>
-                                    </h3>
-                                </div>
-
-                                <div class="vote-group">
-                                    <span class="vote glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
-                                    <span class="vote glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                                </div>
-                            </div>
-                            <div class="reply-content-group">
-                                <p>
-                                    저렇게 해보세요.
-                                </p>
-                            </div>
-                            <div class="reply-footer-group">
-                                <button class="btn">의견 남기기</button>
-                            </div>
-                            <div class="opinion-list">
-                                <ul style="list-style: none;">
-                                    <li></li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </article>

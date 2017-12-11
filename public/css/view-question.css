@@ -58,3 +58,19 @@ div.wrapper>div.reply-box>.reply-card {
 .reply-title-group .page-header small {
     font-size: .5em;
 }
+
+#write-box {
+    width: 100%;
+    border: none;
+    border-radius: 2px;
+    padding: 24px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    margin-top: 15px;
+}
+
+#write-box>.write>textarea {
+    border: none;
+    resize: none;
+    height: 100px;
+    width: 100%;
+}

@@ -5,19 +5,19 @@
                     </div>
 
                     <div class="category-item">
-                        <div><a href="#">육아/건강</a></div>
+                        <div><a href="#" data-category="육아/건강">육아/건강</a></div>
                     </div>
                     <div class="category-item">
-                        <div><a href="#">교육/놀이</a></div>
+                        <div><a href="#" data-category="교육/놀이">교육/놀이</a></div>
                     </div>
                     <div class="category-item">
-                        <div><a href="#">안전</a></div>
+                        <div><a href="#" data-category="안전">안전</a></div>
                     </div>
                     <div class="category-item">
-                        <div><a href="#">음식</a></div>
+                        <div><a href="#" data-category="음식">음식</a></div>
                     </div>
                     <div class="category-item">
-                        <div><a href="#">기타</a></div>
+                        <div><a href="#" data-category="기타">기타</a></div>
                     </div>
                 </div>
 				<div class="rank-box">

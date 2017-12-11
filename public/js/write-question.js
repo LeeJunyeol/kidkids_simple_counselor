@@ -16,6 +16,7 @@ $(document).ready(function () {
     var $dropdownMenu = $("ul.dropdown-menu");
     var $categorySpan = $("button>span.top");
     $dropdownMenu.on("click", "li", function (e) {
+        this.removeClass("unclicked");
         this.text($(e.currentTarget).find("a").text());
     }.bind($categorySpan));
 
@@ -25,7 +26,19 @@ $(document).ready(function () {
         var content = $("div.write.content>textarea").val();
         var tags = $("li.tags>span").map(function (i, element) {
             return element.innerHTML;
-        });
+        }).get().join("/");
+        if(title === ""){
+            alert("제목을 입력하여 주시기 바랍니다.");
+            return;
+        }
+        if(content === ""){
+            alert("질문 내용을 입력하여 주시기 바랍니다.");
+            return;
+        }
+        if($categorySpan.hasClass("unclicked")){
+            alert("카테고리를 지정하여 주시기 바랍니다.");
+            return;
+        }
         var category = $categorySpan.text();
 
         $.ajax(QUESTION_URL, {
@@ -33,10 +46,7 @@ $(document).ready(function () {
             contentType: "application/x-www-form-urlencoded",
             data: {
                 mydata: {
-                    category: category,
-                    title: title,
-                    content: content,
-                    tags: "얍얍얍",
+                    category, title, content, tags,
                     user_id: "jylee"
                 }
             }
@@ -48,4 +58,8 @@ $(document).ready(function () {
             }
         })
     })
+
+    function validate(){
+        
+    }
 });

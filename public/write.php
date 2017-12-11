@@ -28,7 +28,7 @@ require_once "header.php";
 				<div class="write category">
 					<div class="dropdown">
 						<button class="btn btn-default dropdown-toggle" type="button" id="dropdown-category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							<span class="top">카테고리</span>
+							<span class="top unclicked">카테고리</span>
 							<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -51,10 +51,10 @@ require_once "header.php";
 					</div>
 				</div>
 				<div class="write header">
-					<textarea placeholder="제목" style="font-size: 30px;"></textarea>
+					<textarea placeholder="제목"></textarea>
 				</div>
 				<div class="write content">
-					<textarea placeholder="내용을 입력하세요." style="width: 100%;"></textarea>
+					<textarea placeholder="내용을 입력하세요."></textarea>
 				</div>
 				<div class="write tags">
 					<div>

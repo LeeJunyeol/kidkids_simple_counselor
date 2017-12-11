@@ -6,9 +6,11 @@ CREATE TABLE users
     `user_id`    VARCHAR(45)    NOT NULL, 
     `name`       VARCHAR(50)    NOT NULL, 
     `password`   VARCHAR(45)    NOT NULL, 
-    `user_type`  ENUM('교육/놀이', '육아/건강', '안전', '음식', '기타')           NOT NULL,
+    `user_type`  ENUM('우수', '전문가', '일반')           NOT NULL,
     PRIMARY KEY (user_id)
 ) DEFAULT CHARSET=utf8;
+
+ALTER TABLE 
 
 -- questions Table Create SQL
 CREATE TABLE questions
@@ -68,7 +70,7 @@ ALTER TABLE Votes ADD CONSTRAINT FK_Votes_user_id_users_user_id FOREIGN KEY (use
 -- comments Table Create SQL
 CREATE TABLE comments
 (
-    `commnet_id`   INT            NOT NULL    AUTO_INCREMENT, 
+    `commnet_id`   INT `answer_id``answer_vote`           NOT NULL    AUTO_INCREMENT, 
     `user_id`      VARCHAR(45)    NOT NULL, 
     `answer_id`    INT            NULL, 
     `content`      TEXT           NOT NULL, 
@@ -102,16 +104,4 @@ ALTER TABLE answer_vote ADD CONSTRAINT FK_answer_vote_vote_id_Votes_vote_id FORE
 
 
 
-
-
-ALTER TABLE question ALTER `create_date` SET DEFAULT CURRENT_TIMESTAMP;
-ALTER TABLE question ALTER `modify_date` SET DEFAULT CURRENT_TIMESTAMP;
-
-INSERT INTO question (`user_id`, `category`, `title`, `content`, `view`) VALUES(1, "카테고리", "제목", "내용", 10);
-
-SELECT * FROM question;
-
-DROP TABLE question;
-
-DELETE FROM question;
 

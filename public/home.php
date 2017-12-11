@@ -1,7 +1,6 @@
 <?php
-
+session_start();
 require_once "config.php";
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,9 +31,9 @@ require_once "header.php";
 						echo "전체 질문";
 					} ?></h2>
 			</div>
-			<div class="btn-order">
-				<a href="#">최신순</a>
-				<a href="#">조회순</a>
+			<div id="btn-order-box" class="btn-order">
+				<a class="btn-order latest" href="#">최신순</a>
+				<a class="btn-order cnt" href="#">조회순</a>
 			</div>
 		</div>
 		<div class="question board">

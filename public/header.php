@@ -19,7 +19,13 @@
             <button class="btn search btn-default">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
             </button>
-            <button class="btn btn-default login">로그인</button>
+            <?php 
+            if(!isset($_SESSION["user"])){
+                echo "<button class='btn btn-default login'>로그인</button>";
+            } else {
+                echo "<button class='btn btn-default logout'>로그아웃</button>";
+            }
+            ?>
             <button class="btn btn-default signup">회원가입</button>
         </div>
     </div>

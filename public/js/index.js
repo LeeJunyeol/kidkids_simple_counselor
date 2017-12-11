@@ -13,6 +13,8 @@ $(document).ready(function () {
     var lastPageNum = 1;
 
     var category = $("div.title>h2").text();
+    var sortBy = "default";
+    var isAsc = false;
 
     init();
 
@@ -20,12 +22,12 @@ $(document).ready(function () {
         if(category === "전체 질문"){
             category = undefined;
         }
-        getQuestions(1, category);
+        getQuestions(1, sortBy, category);
         
         $("#pageNav").on("click", "li.previous", function (e) {
             if (currentPageNum > 1) {
                 currentPageNum--;
-                getQuestions(currentPageNum, category);
+                getQuestions(currentPageNum, sortBy, category);
             } else {
                 alert("첫 페이지입니다.");
             }
@@ -33,14 +35,14 @@ $(document).ready(function () {
         $("#pageNav").on("click", "li.next", function (e) {
             if (currentPageNum < lastPageNum) {
                 currentPageNum++;
-                getQuestions(currentPageNum, category);
+                getQuestions(currentPageNum, sortBy, category);
             } else {
                 alert("마지막 페이지입니다.");
             }
         })
         $("#pageNav").on("click", "li.pageNum", function (e) {
             currentPageNum = parseInt($(e.currentTarget).data("num"));
-            getQuestions(currentPageNum, category);
+            getQuestions(currentPageNum, sortBy, category);
         })
 
         $("div.board>ul.list-group").on("click", "li.question>p>a", function (e) {
@@ -50,11 +52,32 @@ $(document).ready(function () {
                 "question_id": questionId
             });
         })
+
+        // 최신순 조회순
+        $("#btn-order-box").on("click", ".btn-order", function (e) {
+            e.preventDefault();
+            if($(this).hasClass("latest")){
+                sortBy = "latest";
+            } else {
+                sortBy = "cnt";
+            }
+            $(this).toggleClass("isasc");
+            $(this).hasClass("isasc")? isAsc = true : isAsc = false;
+
+            getQuestions(currentPageNum, sortBy, category);
+
+            // var questionId = $(this).closest("li").data("id");
+            // $.redirect("question/" + questionId, {
+            //     "question_id": questionId
+            // });
+        })
     }
 
-    function getQuestions(page, category) {
+    function getQuestions(page, sortBy, category) {
         var dataObj = {};
         dataObj['page'] = page;
+        dataObj['sortBy'] = sortBy;
+        dataObj['isASC'] = isAsc;
         if(category !== undefined){
             dataObj['category'] = category;
         }

@@ -12,12 +12,22 @@ $answerModel = new AnswerModel($conn);
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
     // 카테고리별 출력
-    if(isset($_GET['category']) && isset($_GET['page'])){
+    if(isset($_GET['category']) && isset($_GET['page']) && isset($_GET['sortBy']) && isset($_GET['isASC'])){
         $limit = $_GET['page'] * 5;
         $offset = $limit - 5;
 
         $category = $_GET['category'];
-        $results = $questionModel->getByCategoryForPage($category, $offset, $limit);
+        $isASC = $_GET['isASC'];
+        $sortBy = "create_date";
+        switch($_GET['sortBy']){
+            case "latest":
+            $sortBy = "create_date";
+            break;
+            case "cnt":
+            $sortBy = "view";
+        }
+
+        $results = $questionModel->getByCategoryForPage($category, $offset, $limit, $sortBy, $isASC);
         $rowCount = $questionModel->countByCategory($category);
         
         echo json_encode([
@@ -27,12 +37,20 @@ switch($_SERVER['REQUEST_METHOD']){
         return;
     }
     // 전체 출력
-    if(!isset($_GET['category']) && isset($_GET['page'])){
-        // 5개씩 보여준다.
+    if(!isset($_GET['category']) && isset($_GET['page']) && isset($_GET['sortBy']) && isset($_GET['isASC'])){
         $limit = $_GET['page'] * 5;
         $offset = $limit - 5;
 
-        $results = $questionModel->getForPage($offset, $limit);
+        $isASC = $_GET['isASC'];
+        $sortBy = "create_date";
+        switch($_GET['sortBy']){
+            case "latest":
+            $sortBy = "create_date";
+            break;
+            case "cnt":
+            $sortBy = "view";
+        }
+        $results = $questionModel->getForPage($offset, $limit, $sortBy, $isASC);
         $rowCount = $questionModel->count();
 
         echo json_encode([
@@ -49,7 +67,7 @@ switch($_SERVER['REQUEST_METHOD']){
         $opinions = $answerModel->getJoinOnAnswerByQuestionId($id);
         
         echo json_encode([
-            "question" => $row,
+            "question" => $question,
             "answers" => $answers,
             "opinions" => $opinions
         ]);
@@ -60,16 +78,8 @@ switch($_SERVER['REQUEST_METHOD']){
     if(isset($_POST['mydata'])){
         $mydata = $_POST['mydata'];
 
-        // prepare sql and bind parameters
-        $stmt = $conn->prepare("INSERT INTO questions (user_id, category, title, content, tags) 
-        VALUES (:user_id, :category, :title, :content, :tags)");
-        $stmt->bindParam(':user_id', $mydata['user_id']);
-        $stmt->bindParam(':category', $mydata['category']);
-        $stmt->bindParam(':title', $mydata['title']);
-        $stmt->bindParam(':content', $mydata['content']);
-        $stmt->bindParam(':tags', $mydata['tags']);
-        
-        if($stmt->execute()){
+        // 질문을 등록한다.
+        if($questionModel->add($mydata)){
             echo json_encode([
                 'success' => true,
                 'message'=> "Inserted!"
@@ -80,6 +90,7 @@ switch($_SERVER['REQUEST_METHOD']){
                 'message'=> "Insert Failed"
             ]);
         }
+
     } else {
         echo "Wrong Request";
     }

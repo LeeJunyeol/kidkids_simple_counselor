@@ -1,7 +1,6 @@
 <?php
-
+session_start();
 require_once "config.php";
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,10 +14,6 @@ require_once "config.php";
     <link href="<?php echo _CSS?>/Footer-Clean.css" rel="stylesheet">
     <link href="<?php echo _CSS?>/common.css" rel="stylesheet">
     <link href="<?php echo _CSS?>/view-question.css" rel="stylesheet">
-    <style>
-        
-
-    </style>
 </head>
 
 <body>

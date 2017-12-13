@@ -20,7 +20,7 @@ require_once "header.php";
 <article>
     <h1>회원가입</h1>
     
-    <form action="http://localhost/ksc/api/User" method="post" autocomplete="off">
+    <form action="http://localhost/ksc/api/User" method="post" autocomplete="off" accept-charset="utf-8">
     
     <div class="top-row">
       <div class="field-wrap">

@@ -29,22 +29,22 @@
 							<span class="glyphicon glyphicon-lock"></span> 로그인</h4>
 					</div>
 					<div class="modal-body" style="padding:40px 50px;">
-						<form role="form">
+						<form role="form" action="http://localhost/ksc/api/User" method="post" accept-charset="utf-8">
 							<div class="form-group">
 								<label for="usrname">
 									<span class="glyphicon glyphicon-user"></span> 아이디</label>
-								<input type="text" class="form-control" id="usrname" placeholder="Enter email">
+								<input type="text" class="form-control" name="id" placeholder="Enter ID">
 							</div>
 							<div class="form-group">
 								<label for="psw">
 									<span class="glyphicon glyphicon-eye-open"></span> 비밀번호</label>
-								<input type="text" class="form-control" id="psw" placeholder="Enter password">
+								<input type="password" class="form-control" name="password" placeholder="Enter password">
 							</div>
 							<div class="checkbox">
 								<label>
 									<input type="checkbox" value="" checked>아이디 기억하기</label>
 							</div>
-							<button type="submit" class="btn btn-success btn-block">
+							<button type="submit" id="btn-login" name="login" class="btn btn-success btn-block">
 								<span class="glyphicon glyphicon-off"></span> 로그인</button>
 						</form>
 					</div>

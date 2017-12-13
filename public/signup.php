@@ -33,7 +33,7 @@ require_once "header.php";
         <label>
             비밀번호<span class="req">*</span>
         </label>
-        <input type="password"required autocomplete="off" name='password'/>
+        <input type="password" required autocomplete="off" name='password'/>
       </div>
       <div class="field-wrap">
         <label>
@@ -65,7 +65,6 @@ require_once "footer.php";
     <script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
     <script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
     <script src="<?php echo _JS ?>/common.js"></script>
-    <script src="<?php echo _JS ?>/index.js"></script>
 
 </body>
 

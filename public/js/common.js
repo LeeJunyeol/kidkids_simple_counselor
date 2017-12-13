@@ -4,8 +4,10 @@ $(document).ready(function () {
     })
     $(".btn.question").on("click", goToWrite);
     $(".category-box").on("click", ".category-item>div>a", goToHomeByCategory);
-    $(".login").on("click", login);
+//    $(".login").on("click", login);
     $(".logout").on("click", logout);
+    $("button.signup").on("click", goToSignup);
+    $("a.btn-signup").on("click", goToSignup);
     
     function login(e){
         console.log("로그인");
@@ -14,6 +16,10 @@ $(document).ready(function () {
 
     function logout(e){
         location.href = "http://localhost/ksc/public/logout.php";
+    }
+
+    function goToSignup() {
+        location.href = location.origin + "/ksc/signup";
     }
 
     function goToWrite() {

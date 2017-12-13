@@ -166,8 +166,5 @@ if(isset($_GET['my'])){
         echo 'DELETE';
         break;
     }
-
 }
-
-
 ?>

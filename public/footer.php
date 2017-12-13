@@ -54,7 +54,7 @@
 
 						<div>
 							<p>회원이 아니신가요?
-								<a href="#">회원가입</a>
+								<a class="btn-signup" href="#">회원가입</a>
 							</p>
 							<p>
 								<a href="#">비밀번호</a>를 잊으셨나요?</p>

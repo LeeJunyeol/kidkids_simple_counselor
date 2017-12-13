@@ -1,127 +1,21 @@
-			<aside class="rank-aside">
-				<div class="category-box">
-                    <div class="head category-head">
-                        <h3>카테고리</h3>
-                    </div>
+		<style>
+		footer {
+			background: #2A2730;
+			padding-top: 60px;
+			padding-bottom: 60px;
+			margin-top: 100px;
+		}
 
-                    <div class="category-item">
-                        <div><a href="#" data-category="육아/건강">육아/건강</a></div>
-                    </div>
-                    <div class="category-item">
-                        <div><a href="#" data-category="교육/놀이">교육/놀이</a></div>
-                    </div>
-                    <div class="category-item">
-                        <div><a href="#" data-category="안전">안전</a></div>
-                    </div>
-                    <div class="category-item">
-                        <div><a href="#" data-category="음식">음식</a></div>
-                    </div>
-                    <div class="category-item">
-                        <div><a href="#" data-category="기타">기타</a></div>
-                    </div>
-                </div>
-				<div class="rank-box">
-					<div class="head rank-head">
-						<h3>지식 랭킹</h3>
-					</div>
-					<div>
-						<table class="rank-table">
-							<thead>
-								<tr>
-									<th class="rank-table-head rank">순위</th>
-									<th class="rank-table-head id">아이디</th>
-									<th class="rank-table-head score">점수</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="rank-table-item rank">1</td>
-									<td class="rank-table-item id">PHP</td>
-									<td class="rank-table-item score">100</td>
-								</tr>
-								<tr>
-									<td class="rank-table-item rank">2</td>
-									<td class="rank-table-item id">JS</td>
-									<td class="rank-table-item score">80</td>
-								</tr>
-								<tr>
-									<td class="rank-table-item rank">3</td>
-									<td class="rank-table-item id">mySQL</td>
-									<td class="rank-table-item score">77</td>
-								</tr>
-							</tbody>
+		footer>.container {
+			width: 1100px;
+			text-align: right;
+		}
 
-						</table>
-					</div>
-
-				</div>
-			</aside>
-		</div>
-	</div>
-
-	<!-- 푸터 -->
-	<div class="footer-clean">
+		</style>
 		<footer>
-			<div class="container" style="width: 1024px; padding-left: 30px; padding-right: 30px;">
-				<div class="row">
-					<div class="col-md-3 col-sm-4 item">
-						<h3>Services</h3>
-						<ul>
-							<li>
-								<a href="#">Web design</a>
-							</li>
-							<li>
-								<a href="#">Development</a>
-							</li>
-							<li>
-								<a href="#">Hosting</a>
-							</li>
-						</ul>
-					</div>
-					<div class="col-md-3 col-sm-4 item">
-						<h3>About</h3>
-						<ul>
-							<li>
-								<a href="#">Company</a>
-							</li>
-							<li>
-								<a href="#">Team</a>
-							</li>
-							<li>
-								<a href="#">Legacy</a>
-							</li>
-						</ul>
-					</div>
-					<div class="col-md-3 col-sm-4 item">
-						<h3>Careers</h3>
-						<ul>
-							<li>
-								<a href="#">Job openings</a>
-							</li>
-							<li>
-								<a href="#">Employee success</a>
-							</li>
-							<li>
-								<a href="#">Benefits</a>
-							</li>
-						</ul>
-					</div>
-					<div class="col-md-3 item social">
-						<a href="#">
-							<i class="icon ion-social-facebook"></i>
-						</a>
-						<a href="#">
-							<i class="icon ion-social-twitter"></i>
-						</a>
-						<a href="#">
-							<i class="icon ion-social-snapchat"></i>
-						</a>
-						<a href="#">
-							<i class="icon ion-social-instagram"></i>
-						</a>
-						<p class="copyright">EK 키드키즈 © 2017</p>
-					</div>
-				</div>
+			<div class="container">
+				<p>Designed and built with all the love in the world by @mdo and @fat. Maintained by the core team with the help of our contributors.</p>
+				<p>EK KIDKIDS 2017</p>
 			</div>
 		</footer>
 		<!-- Modal -->

@@ -78,6 +78,49 @@ class QuestionModel {
 
         return $rowCount;
     }
+
+    function updateViewById($id, $view){
+        $sql = "UPDATE `questions` SET `view` = ? WHERE `question_id` = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, ++$view);
+        $stmt->bindParam(2, $id);
+        if($stmt->execute()){
+            echo "여기";
+            return true;
+        } else {
+            echo "저기";
+            return false;
+        }
+    }
+
+    function updateMe($id, $myQuestion){
+        // print_r($myQuestion);
+        // die;
+        $sql = "UPDATE questions SET category=?, title=?, content=? WHERE question_id=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $myQuestion->category);
+        $stmt->bindParam(2, $myQuestion->title);
+        $stmt->bindParam(3, $myQuestion->content);
+        $stmt->bindParam(4, $id);
+        if($stmt->execute()){
+            //echo "여기";
+            return true;
+        } else {
+            echo "저기";
+            return false;
+        }
+    }
+
+    function delete($id){
+        $sql = "DELETE FROM `questions` WHERE `question_id` = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $id);
+        if($stmt->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 

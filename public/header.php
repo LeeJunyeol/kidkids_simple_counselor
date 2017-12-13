@@ -15,18 +15,30 @@
                 <img id="logoimg" src="<?php echo _IMG ?>/char_hooni.png" />
             </a>
         </div>
-        <div class="btn-group user-control">
-            <button class="btn search btn-default">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            </button>
+        <div id="user-container">
+        <?php 
+        if(isset($_SESSION["user"])){
+            $user = $_SESSION["user"];
+            echo "<div data-id=".$user." id='welcome' class='welcome'>
+                <a href='#'>".$user."님 안녕하세요.</a>
+            </div>";
+        };
+        ?>
+            <div class="btn-group user-control">
+                <button class="btn search btn-default">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
             <?php 
             if(!isset($_SESSION["user"])){
                 echo "<button class='btn btn-default login'>로그인</button>";
+                echo "<button class='btn btn-default signup'>회원가입</button>";
+                
             } else {
+                echo "<button class='btn btn-default mypage'>마이페이지</button>";
                 echo "<button class='btn btn-default logout'>로그아웃</button>";
             }
             ?>
-            <button class="btn btn-default signup">회원가입</button>
+            </div>
         </div>
     </div>
 </header>

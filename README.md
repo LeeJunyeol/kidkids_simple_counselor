@@ -13,4 +13,20 @@ htdocs 디렉토리에 소스코드를 복사합니다.
 
 xampp control panel을 열어 apache 서버를 실행한 후, url에 아래의 주소를 입력합니다.
 
-http://localhost/kidkids_simple_counselor/templates/index.html
+http://localhost/kidkids_simple_counselor/home
+
+
+# URL Map
+
+- ErrorDocument 404     /ksc/public/404.php
+
+- RewriteRule ^home$ public/home.php
+- RewriteRule ^write\/?$ public/write.php
+- RewriteRule ^update/([0-9]+)$ public/write.php?question_id=$1
+- RewriteRule ^question/([0-9]+)$ public/question.php?question_id=$1
+- RewriteRule ^admin$ public/admin.php
+
+- RewriteRule ^api/([a-zA-Z]+)\/?$ api/Controllers/$1.php
+- RewriteRule ^api/([a-zA-Z]+)/([0-9]+)$ api/Controllers/$1.php?id=$2
+- RewriteRule ^api/([a-zA-Z]+)/([0-9]+)/([a-zA-Z]+)\/?$ api/Controllers/$1.php?id=$2&action=$3
+- RewriteRule ^api/my/([a-zA-Z]+)/([0-9]+)$ api/Controllers/$1.php?id=$2&my=true

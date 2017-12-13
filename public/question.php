@@ -21,11 +21,21 @@ require_once "config.php";
 require_once "header.php";
 ?>
             <!-- 메인 -->
-            <article class="view" data-id="<?php echo $_POST["question_id"]?>">
+            <article class="view">
                 <div class="wrapper">
                     <div id="question-container" class="question container hide">
                     <script type="text/handlebars-template" id="question-template">
-                        <h3>Q. {{title}}</h3>
+                        <div class="header-group" data-id={{user_id}} style="display: flex; align-items: baseline; justify-content: space-between;">
+                            <h3>Q. {{title}}</h3>
+                            <div class="btn-group not-visible">
+                                <button type="button" class="btn btn-default edit" aria-label="Left Align" style="float: none; position: static;">
+                                    <span class="edit glyphicon glyphicon glyphicon-pencil" aria-hidden="true">수정</span>
+                                </button>
+                                <button type="button" class="btn btn-default delete" aria-label="Left Align" style="float: none; position: static; margin-left: -5px;">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true">삭제</span>
+                                </button>
+                            </div>
+                        </div>
                         <p>
                             {{content}}
                         </p>
@@ -47,7 +57,7 @@ require_once "header.php";
                     <div class="reply-box">
                         <script type="text/handlebars-template" id="answer-template">
                         {{#each this}}
-                        <div class="reply-card container">
+                        <div class="reply-card container" data-id={{answer_id}}>
                             <div class="reply-title-group">
                                 <div class="page-header">
                                     <span class="label label-success special">{{label}}</span>
@@ -59,8 +69,8 @@ require_once "header.php";
                                 </div>
 
                                 <div class="vote-group">
-                                    <span class="vote glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
-                                    <span class="vote glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                                    <span class="vote up glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                                    <span class="vote down glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                                 </div>
                             </div>
                             <div class="reply-content-group">
@@ -108,6 +118,7 @@ require_once "header.php";
                 </div>
             </article>
 <?php
+require_once "aside.php";
 require_once "footer.php";
 ?>
     <script src="<?php echo _NODE ?>/jquery/dist/jquery.js"></script>

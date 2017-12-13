@@ -21,7 +21,9 @@ class AnswerModel {
     }
 
     function getById($id){
-        $stmt = $this->conn->prepare("SELECT * FROM answers WHERE answer_id=:answer_id");
+        $stmt = $this->conn->prepare("SELECT a.*, SUM(v.vote) as vote_cnt FROM answers AS a 
+        LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+        WHERE a.answer_id = :answer_id");
         $stmt->bindValue(':answer_id', $id);
         $stmt->execute();
         $answer = $stmt->fetchObject();
@@ -30,11 +32,17 @@ class AnswerModel {
     }
 
     function getByQuestionId($questionId){
-        $stmt = $this->conn->prepare("SELECT * FROM answers WHERE question_id=:question_id");
+        $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id, a.content, a.create_date, a.modify_date, a.label, a.title, SUM(v.vote) as vote_cnt FROM answers AS a 
+        LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+        WHERE a.question_id = :question_id group by a.answer_id");
         $stmt->bindValue(':question_id', $questionId);
         $stmt->execute();
         $results = array();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            // 아직 투표가 없을 경우 null이 아닌 기본값 0을 지정
+            if($row['vote_cnt'] == null){
+                $row['vote_cnt'] = 0;
+            }
             $results[] = $row;
         }
         return $results;
@@ -53,6 +61,21 @@ class AnswerModel {
             $results[] = $row;
         }
         return $results;
+    }
+
+    function deleteByQuestionId($questionId){
+        // var_dump($questionId);
+        // exit;
+        $sql = "DELETE FROM `answers` WHERE `question_id`=:question_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(":question_id", $questionId, PDO::PARAM_INT);
+        if($stmt->execute()){
+            echo "됨";
+            return true;
+        } else {
+            echo "안됨";
+            return false;
+        }
     }
 }
 

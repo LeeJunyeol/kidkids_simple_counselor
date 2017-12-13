@@ -33,11 +33,15 @@ div.wrapper>div.reply-box>.reply-card {
 }
 
 .reply-title-group .vote-group {
-    width: 14px;
+    width: 20px;
     display: flex;
     flex-wrap: wrap;
     align-content: center;
 }
+
+.reply-title-group .vote-group > .vote {
+    font-size: 1.5em;
+}    
 
 .reply-title-group .page-header {
     margin: 0;

@@ -1,0 +1,63 @@
+.box {
+    background: #FAFBFC;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    display: flex;
+}
+
+h2 {
+    margin-right: 10px;
+}
+
+ul {
+    -webkit-padding-start: 0px;
+}
+
+#top-container {
+    display: flex;
+    justify-content: space-between
+}
+
+#top-container>div {
+    padding: 20px;
+    padding-bottom: 0;
+}
+
+#top-container #profile-box {
+    width: 65%;
+}
+
+#top-container #rank-box {
+    width: 35%;
+}
+
+#second-container {
+    display: flex;
+    justify-content: space-between
+}
+
+#second-container>div {
+    width: 50%;
+    padding: 20px;
+}
+
+#second-container>div h2 {
+    min-width: 130px;
+}
+
+#second-container>div ul.wrap {
+    width: 100%;
+    list-style: none;
+}
+
+#second-container>div ul.tags {
+    list-style: none;
+}    
+
+#second-container>div ul.tags>li {
+    display: inline;
+}    
+
+h2, h3 {
+    margin-top: 0;
+}

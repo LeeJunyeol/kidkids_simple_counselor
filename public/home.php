@@ -41,22 +41,24 @@ require_once "header.php";
 				<script type="text/handlebars-template" id="questions-template">
 					{{#each this}}
 					<li class="question list-group-item" data-id={{question_id}}>
-						<span class="view-cnt badge">{{view}}</span>
-						<p>
-							<a href="#" class="list-head">{{title}}</a>
-							<br>
-							<div class="list-footer">
-								<span class="author">{{user_id}}</span>
-								<span class="date">{{modify_date}}</span>
-								<ul class="tags">
-									{{#each tags}}
-									<li class="tags">
-										<span class="label label-info">{{this}}</span>
-									</li>
-									{{/each}}
-								</ul>
-							</div>
-						</p>
+						<div class="list-header">
+							<h3><a href="#" class="list-head">{{title}}</a></h3>
+						</div>
+						<div class="list-footer">
+							<span class="glyphicon glyphicon-user"></span>
+							<span class="author">{{user_id}}</span>
+							<span class="glyphicon glyphicon-calendar"></span>
+							<span class="date">{{modify_date}}</span>
+							조회수 <span class="view-cnt badge">{{view}}</span>
+							<ul class="tags"> 태그:  
+							{{#each tags}}
+							<li class="tags">
+								<span class="label label-info">{{this}}</span>
+							</li>
+							{{/each}}
+							</ul>
+
+						</div>
 					</li>
 					{{/each}}
 				</script>
@@ -85,6 +87,7 @@ require_once "header.php";
 		</div>
 	</article>
 <?php
+require_once "aside.php";
 require_once "footer.php";
 ?>
 	<script src="<?php echo _NODE ?>/jquery/dist/jquery.js"></script>

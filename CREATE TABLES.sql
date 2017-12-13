@@ -44,7 +44,7 @@ CREATE TABLE answers
 ) DEFAULT CHARSET=utf8;
 
 ALTER TABLE answers ADD CONSTRAINT FK_answers_question_id_questions_question_id FOREIGN KEY (question_id)
- REFERENCES questions (question_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
+ REFERENCES questions (question_id)  ON DELETE CASCADE ON UPDATE RESTRICT;
 
 ALTER TABLE answers ADD CONSTRAINT FK_answers_user_id_users_user_id FOREIGN KEY (user_id)
  REFERENCES users (user_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
@@ -83,7 +83,7 @@ CREATE TABLE comments
 ) DEFAULT CHARSET=utf8;
 
 ALTER TABLE comments ADD CONSTRAINT FK_comments_user_id_users_user_id FOREIGN KEY (user_id)
- REFERENCES users (user_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
+ REFERENCES users (user_id)  ON DELETE CASCADE ON UPDATE RESTRICT;
 
 ALTER TABLE comments ADD CONSTRAINT FK_comments_answer_id_answers_answer_id FOREIGN KEY (answer_id)
  REFERENCES answers (answer_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
@@ -101,7 +101,3 @@ ALTER TABLE answer_vote ADD CONSTRAINT FK_answer_vote_answer_id_answers_answer_i
 
 ALTER TABLE answer_vote ADD CONSTRAINT FK_answer_vote_vote_id_Votes_vote_id FOREIGN KEY (vote_id)
  REFERENCES Votes (vote_id)  ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-
-
-

@@ -1,8 +1,4 @@
 <?php
-session_start();
-if(!isset($_SESSION["user"])){
-	header("location: home");
-}
 require_once "config.php";
 ?>
 <!DOCTYPE html>
@@ -21,6 +17,11 @@ require_once "config.php";
 
 <body>
 <?php
+session_start();
+if(!isset($_SESSION["user"])){
+	echo "<script>alert(\"로그인이 필요한 서비스입니다.\");
+	location.href=\"/ksc/home\"</script>";
+}
 require_once "header.php";
 ?>
 	<!-- 메인 -->
@@ -76,12 +77,13 @@ require_once "header.php";
 					</div>
 				</div>
 				<div class="submit">
-					<button id="btn-post-question" class="btn btn-default" type="submit">등록</button>
+					<button id="btn-post-question" class="btn btn-default post" type="submit">등록</button>
 				</div>
 			</div>
 		</div>
 	</article>
 <?php
+require_once "aside.php";
 require_once "footer.php";
 ?>
 	<script src="<?php echo _NODE ?>/jquery/dist/jquery.js"></script>

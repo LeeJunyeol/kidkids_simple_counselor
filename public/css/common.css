@@ -1,7 +1,15 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 body {
     font-family: 'Noto Sans KR', sans-serif;
-    background: #F5F5F5;
+    background: #D9E6ED;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.not-visible {
+    visibility: hidden;
 }
 
 /* 본문 */
@@ -21,8 +29,8 @@ article {
 /* 헤더 */
 
 header {
-    background: white;
-    border-bottom-style: ridge;
+    background: #FAFBFC;
+    border-bottom-style: solid;
     border-bottom-color: #5CBC00;
     border-bottom-width: 3.5px;
 }
@@ -48,18 +56,21 @@ header>div.head>.title {
 
 header>div.head>.title>h1 {
     z-index: 1;
+    color: white;
+    text-shadow: #4285F4 0px 2px, #4285F4 2px 0px, #4285F4 -2px 0px, 
+    #4285F4 0px -2px, #4285F4 -1.4px -1.4px, #4285F4 1.4px 1.4px, 
+    #4285F4 1.4px -1.4px, #4285F4 -1.4px 1.4px; 
+
 }
 
 header>div.head>.title #logoimg {
-    width: 180px;
-    height: 150px;
+    height: 130px;
     position: absolute;
-    top: -70px;
-    left: 65px;
+    top: -60px;
+    left: -48px;
 }
 
-header>div.head>.user-control.btn-group {
-    width: 205px;
+header>div.head .user-control.btn-group {
     height: 60px;
     display: flex;
     align-items: center;
@@ -121,6 +132,7 @@ footer {
     justify-content: center;
 }
 
+a { text-decoration:none !important }
 
 /* aside 공통 */
 
@@ -132,7 +144,7 @@ aside {
 aside>div {
     width: 100%;
     min-width: 140px;
-    background: white;
+    background: #FAFBFC;
     padding: 15px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
     display: flex;

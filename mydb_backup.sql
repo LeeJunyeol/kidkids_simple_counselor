@@ -109,7 +109,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `user_id` varchar(45) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `user_type` enum('일반','전문가','우수') NOT NULL DEFAULT '일반',
   `email` varchar(100) NOT NULL,
   `hash` varchar(32) NOT NULL,
@@ -120,10 +120,13 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert  into `users`(`user_id`,`name`,`password`,`user_type`,`email`,`hash`,`active`) values 
+('','','','일반','','',0),
 ('admin','관리자','123','일반','chljy33@naver.com','',0),
 ('happa','하파','123','일반','black@naver.com','',0),
 ('jylee','이준열','123','전문가','abc@naver.com','',0),
-('tipa','티파','123','우수','abcd@naver.com','',0);
+('realmaster','마스터','$2y$10$6ivy0z4l3IkXwVryUv.ueOZqQHmaWYelmJ6uaJPBYSuNv7bW2w4H2','일반','master@naver.com','49182f81e6a13cf5eaa496d51fea6406',0),
+('tipa','티파','123','우수','abcd@naver.com','',0),
+('yes','이준열','$2y$10$D8p9wNf1Z2ClrnPmswTkz.9K5m2aVz9GIOCWqTl4rkLDFJiDd0esW','일반','chljy33@naver.com','72da7fd6d1302c0a159f6436d01e9eb0',0);
 
 /*Table structure for table `votes` */
 

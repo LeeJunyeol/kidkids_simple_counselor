@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once "config.php";
 ?>
 <!DOCTYPE html>
@@ -11,7 +10,6 @@ require_once "config.php";
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>타이틀</title>
 	<link href="<?php echo _NODE?>/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-	<link href="<?php echo _CSS?>/Footer-Clean.css" rel="stylesheet">
 	<link href="<?php echo _CSS?>/common.css" rel="stylesheet">
 	<link href="<?php echo _CSS?>/index.css" rel="stylesheet">
 </head>
@@ -94,6 +92,7 @@ require_once "footer.php";
 	<script src="<?php echo _NODE ?>/jquery.redirect/jquery.redirect.js"></script>
 	<script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
+	<script src="<?php echo _JS ?>/util.js"></script>
 	<script src="<?php echo _JS ?>/common.js"></script>
 	<script src="<?php echo _JS ?>/index.js"></script>
 

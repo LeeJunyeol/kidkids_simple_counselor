@@ -33,22 +33,16 @@
 									<th class="rank-table-head score">점수</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="rank-body">
+								<script type="text/handlebars-template" id="rank-body-template">
+								{{#each this}}
 								<tr>
-									<td class="rank-table-item rank">1</td>
-									<td class="rank-table-item id">PHP</td>
-									<td class="rank-table-item score">100</td>
+									<td class="rank-table-item rank">{{rank}}</td>
+									<td class="rank-table-item id">{{user_id}}</td>
+									<td class="rank-table-item score">{{score}}</td>
 								</tr>
-								<tr>
-									<td class="rank-table-item rank">2</td>
-									<td class="rank-table-item id">JS</td>
-									<td class="rank-table-item score">80</td>
-								</tr>
-								<tr>
-									<td class="rank-table-item rank">3</td>
-									<td class="rank-table-item id">mySQL</td>
-									<td class="rank-table-item score">77</td>
-								</tr>
+								{{/each}}
+							</script>
 							</tbody>
 
 						</table>

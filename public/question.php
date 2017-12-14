@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once "config.php";
 ?>
 <!DOCTYPE html>
@@ -11,7 +10,6 @@ require_once "config.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>타이틀</title>
     <link href="<?php echo _NODE?>/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="<?php echo _CSS?>/Footer-Clean.css" rel="stylesheet">
     <link href="<?php echo _CSS?>/common.css" rel="stylesheet">
     <link href="<?php echo _CSS?>/view-question.css" rel="stylesheet">
 </head>
@@ -39,9 +37,12 @@ require_once "header.php";
                         <p>
                             {{content}}
                         </p>
-                        <button class="btn btn-default reply">답글달기</button>
-                        <button class="btn btn-default">의견 남기기</button>
+                        <div class="btn-group">
+                            <button class="btn btn-default reply">답글달기</button>
+                            <button class="btn btn-default view-opinions">댓글{{opinion_cnt}}</button>
+                        </div>
                     </script>
+
                     </div>
                     <div id="write-box" class="container" style="display: none">
                         <div class="write header">
@@ -61,16 +62,10 @@ require_once "header.php";
                             <div class="reply-title-group">
                                 <div class="page-header">
                                     <span class="label label-success special">{{label}}</span>
-
                                     <h3 class="reply title">
-                                        <span class="label label-default">{{vote_cnt}}</span> {{title}}
-                                        <small>by {{user_id}}</small>
+                                        {{title}}
+                                        <small>by {{author}}</small>
                                     </h3>
-                                </div>
-
-                                <div class="vote-group">
-                                    <span class="vote up glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
-                                    <span class="vote down glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                                 </div>
                             </div>
                             <div class="reply-content-group">
@@ -79,40 +74,92 @@ require_once "header.php";
                                 </p>
                             </div>
                             <div class="reply-footer-group" data-id={{answer_id}}>
-                                <button class="btn btn-default write-opinion">의견 남기기</button>
-                                <button class="btn btn-default view-opinions">의견 보이기</button>
-                            </div>
-                            <div class="opinion-list" style="margin-top: 10px;">
-                                <ul class="opinion-list hide" style="list-style: none; -webkit-padding-start: 0; border: 2px solid;">
-                                </ul>
+                                <div class="btn-group">
+                                    <button class="btn btn-default view-opinions">댓글{{opinion_cnt}}</button>
+                                </div>
+
+                                <div class="vote-group" {{#if myvote}}data-value={{myvote}}{{/if}}>
+                                    <div class="score">
+                                        <h2 class="votesum"><span style="font-size: 20px;">추천도: </span><span class="score">{{votesum}}</span></h2>
+                                    </div>
+                                    <div class="sub-vote-group">
+                                        <a class="vote up btn btn-default" href="#" role="button">추천
+                                            <img src="http://localhost/ksc/public/images/up.png" />
+                                        </a>
+                                        <a class="vote down btn btn-default" href="#" role="button">
+                                            <img src="http://localhost/ksc/public/images/down.png" />비추천
+                                        </a>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         {{/each}}
                         </script>
                         <script type="text/handlebars-template" id="opinion-template">
-                        {{#each this}}
-                        <li style="border-bottom: 1px solid; padding: 10px 10px 5px 5px;">
-                            <div class="opinion-card-header" style="display: flex; justify-content: space-between;">
-                                <div style="width: 100%">
-                                    <p class="opinion">
-                                        {{content}}
-                                    </p>
-                                </div>
-                                <div class="edit-btn-group" style="float: right; width: 50px;">
-                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </div>
+                        <div class="opinion-list" style="margin-top: 10px;">
+                            <div>
+                                <div>댓글을 남겨주세요.</div>
+                                <form action="http://localhost/ksc/api/Opinion" method="post">
+                                    {{#if question_id}}
+                                    <input type="text" name="question_id" value={{question_id}} />
+                                    {{/if}}
+                                    {{#if answer_id}}
+                                    <input type="text" name="answer_id" value={{answer_id}} />
+                                    {{/if}}
+                                    <input type="text" name="content" />
+                                    <button type="submit">등록</button>
+                                </form>
                             </div>
-                            <div class="opinion-card-footer">
-                                <span class="author">
-                                    {{user_id}}
-                                </span>
-                                <span>
-                                    {{modify_date}}
-                                </span>
-                            </div>
-                        </li>
-                        {{/each}}
+                            <ul class="opinion-list" style="list-style: none; -webkit-padding-start: 0; border: 2px solid;">
+                            {{#each opinions}}
+                                <li style="border-bottom: 1px solid; padding: 10px 10px 5px 5px;">
+                                    <div class="opinion-card-header" style="display: flex; justify-content: space-between;">
+                                        <div style="width: 100%">
+                                            <p class="opinion">
+                                                {{content}}
+                                            </p>
+                                        </div>
+                                        <div class="edit-btn-group" style="float: right; width: 50px;">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="opinion-card-footer">
+                                        <span class="author">
+                                            {{user_id}}
+                                        </span>
+                                        <span>
+                                            {{modify_date}}
+                                        </span>
+                                    </div>
+                                </li>
+                            {{/each}}
+                            </ul>
+                        </div>
+                        </script>
+                        <script type="text/handlebars-template" id="opinion-item-template">
+                            <li style="border-bottom: 1px solid; padding: 10px 10px 5px 5px;">
+                                <div class="opinion-card-header" style="display: flex; justify-content: space-between;">
+                                    <div style="width: 100%">
+                                        <p class="opinion">
+                                            {{content}}
+                                        </p>
+                                    </div>
+                                    <div class="edit-btn-group" style="float: right; width: 50px;">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="opinion-card-footer">
+                                    <span class="author">
+                                        {{user_id}}
+                                    </span>
+                                    <span>
+                                        {{modify_date}}
+                                    </span>
+                                </div>
+                            </li>
                         </script>
                     </div>
                 </div>
@@ -125,8 +172,8 @@ require_once "footer.php";
 	<script src="<?php echo _NODE ?>/jquery.redirect/jquery.redirect.js"></script>
 	<script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
-	<script src="<?php echo _JS ?>/common.js"></script>
 	<script src="<?php echo _JS ?>/util.js"></script>
+	<script src="<?php echo _JS ?>/common.js"></script>
 	<script src="<?php echo _JS ?>/view-question.js"></script>
 </body>
 

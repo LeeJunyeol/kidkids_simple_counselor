@@ -6,40 +6,98 @@ $(document).ready(function () {
     var questionTemplate = handlebarsHelper("#question-template");
     var answerTemplate = handlebarsHelper("#answer-template");
     var opinionTemplate = handlebarsHelper("#opinion-template");
+    var opinionItemTemplate = handlebarsHelper("#opinion-item-template");
     var questionId = parseInt(location.href.split("/").pop());
-    var userId =  $("#welcome").data("id") || "";
+    var userId = $("#welcome").data("id") || "";
 
     init();
 
     function init() {
         render();
-        $("div.reply-box").on("click", "span.vote.up", function(e){
+        $("div.reply-box").on("click", "a.vote.up", function (e) {
             vote.call(this, 1, userId, $(this).closest(".reply-card").data("id"));
         });
-        $("div.reply-box").on("click", "span.vote.down", function(e){
+        $("div.reply-box").on("click", "a.vote.down", function (e) {
             vote.call(this, -1, userId, $(this).closest(".reply-card").data("id"));
         });
+        $("#question-container").on("click", ".view-opinions", viewOpinion);
+
+        // 댓글 클릭 이벤트
+        $("div.reply-box").on("click", ".btn.view-opinions", function (e) {
+            var $replyContainer = $(this).closest(".reply-card.container");
+            var answerId = $replyContainer.find(".reply-footer-group").data("id");
+            $(this).text("의견 숨기기");
+            $(this).hasClass("")
+
+            $.ajax("http://localhost/ksc/api/Answer/" + answerId + "/Opinion", {
+                type: "GET",
+                contentType: "application/json",
+                data: {
+                    id: answerId
+                }
+            }).then(function (res) {
+                var result = JSON.parse(res);
+                if (result['success']) {
+                    var opinions = result['opinions'];
+                    $replyContainer.find("ul").html(opinionTemplate(opinions));
+                    $replyContainer.find("ul").removeClass("hide");
+                }
+            });
+        });
+    }
+
+    // 댓글 클릭 이벤트
+    function viewOpinion(e) {
+        $.ajax("http://localhost/ksc/api/Opinion", {
+            type: "GET",
+            data: {
+                question_id: questionId
+            }
+        }).then(function (res) {
+            var result = JSON.parse(res);
+            console.log(result);
+            var data = {
+                question_id: questionId,
+                opinions: result['opinions']
+            }
+            $(this.delegateTarget).append(opinionTemplate(data));
+        }.bind(e));
     }
 
     // 답글 투표를 한다.
     function vote(score, userId, answerId) {
-        if(userId === "") return alert("로그인이 필요합니다.");
+        if (userId === "") return alert("로그인이 필요합니다.");
         $.ajax(API_BASE_URL + "/Answer/" + answerId + "/vote", {
             type: "PUT",
             contentType: "application/json",
-            data: JSON.stringify({score, userId, answerId})
-        }).then(function(res){
+            data: JSON.stringify({
+                score,
+                userId,
+                answerId
+            })
+        }).then(function (res) {
             var result = JSON.parse(res);
-            if(result["success"]){
-                $targetEle = $(this).closest(".reply-title-group").find("h3.reply>span.label");
-                $targetEle.text(parseInt($targetEle.text()) + score);
+            var $targetEle = $(this).closest(".vote-group").find("h2.votesum>span.score");
+            if (result["success"]) {
+                var $targetEle = $(this).closest(".vote-group").find("h2.votesum>span.score");
+                var currentScore = $targetEle.text();
+                if (currentScore !== "") {
+                    $targetEle.text(parseInt($targetEle.text()) + parseInt(score));
+                } else {
+                    $targetEle.text(parseInt(score));
+                }
+                if (parseInt(score) > 0) {
+                    $(this).css("border-color", "blue");
+                } else {
+                    $(this).css("border-color", "red");
+                }
             }
             alert(result["message"]);
         }.bind(this))
     }
 
     // 템플릿을 그린다.
-    function render(){
+    function render() {
         $.ajax(API_BASE_URL + "/Question/" + questionId, {
             type: "GET",
             contentType: "application/json"
@@ -48,33 +106,45 @@ $(document).ready(function () {
             var question = result['question'];
             var answers = result['answers'];
             var opinions = result['opinions'];
-            
+
+            console.log(answers);
             $("div.question.container").removeClass("hide");
             $("div.question.container").html(questionTemplate(question));
             $("div.reply-box").html(answerTemplate(answers));
             $("div.opinion-list>ul").html(opinionTemplate(opinions));
-            
-            if($("div.question.container").find(".header-group").data("id") === userId){
+
+            if ($("div.question.container").find(".header-group").data("id") === userId) {
                 $("div.question.container").find(".btn-group").removeClass("not-visible");
             }
-        })
+            $(".vote-group").each(function (i, ele) {
+                var $ele = $(ele);
+                var myvote = $ele.data("value");
+                if (myvote !== undefined) {
+                    if (parseInt(myvote) > 0) {
+                        $ele.find(".up").css("border-color", "blue");
+                    } else {
+                        $ele.find(".down").css("border-color", "red");
+                    }
+                }
+            });
+        });
     }
 
     // 수정/삭제 이벤트
-    $("#question-container").on("click", ".delete", function(e){
+    $("#question-container").on("click", ".delete", function (e) {
         console.log("삭제!");
         $.ajax(API_BASE_URL + "/my/Question/" + questionId, {
             type: "DELETE"
-        }).then(function(res){
+        }).then(function (res) {
             console.log(res);
             var result = JSON.parse(res);
             alert(result['messages']);
 
-            location.href="http://localhost/ksc/home";
+            location.href = "http://localhost/ksc/home";
         });
     });
-    $("#question-container").on("click", ".edit", function(e){
-        location.href="http://localhost/ksc/update/" + questionId;
+    $("#question-container").on("click", ".edit", function (e) {
+        location.href = "http://localhost/ksc/update/" + questionId;
     });
 
     // 답글등록 이벤트
@@ -90,7 +160,7 @@ $(document).ready(function () {
                     title,
                     content,
                     question_id: questionId,
-                    user_id: "tipa"
+                    user_id: userId
                 }
             }
         }).then(function (res) {
@@ -124,27 +194,5 @@ $(document).ready(function () {
         $("#write-box").toggle("blind");
     })
 
-    // 의견남기기 버튼 이벤트
-    $("div.reply-box").on("click", ".btn.view-opinions", function (e) {
-        var $replyContainer = $(this).closest(".reply-card.container");
-        var answerId = $replyContainer.find(".reply-footer-group").data("id");
-        $(this).text("의견 숨기기");
-        $(this).hasClass("")
-
-        $.ajax("http://localhost/ksc/api/Controllers/Opinion.php", {
-            type: "GET",
-            contentType: "application/json",
-            data: {
-                id: answerId
-            }
-        }).then(function (res) {
-            var result = JSON.parse(res);
-            if (result['success']) {
-                var opinions = result['opinions'];
-                $replyContainer.find("ul").html(opinionTemplate(opinions));
-                $replyContainer.find("ul").removeClass("hide");
-            }
-        });
-    });
 
 });

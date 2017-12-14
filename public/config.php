@@ -1,4 +1,5 @@
 <?php 
+session_start();
 $url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}";
 
 $publicUrl = preg_replace('/public\/.+\.php/','public/',$url, 1);

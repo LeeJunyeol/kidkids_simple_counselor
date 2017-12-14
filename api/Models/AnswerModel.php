@@ -4,6 +4,7 @@ class AnswerModel {
     
     public function __construct($conn){
         $this->conn = $conn;
+        require_once "../Util/Util.php";
     }
 
     function add($answer){
@@ -27,25 +28,51 @@ class AnswerModel {
         $stmt->bindValue(':answer_id', $id);
         $stmt->execute();
         $answer = $stmt->fetchObject();
-        
+        if($answer->vote_cnt == null){
+            $answer->vote_cnt = 0;
+        }
         return $answer;
     }
 
-    function getByQuestionId($questionId){
-        $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id, a.content, a.create_date, a.modify_date, a.label, a.title, SUM(v.vote) as vote_cnt FROM answers AS a 
+    function getByQuestionId($questionId, $userId){
+        $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
+        , a.modify_date, a.label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
+        FROM answers AS a 
         LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
-        WHERE a.question_id = :question_id group by a.answer_id");
+        WHERE a.question_id = :question_id");
         $stmt->bindValue(':question_id', $questionId);
         $stmt->execute();
         $results = array();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            // 아직 투표가 없을 경우 null이 아닌 기본값 0을 지정
-            if($row['vote_cnt'] == null){
-                $row['vote_cnt'] = 0;
-            }
             $results[] = $row;
         }
-        return $results;
+
+        $grouped = array_group_by($results, 'answer_id'); // answer_id를 기준으로 그룹
+        $finalAnswers = array();
+        
+        // vote를 합쳐서 votesum을 구하고, 내가 투표한 답변이라면 내 정보를 추가
+        foreach ($grouped as &$value) {
+            $initial = array_shift($value); 
+            if($initial['user_id'] == 'chljy33'){
+                $initial['myuser'] = $initial['user_id'];
+                $initial['myvote'] = $initial['vote'];
+            }
+            $initial['votesum'] = $initial['vote'];
+            
+            $t = array_reduce($value, function($result, $item) { 
+                if($result['user_id'] == 'chljy33'){
+                    $result['myuser'] = $item['user_id'];
+                    $result['myvote'] = $item['vote'];
+                }
+                $result['votesum'] += $item['vote'];
+
+                return $result;
+            }, $initial);
+            array_push($finalAnswers, $t);
+        }
+        usort ($finalAnswers, array("AnswerModel", "cmp"));
+        
+        return $finalAnswers;
     }
     
     function getJoinOnAnswerByQuestionId($questionId){
@@ -77,8 +104,14 @@ class AnswerModel {
             return false;
         }
     }
+
+    // 투표합계 정렬하는 사용자함수.
+    static function cmp($a, $b)
+    {
+        if ($a['votesum'] == $b['votesum']) {
+            return 0;
+        }
+        return ($a['votesum'] > $b['votesum']) ? -1 : 1;
+    }
 }
-
-
-
 ?>

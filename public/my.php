@@ -10,7 +10,6 @@ require_once "config.php";
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>키고상: 마이페이지</title>
     <link href="<?php echo _NODE?>/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-	<link href="<?php echo _CSS?>/Footer-Clean.css" rel="stylesheet">
 	<link href="<?php echo _CSS?>/common.css" rel="stylesheet">
 	<link href="<?php echo _CSS?>/my.css" rel="stylesheet">
 </head>

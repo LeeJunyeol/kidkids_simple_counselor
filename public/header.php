@@ -17,10 +17,10 @@
         </div>
         <div id="user-container">
         <?php 
-        if(isset($_SESSION["user"])){
-            $user = $_SESSION["user"];
-            echo "<div data-id=".$user." id='welcome' class='welcome'>
-                <a href='#'>".$user."님 안녕하세요.</a>
+        if(isset($_SESSION["logged_in"])){
+            $username = $_SESSION["name"];
+            echo "<div data-id=".$_SESSION['id']." id='welcome' class='welcome'>
+                <a href='#'>".$username."님 안녕하세요.</a>
             </div>";
         };
         ?>
@@ -29,7 +29,7 @@
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                 </button>
             <?php 
-            if(!isset($_SESSION["user"])){
+            if(!isset($_SESSION["logged_in"])){
                 echo "<button class='btn btn-default login'>로그인</button>";
                 echo "<button class='btn btn-default signup'>회원가입</button>";
                 

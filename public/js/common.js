@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    var rankBodyTemplate = handlebarsHelper("#rank-body-template");
+
     $(".btn.login").on("click", function () {
         $("#myLoginModal").modal();
     })
@@ -7,6 +9,25 @@ $(document).ready(function () {
     $(".logout").on("click", logout);
     $("button.signup").on("click", goToSignup);
     $("a.btn-signup").on("click", goToSignup);
+
+    renderRankBox();
+    
+    function renderRankBox(){
+        $.ajax("http://localhost/ksc/api/Rank", {
+            type: 'GET',
+            data: {
+                ranker: true
+            }
+        }).then(function(res){
+            var result = JSON.parse(res);
+            var rankers = result['ranker'];
+            rankers.map(function(v, i){
+                v['rank'] = ++i;
+            })
+            $("#rank-body").html(rankBodyTemplate(rankers));
+        })
+    }
+    
 
     // function login(e) {
     //     e.preventDefault();

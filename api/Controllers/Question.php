@@ -1,13 +1,16 @@
 <?php
+session_start();
 
 require_once "../Config/Database.php";
 require_once '../Models/QuestionModel.php';
 require_once '../Models/AnswerModel.php';
+require_once '../Models/VoteModel.php';
 
 $conn = Database::getConnection();
 
 $questionModel = new QuestionModel($conn);
 $answerModel = new AnswerModel($conn);
+$voteModel = new VoteModel($conn);
 
 // 내꺼 불러오고 수정할 때
 // /ksc/api/my/Question
@@ -112,9 +115,8 @@ if(isset($_GET['my'])){
         if(isset($_GET['id'])){
             $id  = $_GET['id'];
             $question = $questionModel->getById($id);
-            $answers = $answerModel->getByQuestionId($id);
+            $answers = $answerModel->getByQuestionId($id, $_SESSION['id']);
             $opinions = $answerModel->getJoinOnAnswerByQuestionId($id);
-            
             echo json_encode([
                 "question" => $question,
                 "answers" => $answers,

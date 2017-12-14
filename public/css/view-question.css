@@ -18,7 +18,7 @@ div.wrapper>div.reply-box>.reply-card {
     width: 100%;
     border: none;
     border-radius: 2px;
-    padding-bottom: 24px;
+    padding-bottom: 3px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
     margin-top: 15px;
 }
@@ -31,17 +31,6 @@ div.wrapper>div.reply-box>.reply-card {
 .reply-title-group>.page-header h3>.label {
     padding: .0em .4em .0em;
 }
-
-.reply-title-group .vote-group {
-    width: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-}
-
-.reply-title-group .vote-group > .vote {
-    font-size: 1.5em;
-}    
 
 .reply-title-group .page-header {
     margin: 0;
@@ -78,3 +67,31 @@ div.wrapper>div.reply-box>.reply-card {
     height: 100px;
     width: 100%;
 }
+
+.reply-footer-group {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between
+}
+
+.reply-footer-group .vote-group .score {
+    text-align: right;
+}
+
+.reply-footer-group .vote-group .score>h2 {
+    margin-top: 0px;
+    position: relative;
+    top: -20px;
+    margin-bottom: 5px;
+}
+
+.reply-footer-group .vote-group a {
+    width: 80px;
+    height: 30px;
+    padding: 1.5px;
+}
+
+.reply-footer-group .vote-group a>img {
+    margin : 1px;
+    height: 100%;
+}    

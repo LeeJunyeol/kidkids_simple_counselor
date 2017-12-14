@@ -16,6 +16,7 @@ switch($_SERVER['REQUEST_METHOD']){
         $insertedId = $answerModel->add($answer);
         if($insertedId){
             $insertedAnswer = $answerModel->getById($insertedId);
+            $insertedAnswer->votesum = 0;
             echo json_encode([
                 'success' => true,
                 'data'=> $insertedAnswer

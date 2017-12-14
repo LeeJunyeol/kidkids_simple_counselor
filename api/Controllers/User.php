@@ -2,6 +2,7 @@
 require_once "../Config/Database.php";
 require_once '../Models/UserModel.php';
 
+session_start();
 $conn = Database::getConnection();
 
 $userModel = new UserModel($conn);
@@ -17,13 +18,14 @@ switch($_SERVER['REQUEST_METHOD']){
             exit;
         } else {
             if ( password_verify($_POST['password'], $user->password) ) {
-                $_SESSION['id'] = $user->id;
+                $_SESSION['id'] = $user->user_id;
                 $_SESSION['email'] = $user->email;
                 $_SESSION['name'] = $user->name;
                 $_SESSION['user_type'] = $user->user_type;
                 
                 // This is how we'll know the user is logged in
                 $_SESSION['logged_in'] = true;
+
                 header("location: http://localhost/ksc/home");
             }
             else {

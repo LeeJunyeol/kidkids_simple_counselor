@@ -14,6 +14,7 @@ $(document).ready(function () {
 
     var myQuestion = {}; // 글 등록,수정 할 때 요청에 보낼 데이터
     var questionId;
+    var userId =  $("#welcome").data("id") || "";
     
     // 태그 입력할 때, 엔터키를 누르면 태그 라벨이 추가된다.
     $("input").on("keyup", function (e) {
@@ -80,7 +81,7 @@ $(document).ready(function () {
             data: {
                 mydata: {
                     category, title, content, tags,
-                    user_id: "jylee"
+                    user_id: userId
                 }
             }
         }).then(function (res) {
@@ -118,7 +119,7 @@ $(document).ready(function () {
             contentType: "application/json",
             data: JSON.stringify({
                 category, title, content, tags,
-                user_id: "jylee"
+                user_id: userId
             })
         }).then(function (res) {
             console.log(res);

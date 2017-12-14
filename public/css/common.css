@@ -4,6 +4,16 @@ body {
     background: #D9E6ED;
 }
 
+textarea:disabled {
+    background-color: white;
+    overflow-y:hidden;
+    margin-top: 10px;
+    min-height: 30px;
+    width: 100%;
+    border: none;
+    resize: none;
+}
+
 .visible {
     visibility: visible;
 }
@@ -91,6 +101,8 @@ header a.btn.question {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0; */
     /* width: 120px;
+
+
     color: white;
     font-size: 16px;
     font-weight: 500;

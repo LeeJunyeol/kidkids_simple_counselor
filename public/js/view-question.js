@@ -10,6 +10,9 @@ $(document).ready(function () {
     var questionId = parseInt(location.href.split("/").pop());
     var userId = $("#welcome").data("id") || "";
 
+    var isClicked = false;
+    var re = /\r\n|\r|\n/g; // textarea 엔터자를때 필요한거
+
     init();
 
     function init() {
@@ -48,20 +51,57 @@ $(document).ready(function () {
 
     // 댓글 클릭 이벤트
     function viewOpinion(e) {
-        $.ajax("http://localhost/ksc/api/Opinion", {
-            type: "GET",
-            data: {
-                question_id: questionId
-            }
-        }).then(function (res) {
-            var result = JSON.parse(res);
-            console.log(result);
-            var data = {
-                question_id: questionId,
-                opinions: result['opinions']
-            }
-            $(this.delegateTarget).append(opinionTemplate(data));
-        }.bind(e));
+        if (!isClicked) {
+            isClicked = true;
+
+            $.ajax("http://localhost/ksc/api/Opinion", {
+                type: "GET",
+                data: {
+                    question_id: questionId
+                }
+            }).then(function (res) {
+                var result = JSON.parse(res);
+                var data;
+                if (result['success']) {
+                    data = {
+                        question_id: questionId,
+                        opinions: result['opinions']
+                    }
+                } else {
+                    data = {
+                        question_id: questionId
+                    }
+                }
+                $(this.delegateTarget).append(opinionTemplate(data)); //question-container
+                $("a.close.opinions").on("click", function(e){
+                    $(e.currentTarget).closest(".opinion-list").toggle("blind");
+                });
+            }.bind(e)).then(function () {
+                $("form.question").on("click", "button[type='submit']", function (e) {
+                    e.preventDefault();
+                    var $form = $(e.delegateTarget);
+                    var content = $form.find("input[name='content']").val();
+
+                    $.ajax("http://localhost/ksc/api/Opinion", {
+                        type: 'POST',
+                        data: {
+                            questionId,
+                            content
+                        }
+                    }).then(function (res) {
+                        var result = JSON.parse(res);
+                        if (result['success']) {
+                            alert("댓글이 등록되었습니다.");
+                            $(this).append(opinionItemTemplate(result['myopinion']));
+                        } else {
+                            alert("댓글 등록에 실패하였습니다.");
+                        }
+                    }.bind($form.closest(".opinion-list").find("ul.opinion-list")));
+                })
+            });
+        } else {
+            $(e.delegateTarget).find("div.opinion-list").toggle("blind");
+        }
     }
 
     // 답글 투표를 한다.
@@ -107,11 +147,19 @@ $(document).ready(function () {
             var answers = result['answers'];
             var opinions = result['opinions'];
 
-            console.log(answers);
+            question.tags = question.tags.split("/");
+            answers.forEach(element => {
+                element.height = element.content.split(re).length * 22;
+            });
+            
             $("div.question.container").removeClass("hide");
             $("div.question.container").html(questionTemplate(question));
             $("div.reply-box").html(answerTemplate(answers));
             $("div.opinion-list>ul").html(opinionTemplate(opinions));
+
+            var questionContent = question.content;
+            var answerContent = answers.content;
+            $("div.question.container").find("textarea").height(questionContent.split(re).length * 22);
 
             if ($("div.question.container").find(".header-group").data("id") === userId) {
                 $("div.question.container").find(".btn-group").removeClass("not-visible");

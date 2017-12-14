@@ -55,7 +55,6 @@ require_once "header.php";
 							</li>
 							{{/each}}
 							</ul>
-
 						</div>
 					</li>
 					{{/each}}

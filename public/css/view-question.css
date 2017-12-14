@@ -2,12 +2,32 @@ div.wrapper div.container {
     background: white;
 }
 
+article div.container {
+    padding: 0 24px;
+}
+
 div.wrapper>div.question {
     width: 100%;
     border: none;
     border-radius: 2px;
-    padding-bottom: 24px;
+    padding-bottom: 13px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+#question-container .footer-group {
+    color: rgb(119, 119, 119);
+}
+
+#question-container .footer-group>ul.tags {
+    list-style: none;
+    -webkit-padding-start: 0px;
+    margin-top: 10px;
+}
+
+#question-container .footer-group>ul.tags>li {
+    display: inline;
+}
+
+#question-container textarea {
 }
 
 div.wrapper>div.reply-box {
@@ -18,7 +38,7 @@ div.wrapper>div.reply-box>.reply-card {
     width: 100%;
     border: none;
     border-radius: 2px;
-    padding-bottom: 3px;
+    padding-bottom: 16px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
     margin-top: 15px;
 }

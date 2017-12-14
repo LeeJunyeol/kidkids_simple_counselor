@@ -34,12 +34,19 @@ require_once "header.php";
                                 </button>
                             </div>
                         </div>
-                        <p>
-                            {{content}}
-                        </p>
-                        <div class="btn-group">
-                            <button class="btn btn-default reply">답글달기</button>
-                            <button class="btn btn-default view-opinions">댓글{{opinion_cnt}}</button>
+                        <textarea disabled>{{content}}</textarea>
+                        <div class="question footer-group">
+                            <div class="btn-group">
+                                <button class="btn btn-default reply">답글달기</button>
+                                <button class="btn btn-default view-opinions">댓글{{opinion_cnt}}</button>
+                            </div>
+                            <ul class="tags"> 태그:  
+							{{#each tags}}
+							<li class="tags">
+								<span class="label label-info">{{this}}</span>
+							</li>
+							{{/each}}
+							</ul>
                         </div>
                     </script>
 
@@ -69,9 +76,7 @@ require_once "header.php";
                                 </div>
                             </div>
                             <div class="reply-content-group">
-                                <p>
-                                    {{content}}
-                                </p>
+                                <textarea style="height: {{height}}px" disabled>{{content}}</textarea>
                             </div>
                             <div class="reply-footer-group" data-id={{answer_id}}>
                                 <div class="btn-group">
@@ -100,7 +105,7 @@ require_once "header.php";
                         <div class="opinion-list" style="margin-top: 10px;">
                             <div>
                                 <div>댓글을 남겨주세요.</div>
-                                <form action="http://localhost/ksc/api/Opinion" method="post">
+                                <form class="{{#if question_id}}question opinion form{{else}}answer opinion form{{/if}}" action="#" method="post">
                                     {{#if question_id}}
                                     <input type="text" name="question_id" value={{question_id}} />
                                     {{/if}}
@@ -111,7 +116,8 @@ require_once "header.php";
                                     <button type="submit">등록</button>
                                 </form>
                             </div>
-                            <ul class="opinion-list" style="list-style: none; -webkit-padding-start: 0; border: 2px solid;">
+                            
+                            <ul class="opinion-list{{#if opinions}}{{else}} hide{{/if}}" style="list-style: none; -webkit-padding-start: 0; border: 2px solid;">
                             {{#each opinions}}
                                 <li style="border-bottom: 1px solid; padding: 10px 10px 5px 5px;">
                                     <div class="opinion-card-header" style="display: flex; justify-content: space-between;">
@@ -136,6 +142,9 @@ require_once "header.php";
                                 </li>
                             {{/each}}
                             </ul>
+                            <div>
+                                <a href="#" class="close opinions">댓글 접기</a>
+                            </div>
                         </div>
                         </script>
                         <script type="text/handlebars-template" id="opinion-item-template">

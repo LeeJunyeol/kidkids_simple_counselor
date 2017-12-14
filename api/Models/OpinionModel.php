@@ -7,8 +7,8 @@ class OpinionModel {
     }
 
     function getById($opinionId){
-        $stmt = $this->conn->prepare("SELECT * FROM opinions WHERE question_id = :question_id");
-        $stmt->bindValue(':question_id', $questionId);
+        $stmt = $this->conn->prepare("SELECT * FROM opinions WHERE opinion_id = :opinion_id");
+        $stmt->bindValue(':opinion_id', $opinionId);
         $stmt->execute();
         $opinion = $stmt->fetchObject();
         return $opinion;

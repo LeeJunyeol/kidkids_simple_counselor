@@ -44,13 +44,12 @@ switch($_SERVER['REQUEST_METHOD']){
     // break;
     break;
     case 'POST':
-    if(isset($_POST['question_id'])){
-        $questionId = $_POST['question_id'];
+    if(isset($_POST['questionId'])){
+        $questionId = $_POST['questionId'];
         $userId = $_SESSION['id'];
         $content = $_POST['content'];
 
         $insertedId = $opinionModel->addOnQuestion($questionId, $content, $userId);
-        header("location: ".$_SERVER[HTTP_REFERER]."");
         if($insertedId){
             $insertedOpinion = $opinionModel->getById($insertedId);
             echo json_encode([
@@ -60,12 +59,12 @@ switch($_SERVER['REQUEST_METHOD']){
         } else {
             echo json_encode([
                 'success' => false,
-                'myopinion' => array()
+                'message' => "insert Failed"
             ]);
         };
         return;
     }
-    if(isset($_POST['answer_id'])){
+    if(isset($_POST['answerId'])){
         
         return;
     }

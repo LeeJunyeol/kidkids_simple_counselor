@@ -9,8 +9,13 @@ $(document).ready(function () {
     $(".logout").on("click", logout);
     $("button.signup").on("click", goToSignup);
     $("a.btn-signup").on("click", goToSignup);
+    $("button.mypage").on("click", goToMyPage);
 
     renderRankBox();
+
+    function goToMyPage(){
+        location.href = "http://localhost/ksc/my";
+    }
     
     function renderRankBox(){
         $.ajax("http://localhost/ksc/api/Rank", {

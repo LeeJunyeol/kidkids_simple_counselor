@@ -3,7 +3,9 @@
                     <div class="head category-head">
                         <h3>카테고리</h3>
                     </div>
-
+                    <div class="category-item">
+                        <div><a href="http://localhost/ksc/home">전체</a></div>
+                    </div>
                     <div class="category-item">
                         <div><a href="#" data-category="육아/건강">육아/건강</a></div>
                     </div>

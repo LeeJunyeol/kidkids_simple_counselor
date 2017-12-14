@@ -65,7 +65,7 @@ require_once "header.php";
                     <div class="reply-box">
                         <script type="text/handlebars-template" id="answer-template">
                         {{#each this}}
-                        <div class="reply-card container" data-id={{answer_id}}>
+                        <div class="reply-card container" data-id={{answer_id}} data-score={{votesum}}>
                             <div class="reply-title-group">
                                 <div class="page-header">
                                     <span class="label label-success special">{{label}}</span>

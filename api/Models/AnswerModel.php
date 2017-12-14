@@ -22,19 +22,18 @@ class AnswerModel {
     }
 
     function getById($id){
-        $stmt = $this->conn->prepare("SELECT a.*, SUM(v.vote) as vote_cnt FROM answers AS a 
+        $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
+        , a.modify_date, a.label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
+        FROM answers AS a 
         LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
         WHERE a.answer_id = :answer_id");
         $stmt->bindValue(':answer_id', $id);
         $stmt->execute();
         $answer = $stmt->fetchObject();
-        if($answer->vote_cnt == null){
-            $answer->vote_cnt = 0;
-        }
         return $answer;
     }
 
-    function getByQuestionId($questionId, $userId){
+    function getByQuestionIdAndUserId($questionId, $userId){
         $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
         , a.modify_date, a.label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
         FROM answers AS a 
@@ -53,14 +52,14 @@ class AnswerModel {
         // vote를 합쳐서 votesum을 구하고, 내가 투표한 답변이라면 내 정보를 추가
         foreach ($grouped as &$value) {
             $initial = array_shift($value); 
-            if($initial['user_id'] == 'chljy33'){
+            if($initial['user_id'] == $userId){
                 $initial['myuser'] = $initial['user_id'];
                 $initial['myvote'] = $initial['vote'];
             }
             $initial['votesum'] = $initial['vote'];
             
             $t = array_reduce($value, function($result, $item) { 
-                if($result['user_id'] == 'chljy33'){
+                if($result['user_id'] == $userId){
                     $result['myuser'] = $item['user_id'];
                     $result['myvote'] = $item['vote'];
                 }
@@ -74,6 +73,39 @@ class AnswerModel {
         
         return $finalAnswers;
     }
+
+    function getByQuestionId($questionId){
+        $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
+        , a.modify_date, a.label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
+        FROM answers AS a 
+        LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+        WHERE a.question_id = :question_id");
+        $stmt->bindValue(':question_id', $questionId);
+        $stmt->execute();
+        $results = array();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $results[] = $row;
+        }
+
+        $grouped = array_group_by($results, 'answer_id'); // answer_id를 기준으로 그룹
+        $finalAnswers = array();
+        
+        // vote를 합쳐서 votesum을 구하고, 내가 투표한 답변이라면 내 정보를 추가
+        foreach ($grouped as &$value) {
+            $initial = array_shift($value); 
+            $initial['votesum'] = $initial['vote'];
+            
+            $t = array_reduce($value, function($result, $item) { 
+                $result['votesum'] += $item['vote'];
+                return $result;
+            }, $initial);
+            array_push($finalAnswers, $t);
+        }
+        usort ($finalAnswers, array("AnswerModel", "cmp"));
+        
+        return $finalAnswers;
+    }
+
     
     function getJoinOnAnswerByQuestionId($questionId){
         $stmt = $this->conn->prepare("SELECT c.commnet_id, c.user_id

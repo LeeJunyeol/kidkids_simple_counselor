@@ -11,7 +11,7 @@
         </div>
         <div class="title">
             <h1>키드키즈 고민상담소!</h1>
-            <a href="/" id="logo">
+            <a href="http://localhost/ksc/home" id="logo">
                 <img id="logoimg" src="<?php echo _IMG ?>/char_hooni.png" />
             </a>
         </div>

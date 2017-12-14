@@ -27,6 +27,10 @@ div.wrapper>div.question {
     display: inline;
 }
 
+.reply-card.container {
+    position: relative;
+}
+
 #question-container textarea {
 }
 

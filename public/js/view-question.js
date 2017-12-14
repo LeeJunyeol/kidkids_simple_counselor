@@ -18,9 +18,11 @@ $(document).ready(function () {
     function init() {
         render();
         $("div.reply-box").on("click", "a.vote.up", function (e) {
+            e.preventDefault();
             vote.call(this, 1, userId, $(this).closest(".reply-card").data("id"));
         });
         $("div.reply-box").on("click", "a.vote.down", function (e) {
+            e.preventDefault();
             vote.call(this, -1, userId, $(this).closest(".reply-card").data("id"));
         });
         $("#question-container").on("click", ".view-opinions", viewOpinion);
@@ -117,23 +119,73 @@ $(document).ready(function () {
             })
         }).then(function (res) {
             var result = JSON.parse(res);
-            var $targetEle = $(this).closest(".vote-group").find("h2.votesum>span.score");
-            if (result["success"]) {
+            //$("span.score").closest(".reply-card.container").position()
+            //if (result["success"]) {
                 var $targetEle = $(this).closest(".vote-group").find("h2.votesum>span.score");
                 var currentScore = $targetEle.text();
+                currentScore = parseInt($targetEle.text()) + parseInt(score);
                 if (currentScore !== "") {
-                    $targetEle.text(parseInt($targetEle.text()) + parseInt(score));
+                    currentScore = parseInt($targetEle.text()) + parseInt(score);
                 } else {
-                    $targetEle.text(parseInt(score));
+                    currentScore = parseInt(score);
                 }
+                $targetEle.text(currentScore);
                 if (parseInt(score) > 0) {
                     $(this).css("border-color", "blue");
                 } else {
                     $(this).css("border-color", "red");
                 }
-            }
-            alert(result["message"]);
+                var $currentContainer = $(this).closest(".reply-card.container");
+                $currentContainer.data("score", currentScore);
+
+                var movingContainers = $(".reply-card.container").filter(function(index){
+                    if($(this).data("id") !== $currentContainer.data("id") && $(this).data("score") <= currentScore && $(this).offset().top < $currentContainer.offset().top){
+                        var $target = $(this);
+                        $(this).animate({"top": "+=209"}, "slow");
+                        return this;
+                    }
+                });
+                console.log(movingContainers);
+                var targetPosition = $(movingContainers).offset();
+                console.log($currentContainer.offset(targetPosition));
+                // movingContainers.each(function(i, ele){
+                //     $(ele).animate({left: "+=300"}, 1000);
+                // })
+                // function getClosestScoreLocation(currentScore){
+                //     var closestScoreLocation = currentScore;
+                //     var movingElements = [];
+                //     var topElement = $(".reply-card.container")[0];
+                //     $(".reply-card.container").each(function(i, ele){
+                //         if($(ele).data("score") > currentScore){
+                //             closestScoreLocation = $(ele).offset();
+                //             movingElements.push(ele);
+                //         }
+                //     })
+                //     return {
+                //         movingElements,
+                //         closestScoreLocation
+                //     };
+                // }
+                // var currentPostion = $(this).closest(".reply-card.container").offset();
+                // var getClosestScoreLocationObj = getClosestScoreLocation(currentScore);
+                // var targetPosition = getClosestScoreLocationObj.closestScoreLocation;
+                // var movingElements = getClosestScoreLocationObj.movingElements;
+                // console.log(movingElements)
+                
+                // console.log(currentPostion);
+                // console.log(targetPosition);
+                
+//                $(this).closest(".reply-card.container").offset(targetPosition);
+                // var scores = $(".reply-card.container").each(function(i, ele){
+                //     ($(ele).find()
+                // })
+            //}
+            //alert(result["message"]);
         }.bind(this))
+    }
+
+    function rearrangeWhenVote(){
+
     }
 
     // 템플릿을 그린다.

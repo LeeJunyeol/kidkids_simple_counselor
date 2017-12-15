@@ -26,29 +26,65 @@ $(document).ready(function () {
             vote.call(this, -1, userId, $(this).closest(".reply-card").data("id"));
         });
         $("#question-container").on("click", ".view-opinions", viewOpinion);
-
         // 댓글 클릭 이벤트
-        $("div.reply-box").on("click", ".btn.view-opinions", function (e) {
-            var $replyContainer = $(this).closest(".reply-card.container");
-            var answerId = $replyContainer.find(".reply-footer-group").data("id");
-            $(this).text("의견 숨기기");
-            $(this).hasClass("")
+        $("div.reply-box").on("click", ".btn.view-opinions", viewOpinionOnAnswer);
+    }
 
-            $.ajax("http://localhost/ksc/api/Answer/" + answerId + "/Opinion", {
+    function viewOpinionOnAnswer(e){
+        if (!isClicked) {
+            var answerId = $(e.currentTarget).closest(".reply-footer-group").data("id");
+            isClicked = true;
+
+            $.ajax("http://localhost/ksc/api/Opinion", {
                 type: "GET",
-                contentType: "application/json",
                 data: {
-                    id: answerId
+                    answer_id: answerId
                 }
             }).then(function (res) {
                 var result = JSON.parse(res);
+                var data;
                 if (result['success']) {
-                    var opinions = result['opinions'];
-                    $replyContainer.find("ul").html(opinionTemplate(opinions));
-                    $replyContainer.find("ul").removeClass("hide");
+                    data = {
+                        answer_id: answerId,
+                        opinions: result['opinions']
+                    }
+                } else {
+                    data = {
+                        answer_id: answerId,
+                    }
                 }
+                $(e.currentTarget).closest(".reply-card.container").append(opinionTemplate(data));
+                $("a.close.opinions").on("click", function(e){
+                    $(e.currentTarget).closest(".opinion-list").toggle("blind");
+                });
+            }.bind(e)).then(function () {
+                $("form.question").on("click", "button[type='submit']", function (e) {
+                    e.preventDefault();
+                    var $form = $(e.delegateTarget);
+                    var content = $form.find("input[name='content']").val();
+
+                    $.ajax("http://localhost/ksc/api/Opinion", {
+                        type: 'POST',
+                        data: {
+                            answerId,
+                            content
+                        }
+                    }).then(function (res) {
+                        var result = JSON.parse(res);
+                        if (result['success']) {
+                            alert("댓글이 등록되었습니다.");
+                            $(this).append(opinionItemTemplate(result['myopinion']));
+                            $(this).removeClass("hide");
+                        } else {
+                            alert("댓글 등록에 실패하였습니다.");
+                        }
+                    }.bind($form.closest(".opinion-list").find("ul.opinion-list")));
+                })
             });
-        });
+        } else {
+            $(e.delegateTarget).find("div.opinion-list").toggle("blind");
+        }
+
     }
 
     // 댓글 클릭 이벤트
@@ -95,6 +131,7 @@ $(document).ready(function () {
                         if (result['success']) {
                             alert("댓글이 등록되었습니다.");
                             $(this).append(opinionItemTemplate(result['myopinion']));
+                            $(this).removeClass("hide");
                         } else {
                             alert("댓글 등록에 실패하였습니다.");
                         }
@@ -120,7 +157,7 @@ $(document).ready(function () {
         }).then(function (res) {
             var result = JSON.parse(res);
             //$("span.score").closest(".reply-card.container").position()
-            //if (result["success"]) {
+            if (result["success"]) {
                 var $targetEle = $(this).closest(".vote-group").find("h2.votesum>span.score");
                 var currentScore = $targetEle.text();
                 currentScore = parseInt($targetEle.text()) + parseInt(score);
@@ -148,39 +185,8 @@ $(document).ready(function () {
                 console.log(movingContainers);
                 var targetPosition = $(movingContainers).offset();
                 console.log($currentContainer.offset(targetPosition));
-                // movingContainers.each(function(i, ele){
-                //     $(ele).animate({left: "+=300"}, 1000);
-                // })
-                // function getClosestScoreLocation(currentScore){
-                //     var closestScoreLocation = currentScore;
-                //     var movingElements = [];
-                //     var topElement = $(".reply-card.container")[0];
-                //     $(".reply-card.container").each(function(i, ele){
-                //         if($(ele).data("score") > currentScore){
-                //             closestScoreLocation = $(ele).offset();
-                //             movingElements.push(ele);
-                //         }
-                //     })
-                //     return {
-                //         movingElements,
-                //         closestScoreLocation
-                //     };
-                // }
-                // var currentPostion = $(this).closest(".reply-card.container").offset();
-                // var getClosestScoreLocationObj = getClosestScoreLocation(currentScore);
-                // var targetPosition = getClosestScoreLocationObj.closestScoreLocation;
-                // var movingElements = getClosestScoreLocationObj.movingElements;
-                // console.log(movingElements)
-                
-                // console.log(currentPostion);
-                // console.log(targetPosition);
-                
-//                $(this).closest(".reply-card.container").offset(targetPosition);
-                // var scores = $(".reply-card.container").each(function(i, ele){
-                //     ($(ele).find()
-                // })
-            //}
-            //alert(result["message"]);
+            }
+            alert(result["message"]);
         }.bind(this))
     }
 
@@ -211,7 +217,7 @@ $(document).ready(function () {
 
             var questionContent = question.content;
             var answerContent = answers.content;
-            $("div.question.container").find("textarea").height(questionContent.split(re).length * 22);
+            $("div.question.container").find("textarea").height(questionContent.split(re).length * 28);
 
             if ($("div.question.container").find(".header-group").data("id") === userId) {
                 $("div.question.container").find(".btn-group").removeClass("not-visible");

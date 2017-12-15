@@ -32,19 +32,24 @@ class QuestionModel {
     }
 
     function getForPage($offset, $limit, $sortBy, $isASC){
-        $ascChar = "DESC";
-        if($isASC === "true"){
-            $ascChar = "ASC";
-        } 
-
-        $sql = "SELECT * FROM questions ORDER BY $sortBy $ascChar LIMIT $offset, $limit" ;
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        $results = array();
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $results[] = $row;
+        $ascChar = "ASC";
+        if($isASC === "false"){
+            $ascChar = "DESC";
         }
-        return $results;
+
+        try {
+            $sql = "SELECT * FROM questions ORDER BY $sortBy $ascChar LIMIT $offset, $limit";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $questions = array();
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                $questions[] = $row;
+            }
+            return $questions;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
     }
 
     function getByCategoryForPage($category, $offset, $limit, $sortBy, $isASC){
@@ -96,12 +101,13 @@ class QuestionModel {
     function updateMe($id, $myQuestion){
         // print_r($myQuestion);
         // die;
-        $sql = "UPDATE questions SET category=?, title=?, content=? WHERE question_id=?";
+        $sql = "UPDATE questions SET category=?, title=?, content=?, tags=? WHERE question_id=?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $myQuestion->category);
         $stmt->bindParam(2, $myQuestion->title);
         $stmt->bindParam(3, $myQuestion->content);
-        $stmt->bindParam(4, $id);
+        $stmt->bindParam(4, $myQuestion->tags);
+        $stmt->bindParam(5, $id);
         if($stmt->execute()){
             //echo "여기";
             return true;

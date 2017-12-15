@@ -31,7 +31,8 @@ div.wrapper>div.question {
     position: relative;
 }
 
-#question-container textarea {
+textarea {
+    min-height: 100px !important;
 }
 
 div.wrapper>div.reply-box {

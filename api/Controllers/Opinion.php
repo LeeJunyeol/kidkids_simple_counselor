@@ -23,7 +23,7 @@ switch($_SERVER['REQUEST_METHOD']){
     // answer에 딸린 opinion 조회
     if(isset($_GET['answer_id']) && !isset($_GET['opinion_id'])){
         $answerId = $_GET['answer_id'];
-        $opinions = getByAnswerId($answerId);
+        $opinions = $opinionModel->getByAnswerId($answerId);
         $success = count($opinions) > 0? true : false;
         echo json_encode([
             "success" => $success,
@@ -65,7 +65,23 @@ switch($_SERVER['REQUEST_METHOD']){
         return;
     }
     if(isset($_POST['answerId'])){
-        
+        $answerId = $_POST['answerId'];
+        $userId = $_SESSION['id'];
+        $content = $_POST['content'];
+
+        $insertedId = $opinionModel->addOnQuestion($questionId, $content, $userId);
+        if($insertedId){
+            $insertedOpinion = $opinionModel->getById($insertedId);
+            echo json_encode([
+                'success' => true,
+                'myopinion' => $insertedOpinion
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => "insert Failed"
+            ]);
+        };
         return;
     }
 }

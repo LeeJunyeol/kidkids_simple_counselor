@@ -9,6 +9,19 @@ $answerModel = new AnswerModel($conn);
 $voteModel = new VoteModel($conn);
 
 switch($_SERVER['REQUEST_METHOD']){
+    case 'GET':
+    if(isset($_GET['page']) && isset($_GET['limit'])){
+        $limit = $_GET['limit'];
+        $offset = ($_GET['page'] - 1) * $limit;
+        
+        $answers = $answerModel->getForPage($offset, $limit);
+
+        echo json_encode([
+            'answers' => $answers
+        ]);
+        return;
+    }
+    break;
     case 'POST':
     if(isset($_POST['answer'])){
         $answer = $_POST['answer'];
@@ -28,6 +41,7 @@ switch($_SERVER['REQUEST_METHOD']){
             ]);
         }
     }
+    break;
     case 'PUT':
     if(isset($_GET['action'])){
         if($_GET['action'] == "vote"){

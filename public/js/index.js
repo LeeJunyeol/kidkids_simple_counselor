@@ -20,32 +20,9 @@ $(document).ready(function () {
 
     init();
 
-    function prevPage(e){
-        if (currentPageNum > 1) {
-            currentPageNum--;
-            getQuestions(currentPageNum, sortBy, category);
-        } else {
-            alert("첫 페이지입니다.");
-        }
-    }
-
-    function nextPage(e){
-        if (currentPageNum < lastPageNum) {
-            currentPageNum++;
-            getQuestions(currentPageNum, sortBy, category);
-        } else {
-            alert("마지막 페이지입니다.");
-        }
-    }
-
-    function moveToPageNum(e){
-        currentPageNum = parseInt($(e.currentTarget).data("num"));
-        getQuestions(currentPageNum, sortBy, category);
-    }
-
     function init() {
         if (category === "전체 질문") {
-            category = undefined;
+            category = undefined; // -> 공백 ""
         }
         getQuestions(1, sortBy, category);
 
@@ -86,12 +63,36 @@ $(document).ready(function () {
         })
     }
 
+    function prevPage(e){
+        if (currentPageNum > 1) {
+            currentPageNum--;
+            getQuestions(currentPageNum, sortBy, category);
+        } else {
+            alert("첫 페이지입니다.");
+        }
+    }
+
+    function nextPage(e){
+        if (currentPageNum < lastPageNum) {
+            currentPageNum++;
+            getQuestions(currentPageNum, sortBy, category);
+        } else {
+            alert("마지막 페이지입니다.");
+        }
+    }
+
+    function moveToPageNum(e){
+        currentPageNum = parseInt($(e.currentTarget).data("num"));
+        getQuestions(currentPageNum, sortBy, category);
+    }
+
     // 질문 목록을 불러온다.
     function getQuestions(page, sortBy, category) {
         var dataObj = {};
         dataObj['page'] = page;
         dataObj['sortBy'] = sortBy;
         dataObj['isASC'] = isAsc;
+        dataObj['limit'] = 5;
         if (category !== undefined) {
             dataObj['category'] = category;
         }
@@ -102,9 +103,9 @@ $(document).ready(function () {
         }).then(function (res) {
 //            console.log(res);
             var result = JSON.parse(res);
-            var questions = result['data'];
+            var questions = result['questions'];
             
-            for (var i = 0; i < result['data'].length; i++) {
+            for (var i = 0; i < questions.length; i++) {
                 questions[i].modify_date = getFormatDate(questions[i].modify_date);
                 questions[i].tags = questions[i].tags.split("/");
             }

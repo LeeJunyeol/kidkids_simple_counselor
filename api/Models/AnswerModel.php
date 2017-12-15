@@ -21,11 +21,28 @@ class AnswerModel {
         }
     }
 
+    function getForPage($offset, $limit){
+        try {
+            $sql = "SELECT * FROM answers LIMIT $offset, $limit";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $answers = array();
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                $answers[] = $row;
+            }
+            return $answers;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+        
     function getById($id){
         $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
-        , a.modify_date, a.label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
+        , a.modify_date, u.user_type as label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
         FROM answers AS a 
-        LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+        LEFT JOIN votes AS v ON a.answer_id = v.answer_id
+        LEFT JOIN users AS u ON a.user_id = u.user_id
         WHERE a.answer_id = :answer_id");
         $stmt->bindValue(':answer_id', $id);
         $stmt->execute();
@@ -35,9 +52,10 @@ class AnswerModel {
 
     function getByQuestionIdAndUserId($questionId, $userId){
         $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
-        , a.modify_date, a.label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
+        , a.modify_date, u.user_type as label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
         FROM answers AS a 
         LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+        LEFT JOIN users AS u ON a.user_id = u.user_id
         WHERE a.question_id = :question_id");
         $stmt->bindValue(':question_id', $questionId);
         $stmt->execute();
@@ -52,16 +70,21 @@ class AnswerModel {
         // vote를 합쳐서 votesum을 구하고, 내가 투표한 답변이라면 내 정보를 추가
         foreach ($grouped as &$value) {
             $initial = array_shift($value); 
-            if($initial['user_id'] == $userId){
-                $initial['myuser'] = $initial['user_id'];
-                $initial['myvote'] = $initial['vote'];
+            if(!isset($userId)){
+                if($initial['user_id'] == $userId){
+                    $initial['myuser'] = $initial['user_id'];
+                    $initial['myvote'] = $initial['vote'];
+                }
             }
+        
             $initial['votesum'] = $initial['vote'];
             
             $t = array_reduce($value, function($result, $item) { 
-                if($result['user_id'] == $userId){
-                    $result['myuser'] = $item['user_id'];
-                    $result['myvote'] = $item['vote'];
+                if(!isset($userId)){
+                    if($result['user_id'] == $item['user_id']){
+                        $result['myuser'] = $item['user_id'];
+                        $result['myvote'] = $item['vote'];
+                    }
                 }
                 $result['votesum'] += $item['vote'];
 
@@ -76,9 +99,10 @@ class AnswerModel {
 
     function getByQuestionId($questionId){
         $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
-        , a.modify_date, a.label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
+        , a.modify_date, u.user_type as label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
         FROM answers AS a 
         LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+        LEFT JOIN users AS u ON a.user_id = u.user_id
         WHERE a.question_id = :question_id");
         $stmt->bindValue(':question_id', $questionId);
         $stmt->execute();

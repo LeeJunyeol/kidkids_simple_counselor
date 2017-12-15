@@ -1,5 +1,9 @@
 <?php
 require_once "config.php";
+if(!isset($_SESSION["logged_in"])){
+	echo "<script>alert(\"로그인이 필요한 서비스입니다.\");
+	location.href=\"/ksc/login\"</script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,10 +21,6 @@ require_once "config.php";
 
 <body>
 <?php
-if(!isset($_SESSION["logged_in"])){
-	echo "<script>alert(\"로그인이 필요한 서비스입니다.\");
-	location.href=\"/ksc/home\"</script>";
-}
 require_once "header.php";
 ?>
 	<!-- 메인 -->
@@ -88,6 +88,7 @@ require_once "footer.php";
 	<script src="<?php echo _NODE ?>/jquery/dist/jquery.js"></script>
 	<script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
+	<script src="<?php echo _JS ?>/util.js"></script>
 	<script src="<?php echo _JS ?>/common.js"></script>
 	<script src="<?php echo _JS ?>/write-question.js"></script>
 	<script>

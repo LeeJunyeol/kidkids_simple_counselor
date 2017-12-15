@@ -1,55 +1,52 @@
-$(document).ready(function () {
-    var rankBodyTemplate = handlebarsHelper("#rank-body-template");
+var CommonModule = (function () {
 
-    $(".btn.login").on("click", function () {
-        $("#myLoginModal").modal();
-    })
-    $(".btn.question").on("click", goToWrite);
-    $(".category-box").on("click", ".category-item>div>a", goToHomeByCategory);
-    $(".logout").on("click", logout);
-    $("button.signup").on("click", goToSignup);
-    $("a.btn-signup").on("click", goToSignup);
-    $("button.mypage").on("click", goToMyPage);
+    var BASE_URL = "http://localhost/ksc/";
 
-    renderRankBox();
+    function init() {
+        $(".btn.login").on("click", goToLogin);
+        $(".btn.question").on("click", goToWrite);
+        $(".category-box").on("click", ".category-item>div>a", goToHomeByCategory);
+        $(".logout").on("click", logout);
+        $("button.signup").on("click", goToSignup);
+        $("a.btn-signup").on("click", goToSignup);
+        $("button.mypage").on("click", goToMyPage);
 
-    function goToMyPage(){
-        location.href = "http://localhost/ksc/my";
+        // 본문에 모든 a태그 디폴트를 없앰
+        $("article").on("click", "a", function (e) {
+            e.preventDefault();
+        })
+
+        renderRankBox();
     }
-    
-    function renderRankBox(){
-        $.ajax("http://localhost/ksc/api/Rank", {
+
+    function goToLogin() {
+        location.href = BASE_URL + "/login"
+    }
+
+    function goToMyPage() {
+        location.href = BASE_URL + "/my";
+    }
+
+    function renderRankBox() {
+        var rankBodyTemplate = handlebarsHelper("#rank-body-template");
+
+        $.ajax(BASE_URL + "/api/Rank", {
             type: 'GET',
             data: {
                 ranker: true
             }
-        }).then(function(res){
+        }).then(function (res) {
             var result = JSON.parse(res);
             var rankers = result['ranker'];
-            rankers.map(function(v, i){
+            rankers.map(function (v, i) {
                 v['rank'] = ++i;
             })
             $("#rank-body").html(rankBodyTemplate(rankers));
         })
     }
-    
-
-    // function login(e) {
-    //     e.preventDefault();
-    //     var id = $("#usrname").val();
-    //     var password = $("#psw").val();
-    //     console.log(id);
-    //     console.log(password);
-    //     $.ajax("http://localhost/ksc/api/User?login", {
-    //         type: 'POST',
-    //         data: {
-    //             id, password
-    //         }
-    //     })
-    // }
 
     function logout(e) {
-        location.href = "http://localhost/ksc/public/logout.php";
+        location.href = BASE_URL + "/public/logout.php";
     }
 
     function goToSignup() {
@@ -62,6 +59,14 @@ $(document).ready(function () {
 
     function goToHomeByCategory(e) {
         var category = $(this).text();
-        location.href = "http://localhost/ksc/home?category=" + category;
+        location.href = BASE_URL + "/home?category=" + category;
     }
+
+    return {
+        init
+    }
+})();
+
+$(document).ready(function () {
+    CommonModule.init()
 });

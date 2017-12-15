@@ -25,6 +25,7 @@ if(isset($_GET['my'])){
             ]);
             return;
         }
+        break;
         case 'PUT':
         if(isset($_GET['id'])){
             $mydata = json_decode(file_get_contents('php://input'));
@@ -42,6 +43,7 @@ if(isset($_GET['my'])){
             };
             return;
         }
+        break;
         case 'DELETE':
         if(isset($_GET['id'])){
             if($questionModel->delete($_GET['id'])){
@@ -57,6 +59,7 @@ if(isset($_GET['my'])){
             };
             return;
         }
+        break;
     }
 } else {
     // /ksc/api/Question
@@ -87,14 +90,18 @@ if(isset($_GET['my'])){
             ]);
             return;
         }
-        // 전체 출력
-        if(!isset($_GET['category']) && isset($_GET['page']) && isset($_GET['sortBy']) && isset($_GET['isASC'])){
-            $limit = $_GET['page'] * 5;
-            $offset = $limit - 5;
+        // 전체 조회 (카테고리별 X)
+        if(!isset($_GET['category']) && isset($_GET['page']) 
+        && isset($_GET['sortBy']) && isset($_GET['isASC']) 
+        && isset($_GET['limit'])){
+            $limit = $_GET['limit'];
+            $offset = ($_GET['page'] - 1) * $limit;
 
             $isASC = $_GET['isASC'];
             $sortBy = "create_date";
             switch($_GET['sortBy']){
+                case "id":
+                $sortBy = "question_id";
                 case "latest":
                 $sortBy = "create_date";
                 break;
@@ -106,7 +113,7 @@ if(isset($_GET['my'])){
 
             echo json_encode([
                 'count'=> $rowCount,
-                'data'=> $results
+                'questions'=> $results
             ]);
             return;        
         }

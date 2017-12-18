@@ -7,6 +7,25 @@ class AnswerModel {
         require_once "../Util/Util.php";
     }
 
+    function getMyAnswerRecent5($userId){
+        try {
+            $sql = "SELECT * FROM answers WHERE user_id = '$userId' ORDER BY create_date DESC LIMIT 5";
+            $stmt = $this->conn->prepare($sql);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            }
+            $answers = array();
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                $answers[] = $row;
+            }
+            return $answers;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+
     function add($answer){
         $stmt = $this->conn->prepare("INSERT INTO answers (question_id, user_id, title, content) VALUES (:question_id, :user_id, :title, :content)");
         $stmt->bindParam(':question_id', $answer['question_id']);

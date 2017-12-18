@@ -13,13 +13,14 @@ class UserModel {
         return $stmt->fetchObject();
     }
 
-    function register($id, $password, $name, $email, $hash){
-        $stmt = $this->conn->prepare("INSERT INTO users (`user_id`, `name`, `password`, `user_type`, `email`, `hash`) VALUES (?, ?, ?, '일반', ?, ?)");
+    function register($id, $password, $name, $email, $hash, $pic){
+        $stmt = $this->conn->prepare("INSERT INTO users (`user_id`, `name`, `password`, `user_type`, `email`, `hash`, `user_pic`) VALUES (?, ?, ?, '일반', ?, ?, ?)");
         $stmt->bindParam(1, $id);
         $stmt->bindParam(2, $name);
         $stmt->bindParam(3, $password);
         $stmt->bindParam(4, $email);
         $stmt->bindParam(5, $hash);
+        $stmt->bindParam(6, $pic);
         
         if($stmt->execute()){
             return true;

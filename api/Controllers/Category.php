@@ -32,7 +32,11 @@ switch($_SERVER['REQUEST_METHOD']){
     }
     if(isset($_GET['search-category-string'])){
         $categories = $categoryModel->searchByCategoryName($_GET['search-category-string']);
-        
+        echo json_encode([
+            "success" => true,
+            "categories" => $categories
+        ]);
+        return;
     }
     // default
     $categories = $categoryModel->getSub(0);
@@ -40,7 +44,7 @@ switch($_SERVER['REQUEST_METHOD']){
         "success" => true,
         "categories" => $categories
     ]);
-break;
+    break;
     case 'POST':
     // api/Category
     // 카테고리 입력 한 뒤, 그걸 리턴

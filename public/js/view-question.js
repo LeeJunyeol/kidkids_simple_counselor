@@ -13,6 +13,8 @@ $(document).ready(function () {
     var isClicked = false;
     var re = /\r\n|\r|\n/g; // textarea 엔터자를때 필요한거
 
+    var selected = false;
+
     init();
 
     function init() {
@@ -28,6 +30,15 @@ $(document).ready(function () {
         $("#question-container").on("click", ".view-opinions", viewOpinion);
         // 댓글 클릭 이벤트
         $("div.reply-box").on("click", ".btn.view-opinions", viewOpinionOnAnswer);
+        $("div.reply-box").on("click", ".select-btn", (e) => {
+            if(!selected){
+                if(confirm("채택 하시겠습니까?(한 번 채택하시면 수정할 수 없습니다)")){
+                    $(e.currentTarget).addClass("selected");
+                    selected = true;
+                    $(".reply-box").find(".select-btn:not(.selected)").hide();
+                }
+            }
+        });
     }
 
     function viewOpinionOnAnswer(e){
@@ -190,6 +201,8 @@ $(document).ready(function () {
         }.bind(this))
     }
 
+
+
     function rearrangeWhenVote(){
 
     }
@@ -219,8 +232,12 @@ $(document).ready(function () {
             var answerContent = answers.content;
             $("div.question.container").find("textarea").height(questionContent.split(re).length * 28);
 
+            // 수정/삭제 버튼 표시
             if ($("div.question.container").find(".header-group").data("id") === userId) {
                 $("div.question.container").find(".btn-group").removeClass("not-visible");
+                if(parseInt(question['selected_answer_id']) === 0){
+                    $(".select-btn").removeClass("hide");
+                }
             }
             $(".vote-group").each(function (i, ele) {
                 var $ele = $(ele);

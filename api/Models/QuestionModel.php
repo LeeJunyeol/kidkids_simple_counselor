@@ -8,10 +8,9 @@ class QuestionModel {
     }
 
     function add($question){
-        $stmt = $this->conn->prepare("INSERT INTO questions (user_id, category, title, content, tags) 
-        VALUES (:user_id, :category, :title, :content, :tags)");
+        $stmt = $this->conn->prepare("INSERT INTO questions (user_id, title, content, tags) 
+        VALUES (:user_id, :title, :content, :tags)");
         $stmt->bindParam(':user_id', $question['user_id']);
-        $stmt->bindParam(':category', $question['category']);
         $stmt->bindParam(':title', $question['title']);
         $stmt->bindParam(':content', $question['content']);
         $stmt->bindParam(':tags', $question['tags']);
@@ -20,7 +19,26 @@ class QuestionModel {
             print_r($stmt->errorInfo());
             exit;
         };
-        return true;
+        return $this->conn->lastInsertId();
+    }
+
+    function getMyQuestionRecent5($userId){
+        try {
+            $sql = "SELECT * FROM questions WHERE user_id = '$userId' ORDER BY create_date DESC LIMIT 5";
+            $stmt = $this->conn->prepare($sql);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            }
+            $questions = array();
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                $questions[] = $row;
+            }
+            return $questions;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
     }
 
     function getById($id){
@@ -142,13 +160,12 @@ class QuestionModel {
     function updateMe($id, $myQuestion){
         // print_r($myQuestion);
         // die;
-        $sql = "UPDATE questions SET category=?, title=?, content=?, tags=? WHERE question_id=?";
+        $sql = "UPDATE questions SET title=?, content=?, tags=? WHERE question_id=?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1, $myQuestion->category);
-        $stmt->bindParam(2, $myQuestion->title);
-        $stmt->bindParam(3, $myQuestion->content);
-        $stmt->bindParam(4, $myQuestion->tags);
-        $stmt->bindParam(5, $id);
+        $stmt->bindParam(1, $myQuestion->title);
+        $stmt->bindParam(2, $myQuestion->content);
+        $stmt->bindParam(3, $myQuestion->tags);
+        $stmt->bindParam(4, $id);
         if(!$stmt->execute()){
             print_r($stmt->errorInfo());
             exit;

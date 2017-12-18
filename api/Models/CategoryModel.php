@@ -26,8 +26,13 @@ class CategoryModel {
 
     function searchByCategoryName($categoryName){
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM categories WHERE category_name=?");
-            $stmt->bindParam(1, $categoryName);
+            $sql = "SELECT me.*, parent.category_id as p_c_id, 
+            parent.category_name as p_c_name, parent.depth as p_c_depth,
+            parent.parent_idx as p_p_idx FROM 
+            (SELECT * FROM categories WHERE category_name LIKE '%$categoryName%') AS me 
+            INNER JOIN categories AS parent 
+            ON parent.category_id = me.parent_idx;";
+            $stmt = $this->conn->prepare($sql);
             if($stmt->execute()){
                 $categories = array();
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -35,7 +40,8 @@ class CategoryModel {
                 }
                 return $categories;
             } else {
-                return $stmt->errorInfo();
+                print_r($stmt->errorInfo());
+                exit;
             }
         } catch (PDOException $e) {
             return $e->getMessage();

@@ -1,5 +1,10 @@
 <?php
 require_once "config.php";
+if(isset($_SESSION["message"])){
+  $message = $_SESSION['message'];
+  echo "<script>alert(\"" . $message . "\");</script>";
+  session_unset();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,13 +25,12 @@ require_once "header.php";
 		<!-- Modal -->
 		<div id="myLogin" style="background: white; padding-bottom: 35px; padding-left: 35px; padding-right: 35px; padding-top: 15px;">
     <h1>회원가입</h1>
-    <form action="http://localhost/ksc/api/User" method="post" autocomplete="off" accept-charset="utf-8">
+    <form action="http://localhost/ksc/api/User" enctype="multipart/form-data" method="post" autocomplete="off" accept-charset="utf-8">
     
     <style>
     label {
       width: 100px;
     }
-
     </style>
     <div class="top-row">
       <div class="field-wrap">
@@ -53,6 +57,12 @@ require_once "header.php";
         이메일<span class="req">*</span>
       </label>
       <input type="email" class="form-control" required autocomplete="off" name='email' />
+    </div>
+    <div class="field-wrap">
+      <label>
+        프로필사진<span class="req">*</span>
+      </label>
+      <input type="file" class="form-control" name="image" accept="image/*">
     </div>
     
     <button type="submit" id="btn-login" name="register" class="btn btn-success btn-block" style="margin-top: 20px">

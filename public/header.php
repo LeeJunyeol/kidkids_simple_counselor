@@ -58,12 +58,24 @@
     </div>
 </header>
 <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
+    <div class="col-sm-6 col-sm-offset-3" style="display: flex;">
+        <div class="btn-group" style="display: flex; margin-top: 10px;">
+            <button type="button" class="btn btn-info">전체</button>
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">질문</a></li>
+                <li><a href="#">답변</a></li>
+                <li><a href="#">작성자</a></li>
+            </ul>
+        </div>
         <div id="imaginary_container"> 
             <div class="input-group stylish-input-group">
                 <input type="text" class="form-control"  placeholder="Search" >
                 <span class="input-group-addon">
-                    <button type="submit">
+                    <button id="search-btn" type="submit">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>  
                 </span>

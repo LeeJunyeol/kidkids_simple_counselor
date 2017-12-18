@@ -61,3 +61,7 @@ ul {
 h2, h3 {
     margin-top: 0;
 }
+
+.my-info { 
+    margin-left: 25px;
+}

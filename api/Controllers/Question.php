@@ -6,11 +6,13 @@ require_once '../Models/QuestionModel.php';
 require_once '../Models/AnswerModel.php';
 require_once '../Models/VoteModel.php';
 require_once '../Models/CategoryModel.php';
+require_once '../Models/CategoryQuestionModel.php';
 
 $conn = Database::getConnection();
 
 $categoryModel = new CategoryModel($conn);
 $questionModel = new QuestionModel($conn);
+$categoryQuestionModel = new CategoryQuestionModel($conn);
 $answerModel = new AnswerModel($conn);
 $voteModel = new VoteModel($conn);
 
@@ -34,13 +36,13 @@ if(isset($_GET['my'])){
             if($questionModel->updateMe($_GET['id'], $mydata)){
                 echo json_encode([
                     'success'=> true,
-                    'messages'=> "수정이 성공했습니다!",
+                    'message'=> "수정이 성공했습니다!",
                     'redirectURL' => str_replace("/api/my", "", strtolower($_SERVER['REDIRECT_URL']))
                 ]);
             } else {
                 echo json_encode([
                     'success'=> false,
-                    'messages'=> "수정이 실패했습니다!"
+                    'message'=> "수정이 실패했습니다!"
                 ]);
             };
             return;
@@ -141,20 +143,17 @@ if(isset($_GET['my'])){
         case 'POST':
         if(isset($_POST['mydata'])){
             $mydata = $_POST['mydata'];
-
-            // 질문을 등록한다.
-            if($questionModel->add($mydata)){
-                echo json_encode([
-                    'success' => true,
-                    'message'=> "Inserted!"
-                ]);
-            } else {
-                echo json_encode([
-                    'success' => false,
-                    'message'=> "Insert Failed"
-                ]);
+            $categoryIds = explode(",", $mydata['category_ids']);
+            $insertedId = $questionModel->add($mydata);
+            foreach ($categoryIds as $categoryId) {
+                $categoryQuestionModel->add($categoryId, $insertedId);
             }
-
+            // 질문을 등록한다.
+            echo json_encode([
+                'success' => true,
+                'message'=> "Inserted!"
+            ]);
+            return;
         } else {
             echo "Wrong Request";
         }

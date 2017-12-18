@@ -31,10 +31,13 @@ require_once "header.php";
 					<div id="search-category-form" class="input-group stylish-input-group">
 					<input type="text" class="form-control"  placeholder="Search" >
 					<span class="input-group-addon">
-						<button id="search-category" type="submit">
+						<button id="search-category" type="submit" data-target="#modalForm">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>  
 					</span>
+				</div>
+				<div class="selected-category hide">
+				<h3></h3>
 				</div>
 				</div>
 				<div class="write header">
@@ -70,6 +73,51 @@ require_once "header.php";
 require_once "aside.php";
 require_once "footer.php";
 ?>
+<style>
+#ul-search-list input[readonly]{
+	background-color: white;
+}
+</style>
+<!-- Modal -->
+<div class="modal fade" id="modalForm" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" onclick="modalHide()">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">카테고리를 선택해 주세요.</h4>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <p class="statusMsg"></p>
+				<form id="search-category-list-form">
+				<ul id="ul-search-list">
+				<script type="text/handlebars-template" id="search-category-template">
+				{{#each this}}
+					<li>
+					<div class="input-group">
+						<span class="input-group-addon"><input type="radio" name="category-list" value={{category_id}} data-name={{category_name}} data-cid-set={{category_id_set}}></span>
+						<input type="text" class="form-control" aria-label="..." value="{{category_string}}" readonly>
+				    </div><!-- /input-group -->
+					</li>
+				{{/each}}
+				</script>
+				</ul>
+				</form>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="modalHide()">닫기</button>
+                <button type="button" class="btn btn-primary submitBtn">입력</button>
+            </div>
+        </div>
+    </div>
+</div>
 	<script src="<?php echo _NODE ?>/jquery/dist/jquery.js"></script>
 	<script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
@@ -83,6 +131,9 @@ require_once "footer.php";
 				$(this).height(this.scrollHeight);
 			});
 		});
+		function modalHide(){
+            $('#modalForm').modal('hide');
+        }
 	</script>
 </body>
 

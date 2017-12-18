@@ -20,17 +20,29 @@ require_once "header.php";
 <article>
     <div id="top-container">
         <div id="profile-box">
-            <div class="box" >
-                <div class="my-image" style="width: 130px; height: 130px;">
-                    <img src="http://localhost/ksc/public/images/teepa.png" style="width: 100%; height: 100%" />
+            <div class="box" style="position: relative">
+            <?php 
+                $userType = $_SESSION['user_type'];
+                if($userType == '전문가'){
+                    echo "<div style='position: absolute; top: -40px; left: -8px; width: 80px; margin: auto;'>
+                    <img src='http://localhost/ksc/public/images/giphy.gif' style='display: block; width: 33px; height: 33px; margin: auto;'>
+                    <label class='my-label label label-info' style='display: block; padding: .3em .3em .3em; font-size: 130%;'>".$userType."</label></div>";
+                    }?>
+                <div class="my-image" style="width: 130px; height: 100%; margin-top: 6px;">
+                    <img src=<?php echo "http://localhost/ksc/user_images/".$_SESSION['user_image']?> style="width: 100%; height: 100%" />
                 </div>
                 <div class="my-info">
                     <div class="profile-area">
-                        <h2>이름</h2>
-                        <span>이메일</span>
+                        <div>
+                            <h2><span><?php echo $_SESSION['name']; ?></span></h2>
+                        </div>
+                        <div>
+                            <label>이메일: </label>
+                            <span><?php echo $_SESSION['email']; ?></span>
+                        </div>
                     </div>
                     <div class="score-area">
-                        점수
+                        <?php echo $_SESSION['myscore']; ?>
                     </div>
                 </div>
             </div>
@@ -132,7 +144,7 @@ require_once "footer.php";
     <script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
     <script src="<?php echo _JS ?>/util.js"></script>
     <script src="<?php echo _JS ?>/common.js"></script>
-    <script src="<?php echo _JS ?>/index.js"></script>
+    <script src="<?php echo _JS ?>/my.js"></script>
 
 </body>
 

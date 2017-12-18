@@ -5,7 +5,7 @@ require_once '../Models/VoteModel.php';
 session_start();
 $conn = Database::getConnection();
 
-$voteModel = new voteModel($conn);
+$voteModel = new VoteModel($conn);
 
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':

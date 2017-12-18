@@ -1,30 +1,19 @@
-var CommonModule = (function () {
+var BASE_URL = "http://localhost/ksc";
 
-    var BASE_URL = "http://localhost/ksc";
-    var categories = [];
-    var categoryId = $("#rank-aside").data("category-id");
+var AsideModule = (function () {
     
-    var navCategoryTemplate = handlebarsHelper("#nav-category-template");
+    var init = () => {
+        var navCategoryTemplate = handlebarsHelper("#nav-category-template");
+        var categoryId = $("#rank-aside").data("category-id");
 
-    function init() {
-        $(".btn.login").on("click", goToLogin);
-        $(".btn.question").on("click", goToWrite);
         $("#category-list").on("click", ".category-item>a", goToHomeByCategory);
-        $(".logout").on("click", logout);
-        $("button.signup").on("click", goToSignup);
-        $("a.btn-signup").on("click", goToSignup);
-        $("button.mypage").on("click", goToMyPage);
-
-        // 본문에 모든 a태그 디폴트를 없앰
-        $("article").on("click", "a", function (e) {
-            e.preventDefault();
-        })
-
-        renderCategory(categoryId);
+        
+        renderCategory(navCategoryTemplate, categoryId);
         renderRankBox();
     }
 
-    function renderCategory(categoryId) {
+
+    var renderCategory = (navCategoryTemplate, categoryId) => {
         $.ajax(BASE_URL + "/api/Category", {
             type: 'GET',
             data: {
@@ -38,19 +27,12 @@ var CommonModule = (function () {
         })
     }
 
-    function appendSubCategory($target, subCategories){
-        $target.append(navCategoryTemplate(subCategories));
+    var goToHomeByCategory = (e) => {
+        $listItem = $(e.currentTarget).closest("li");
+        location.href = BASE_URL + "/home?categoryId=" + $listItem.data("id") + "&categoryName=" + $(e.currentTarget).text();
     }
 
-    function goToLogin() {
-        location.href = BASE_URL + "/login"
-    }
-
-    function goToMyPage() {
-        location.href = BASE_URL + "/my";
-    }
-
-    function renderRankBox() {
+    var renderRankBox = () => {
         var rankBodyTemplate = handlebarsHelper("#rank-body-template");
 
         $.ajax(BASE_URL + "/api/Rank", {
@@ -68,6 +50,43 @@ var CommonModule = (function () {
         })
     }
 
+    return {
+        init
+    }
+
+})();
+
+
+var CommonModule = (function () {
+
+    function init() {
+        $(".btn.login").on("click", goToLogin);
+        $(".btn.question").on("click", goToWrite);
+        $(".logout").on("click", logout);
+        $("button.signup").on("click", goToSignup);
+        $("a.btn-signup").on("click", goToSignup);
+        $("button.mypage").on("click", goToMyPage);
+
+        // 본문에 모든 a태그 디폴트를 없앰
+        $("article").on("click", "a", (e) => {e.preventDefault()});
+
+        $("#search-btn").on("click", (e) => {
+            search($(e.currentTarget).closest("div.input-group").find("input").val());
+        });
+    }
+
+    function search(keywords) {
+        location.href = "http://localhost/ksc/search?search=" + keywords + "&category=" + "all";
+    }
+
+    function goToLogin() {
+        location.href = BASE_URL + "/login";
+    }
+
+    function goToMyPage() {
+        location.href = BASE_URL + "/my";
+    }
+
     function logout(e) {
         location.href = BASE_URL + "/public/logout.php";
     }
@@ -80,16 +99,12 @@ var CommonModule = (function () {
         location.href = location.origin + "/ksc/write";
     }
 
-    function goToHomeByCategory(e) {
-        $listItem = $(e.currentTarget).closest("li");
-        location.href = BASE_URL + "/home?categoryId=" + $listItem .data("id") + "&categoryName=" + $(e.currentTarget).text();
-    }
-
     return {
         init
     }
 })();
 
 $(document).ready(function () {
-    CommonModule.init()
+    CommonModule.init();
+    if ($("#nav-category-template").length > 0) AsideModule.init();
 });

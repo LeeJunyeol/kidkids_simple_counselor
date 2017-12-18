@@ -12,6 +12,23 @@ require_once "config.php";
     <link href="<?php echo _NODE?>/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="<?php echo _CSS?>/common.css" rel="stylesheet">
     <link href="<?php echo _CSS?>/view-question.css" rel="stylesheet">
+    <style>
+    .selected { 
+        border-color: #fff;
+        background-color: #68FF9C;
+        color: white;
+    }
+    .select-btn:not(.selected):focus { 
+        outline: none;
+    }
+    .select-btn.selected:focus { 
+        outline: none;
+        border-color: #fff;
+        background-color: #68FF9C;
+        color: white;
+    }
+    
+    </style>
 </head>
 
 <body>
@@ -65,7 +82,10 @@ require_once "header.php";
                     <div class="reply-box">
                         <script type="text/handlebars-template" id="answer-template">
                         {{#each this}}
-                        <div class="reply-card container" data-id={{answer_id}} data-score={{votesum}}>
+                        <div class="reply-card container" data-id={{answer_id}} data-score={{votesum}} style="position: relative">
+                            <button type="button" class="select-btn btn btn-default btn-lg hide" style="position: relative; top: 15px; left: 5px; float: right; font-size: 23px; border-radius:45.5%; padding: 10px;">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
                             <div class="reply-title-group">
                                 <div class="page-header">
                                     <span class="label label-success special">{{label}}</span>

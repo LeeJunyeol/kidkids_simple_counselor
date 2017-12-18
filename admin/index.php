@@ -95,15 +95,11 @@ table .content {
                 <div style="width: 100%; display: flex; justify-content: space-between;">
                     <div class="form-group">
                         <label for="Question ID">Question ID</label>
-                        <input type="text" class="form-control" name-"questionId" id="inputQuestionID" placeholder="Question ID">
+                        <input type="text" class="form-control" name="questionId" id="inputQuestionID" placeholder="Question ID">
                     </div>
                     <div class="form-group">
                         <label for="User ID">User ID</label>
-                        <input type="text" class="form-control" name-"userId" id="inputUserID" placeholder="User ID">
-                    </div>
-                    <div class="form-group">
-                        <label for="카테고리">Category ID</label>
-                        <input type="number" class="form-control" name="categoryId" id="inputCategory" placeholder="categoryId">
+                        <input type="text" class="form-control" name="userId" id="inputUserID" placeholder="User ID">
                     </div>
                     <div class="form-group">
                         <label for="제목">Title</label>
@@ -138,6 +134,8 @@ table .content {
                         <input type="date" class="form-control" name="modifyDate" id="inputModifyDate" placeholder="수정일">
                     </div>
                     <button type="submit" class="btn btn-default add">추가</button>
+                    <button type="submit" class="btn btn-default update">수정</button>
+                    <button type="submit" class="btn btn-default delete">삭제</button>
                 </div>
             </form>
         </script>
@@ -150,7 +148,6 @@ table .content {
             <tr>
                 <th class="text-center">question_id</th>
                 <th class="text-center">user_id</th>
-                <th class="text-center">category</th>
                 <th class="text-center">title</th>
                 <th class="text-center content">content</th>
                 <th class="text-center">view</th>
@@ -180,7 +177,6 @@ table .content {
             <tr>
                 <th class="text-center">question_id</th>
                 <th class="text-center">user_id</th>
-                <th class="text-center">category</th>
                 <th class="text-center">title</th>
                 <th class="text-center content">content</th>
                 <th class="text-center">view</th>
@@ -196,10 +192,9 @@ table .content {
             <tbody>
             <script type="text/handlebars-template" id="question-template">
             {{#each this}}
-            <tr>
+            <tr data-obj='{"questionId": "{{question_id}}","userId": "{{user_id}}","title": "{{title}}","content": "","view": "{{view}}","createDate": "{{create_date}}","modifyDate": "{{modify_date}}","tags": "{{tags}}","selectedAnswerId": "{{selected_answer_id}}"}'>
                 <td class="text-center">{{question_id}}</td>
                 <td class="text-center">{{user_id}}</td>
-                <td class="text-center">{{category}}</td>
                 <td class="text-center">{{title}}</td>
                 <td class="text-center content">{{content}}</td>
                 <td class="text-center">{{view}}</td>
@@ -214,8 +209,9 @@ table .content {
             </script>
             <script type="text/handlebars-template" id="answer-template">
             {{#each this}}
-            <tr>
-            <tr>
+            <tr data-obj={
+                {{answer_id}}
+            }>
                 <td class="text-center">{{answer_id}}</th>
                 <td class="text-center">{{question_id}}</th>
                 <td class="text-center">{{user_id}}</th>

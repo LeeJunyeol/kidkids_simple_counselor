@@ -28,6 +28,16 @@ var AdminModule = (function () {
         $("#menu>li:eq(2)").on("click", function(e){
             getCategories(1);
         })
+        $("table").on("click", "tr", function(e){
+            var selectedData = $(e.currentTarget).data("obj");
+            selectedData["content"] = $(e.currentTarget).find(".content").text();
+            selectedData["createDate"] = new Date(selectedData["createDate"]).toISOString().slice(0,10);
+            selectedData["modifyDate"] = new Date(selectedData["modifyDate"]).toISOString().slice(0,10);
+            $(".form-control").each(function(i, v){
+                var name = $(v).prop("name");
+                $(v).val(this[name]);
+            }.bind(selectedData));
+        });
 
     }
 

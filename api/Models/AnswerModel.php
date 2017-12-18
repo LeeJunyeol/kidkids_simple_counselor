@@ -70,12 +70,17 @@ class AnswerModel {
     }
 
     function getByQuestionIdAndUserId($questionId, $userId){
-        $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
-        , a.modify_date, u.user_type as label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
-        FROM answers AS a 
-        LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+        $sql = "SELECT a.answer_id, a.question_id, a.user_id AS author, a.content, a.create_date, a.modify_date, a.title, u.user_type AS label, IFNULL(plus.plus_vote_cnt, 0) AS plus_vote_cnt, IFNULL(minus.minus_vote_cnt, 0) AS minus_vote_cnt FROM answers AS a 
+        LEFT JOIN (SELECT answer_id, COUNT(*) AS plus_vote_cnt FROM votes WHERE vote = 1 GROUP BY answer_id) AS plus ON plus.answer_id = a.answer_id
+        LEFT JOIN (SELECT answer_id, COUNT(*) AS minus_vote_cnt FROM votes WHERE vote = -1 GROUP BY answer_id) AS minus ON minus.answer_id = a.answer_id
         LEFT JOIN users AS u ON a.user_id = u.user_id
-        WHERE a.question_id = :question_id");
+        WHERE question_id = :question_id";
+        // $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
+        // , a.modify_date, u.user_type as label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
+        // FROM answers AS a 
+        // LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+        // LEFT JOIN users AS u ON a.user_id = u.user_id
+        // WHERE a.question_id = :question_id");
         $stmt->bindValue(':question_id', $questionId);
         $stmt->execute();
         $results = array();
@@ -117,12 +122,18 @@ class AnswerModel {
     }
 
     function getByQuestionId($questionId){
-        $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
-        , a.modify_date, u.user_type as label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
-        FROM answers AS a 
-        LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+        $sql = "SELECT a.answer_id, a.question_id, a.user_id AS author, a.content, a.create_date, a.modify_date, a.title, u.user_type AS label, IFNULL(plus.plus_vote_cnt, 0) AS plus_vote_cnt, IFNULL(minus.minus_vote_cnt, 0) AS minus_vote_cnt FROM answers AS a 
+        LEFT JOIN (SELECT answer_id, COUNT(*) AS plus_vote_cnt FROM votes WHERE vote = 1 GROUP BY answer_id) AS plus ON plus.answer_id = a.answer_id
+        LEFT JOIN (SELECT answer_id, COUNT(*) AS minus_vote_cnt FROM votes WHERE vote = -1 GROUP BY answer_id) AS minus ON minus.answer_id = a.answer_id
         LEFT JOIN users AS u ON a.user_id = u.user_id
-        WHERE a.question_id = :question_id");
+        WHERE question_id = :question_id";
+        // $sql = "SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
+        // , a.modify_date, u.user_type as label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
+        // FROM answers AS a 
+        // LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+        // LEFT JOIN users AS u ON a.user_id = u.user_id
+        // WHERE a.question_id = :question_id";
+        $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':question_id', $questionId);
         $stmt->execute();
         $results = array();
@@ -130,23 +141,23 @@ class AnswerModel {
             $results[] = $row;
         }
 
-        $grouped = array_group_by($results, 'answer_id'); // answer_id를 기준으로 그룹
-        $finalAnswers = array();
+        // $grouped = array_group_by($results, 'answer_id'); // answer_id를 기준으로 그룹
+        // $finalAnswers = array();
         
-        // vote를 합쳐서 votesum을 구하고, 내가 투표한 답변이라면 내 정보를 추가
-        foreach ($grouped as &$value) {
-            $initial = array_shift($value); 
-            $initial['votesum'] = $initial['vote'];
+        // // vote를 합쳐서 votesum을 구하고, 내가 투표한 답변이라면 내 정보를 추가
+        // foreach ($grouped as &$value) {
+        //     $initial = array_shift($value); 
+        //     $initial['votesum'] = $initial['vote'];
             
-            $t = array_reduce($value, function($result, $item) { 
-                $result['votesum'] += $item['vote'];
-                return $result;
-            }, $initial);
-            array_push($finalAnswers, $t);
-        }
-        usort ($finalAnswers, array("AnswerModel", "cmp"));
+        //     $t = array_reduce($value, function($result, $item) { 
+        //         $result['votesum'] += $item['vote'];
+        //         return $result;
+        //     }, $initial);
+        //     array_push($finalAnswers, $t);
+        // }
+        // usort ($finalAnswers, array("AnswerModel", "cmp"));
         
-        return $finalAnswers;
+        return $results;
     }
 
     

@@ -126,12 +126,9 @@ if(isset($_GET['my'])){
         if(isset($_GET['id'])){
             $id  = $_GET['id'];
             $question = $questionModel->getById($id);
-            if(isset($_SESSION['id'])){
-                $answers = $answerModel->getByQuestionIdAndUserId($id, $_SESSION['id']);
-            } else {
-                $answers = $answerModel->getByQuestionId($id);
-            }
+            $answers = $answerModel->getByQuestionId($id);
             $opinions = $answerModel->getJoinOnAnswerByQuestionId($id);
+            
             echo json_encode([
                 "question" => $question,
                 "answers" => $answers,

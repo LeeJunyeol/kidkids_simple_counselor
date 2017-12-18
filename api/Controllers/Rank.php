@@ -10,11 +10,12 @@ $voteModel = new VoteModel($conn);
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
     if(isset($_GET['ranker'])){
-        $rankers = $voteModel->getScoreGroupByUser();
-        if(count($rankers) > 0){
+        $scores = $voteModel->getScoreLimit10();
+
+        if(count($scores) > 0){
             echo json_encode([
                 'success' => true,
-                'ranker' => $rankers
+                'ranker' => $scores
             ]);
         } else {
             echo json_encode([

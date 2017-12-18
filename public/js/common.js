@@ -1,11 +1,15 @@
 var CommonModule = (function () {
 
-    var BASE_URL = "http://localhost/ksc/";
+    var BASE_URL = "http://localhost/ksc";
+    var categories = [];
+    var categoryId = $("#rank-aside").data("category-id");
+    
+    var navCategoryTemplate = handlebarsHelper("#nav-category-template");
 
     function init() {
         $(".btn.login").on("click", goToLogin);
         $(".btn.question").on("click", goToWrite);
-        $(".category-box").on("click", ".category-item>div>a", goToHomeByCategory);
+        $("#category-list").on("click", ".category-item>a", goToHomeByCategory);
         $(".logout").on("click", logout);
         $("button.signup").on("click", goToSignup);
         $("a.btn-signup").on("click", goToSignup);
@@ -16,7 +20,26 @@ var CommonModule = (function () {
             e.preventDefault();
         })
 
+        renderCategory(categoryId);
         renderRankBox();
+    }
+
+    function renderCategory(categoryId) {
+        $.ajax(BASE_URL + "/api/Category", {
+            type: 'GET',
+            data: {
+                categoryId
+            }
+        }).then(function (res) {
+            var result = JSON.parse(res);
+            // categories = result['categories'];
+            var $categoryList = $("#category-list");
+            $categoryList.append(navCategoryTemplate(result));
+        })
+    }
+
+    function appendSubCategory($target, subCategories){
+        $target.append(navCategoryTemplate(subCategories));
     }
 
     function goToLogin() {
@@ -58,8 +81,8 @@ var CommonModule = (function () {
     }
 
     function goToHomeByCategory(e) {
-        var category = $(this).text();
-        location.href = BASE_URL + "/home?category=" + category;
+        $listItem = $(e.currentTarget).closest("li");
+        location.href = BASE_URL + "/home?categoryId=" + $listItem .data("id") + "&categoryName=" + $(e.currentTarget).text();
     }
 
     return {

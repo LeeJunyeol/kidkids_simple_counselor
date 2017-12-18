@@ -1,3 +1,21 @@
+<style>
+#imaginary_container{
+    margin-top:10px;
+}
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+	border-right:0; 
+	box-shadow:0 0 0; 
+	border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+</style>
+
 <header>
     <div class="head center-block">
         <div class="logo">
@@ -25,9 +43,6 @@
         };
         ?>
             <div class="btn-group user-control">
-                <button class="btn search btn-default">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </button>
             <?php 
             if(!isset($_SESSION["logged_in"])){
                 echo "<button class='btn btn-default login'>로그인</button>";
@@ -42,5 +57,19 @@
         </div>
     </div>
 </header>
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <div id="imaginary_container"> 
+            <div class="input-group stylish-input-group">
+                <input type="text" class="form-control"  placeholder="Search" >
+                <span class="input-group-addon">
+                    <button type="submit">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>  
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="main">
         <div class="wrapper center-block">

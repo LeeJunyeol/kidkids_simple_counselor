@@ -24,16 +24,11 @@ textarea:disabled {
 
 /* 본문 */
 #main>div.wrapper {
-    padding-bottom: 50px;
-    padding-right: 50px;
     max-width: 1260px;
 }
 
 article {
-    padding-top: 30px;
     width: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
 }
 
 /* 헤더 */
@@ -49,8 +44,6 @@ header>div.head {
     width: 65.5%;
     max-width: 1100px;
     height: 130px;
-    padding-left: 20px;
-    padding-right: 20px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -139,7 +132,8 @@ footer {
 }
 
 #main>.wrapper {
-    width: 80%;
+    width: 65.5%;
+    padding-top: 15px;
     display: flex;
     justify-content: center;
 }
@@ -149,8 +143,8 @@ a { text-decoration:none !important }
 /* aside 공통 */
 
 aside {
-    width: 180px;
-    padding-top: 30px;
+    width: 200px;
+    margin-left: 15px;
 }
 
 aside>div {
@@ -169,7 +163,7 @@ aside>div>div.head {
     color: #1DB51A;
 }
 
-aside>div>div.head>h3 {
+aside h3 {
     margin-top: 0;
     font-size: 18px;
 }

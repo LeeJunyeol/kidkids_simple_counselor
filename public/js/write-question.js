@@ -48,6 +48,20 @@ $(document).ready(function () {
         }.call(this, splitedUrl[1]));
     }
 
+    // 카테고리 검색 팝업 띄우기
+    $("#search-category-form").on("click", "#search-category", function(e){
+        var searchStr = $(e.delegateTarget).find("input").val();
+        if(searchStr === "") {
+            alert("질문 분야를 입력해주세요.");
+            return;
+        };
+        // window.name = "부모창 이름"; 
+        window.name = "parentForm";
+        // window.open("open할 window", "자식창 이름", "팝업창 옵션");
+        var openWin = window.open("http://localhost/ksc/search-category?search-category-string=" + searchStr, "카테고리 검색", "width=570, height=350, resizable = no, scrollbars = no");  
+    });
+
+
     // 드롭다운 이벤트
     $dropdownMenu.on("click", "li", function (e) {
         this.removeClass("unclicked");

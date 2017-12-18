@@ -1,26 +1,40 @@
-<aside class="rank-aside">
+<style>
+ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+ul.sub {
+	padding-left: 10px;
+}
+
+</style>
+<aside id="rank-aside" class="rank-aside" data-category-id=<?php 
+				if(isset($_GET['categoryId'])){
+					echo $_GET['categoryId'];
+					} else {
+						echo 0;
+					} ?>>
 				<div class="category-box">
-                    <div class="head category-head">
-                        <h3>카테고리</h3>
-                    </div>
-                    <div class="category-item">
-                        <div><a href="http://localhost/ksc/home">전체</a></div>
-                    </div>
-                    <div class="category-item">
-                        <div><a href="#" data-category="육아/건강">육아/건강</a></div>
-                    </div>
-                    <div class="category-item">
-                        <div><a href="#" data-category="교육/놀이">교육/놀이</a></div>
-                    </div>
-                    <div class="category-item">
-                        <div><a href="#" data-category="안전">안전</a></div>
-                    </div>
-                    <div class="category-item">
-                        <div><a href="#" data-category="음식">음식</a></div>
-                    </div>
-                    <div class="category-item">
-                        <div><a href="#" data-category="기타">기타</a></div>
-                    </div>
+					<div id="category">
+						<h3>카테고리</h3>
+						<div class="wrapper">
+							<ul>
+								<li id="category-list">
+									<a href="http://localhost/ksc/home"> 분류 전체 보기</a><br>
+									<script type="text/handlebars-template" id="nav-category-template">
+									{{#if currentCategory.parent_idx}}<a href="http://localhost/ksc/home?categoryId={{currentCategory.parent_idx}}">뒤로 가기</a><br>{{/if}}
+									<a href="http://localhost/ksc/home?categoryId={{currentCategory.category_id}}">{{currentCategory.category_name}}</a>
+									<ul class="sub">
+										{{#each categories}}
+										<li class="category-item" data-id={{category_id}} data-depth={{depth}} data-parent-idx={{parent_idx}}><a href="#">{{category_name}}</a></li>
+										{{/each}}
+									</ul>
+									</script>
+								</li>
+							</ul>
+						</div>
+					</div>
                 </div>
 				<div class="rank-box">
 					<div class="head rank-head">

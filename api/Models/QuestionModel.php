@@ -16,18 +16,22 @@ class QuestionModel {
         $stmt->bindParam(':content', $question['content']);
         $stmt->bindParam(':tags', $question['tags']);
 
-        if($stmt->execute()){
-            return true;
-        } else {
-            return false;
-        }
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            exit;
+        };
+        return true;
     }
 
     function getById($id){
-        $stmt = $this->conn->prepare("SELECT question_id, user_id, category, title, content, view, create_date, modify_date, tags
-        FROM questions WHERE question_id=:question_id");
+        $stmt = $this->conn->prepare("SELECT question_id, user_id, title, content, view, tags
+            , selected_answer_id, create_date, modify_date FROM questions
+            WHERE question_id=:question_id");
         $stmt->bindParam(':question_id', $id);
-        $stmt->execute();
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            exit;
+        };
         return $stmt->fetchObject();
     }
 
@@ -38,9 +42,24 @@ class QuestionModel {
         }
 
         try {
-            $sql = "SELECT * FROM questions ORDER BY $sortBy $ascChar LIMIT $offset, $limit";
+            $sql = "SELECT q.question_id, q.user_id, q.title, q.content, q.view, q.tags
+            , q.selected_answer_id, q.create_date, q.modify_date, c.category_name AS category, c.category_id
+            FROM 
+            (
+                SELECT * FROM category_question
+            ) AS cq 
+            INNER JOIN questions AS q
+            ON q.question_id = cq.question_id
+            INNER JOIN categories AS c
+            ON c.category_id = cq.category_id
+            WHERE c.depth = 0 
+            ORDER BY $sortBy $ascChar LIMIT $offset, $limit";
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute();
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            };
+            
             $questions = array();
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                 $questions[] = $row;
@@ -52,15 +71,30 @@ class QuestionModel {
         }
     }
 
-    function getByCategoryForPage($category, $offset, $limit, $sortBy, $isASC){
+    function getByCategoryForPage($categoryId, $offset, $limit, $sortBy, $isASC){
         $ascChar = "DESC";
         if($isASC === "true"){
             $ascChar = "ASC";
         }
-        
-        $stmt = $this->conn->prepare("SELECT * FROM questions WHERE category=:category ORDER BY $sortBy $ascChar LIMIT $offset, $limit");
-        $stmt->bindValue(':category', $category);
-        $stmt->execute();
+        $sql = "SELECT q.question_id, q.user_id, q.title, q.content, q.view, q.tags
+        , q.selected_answer_id, q.create_date, q.modify_date, c.category_name AS category, c.category_id 
+        FROM (
+            SELECT * FROM category_question
+            WHERE category_id=:categoryId
+        ) AS cq 
+        INNER JOIN questions AS q ON q.question_id = cq.question_id
+        INNER JOIN categories AS c ON c.category_id = cq.category_id 
+        ORDER BY q.$sortBy $ascChar LIMIT $offset, $limit";
+        $stmt = $this->conn->prepare($sql);
+        // $stmt = $this->conn->prepare("SELECT q.question_id, q.user_id, q.category_id, q.title, q.content, q.view, q.tags
+        // , q.selected_answer_id, q.create_date, q.modify_date, c.category_name as category 
+        // FROM questions as q JOIN categories AS c ON q.category_id = c.category_id 
+        // WHERE q.category_id=:categoryId ORDER BY q.$sortBy $ascChar LIMIT $offset, $limit");
+        $stmt->bindValue(':categoryId', $categoryId);
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            exit;
+        };
         $results = array();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             $results[] = $row;
@@ -75,10 +109,19 @@ class QuestionModel {
         return $rowCount;
     }
 
-    function countByCategory($category){
-        $stmt = $this->conn->prepare("SELECT count(*) FROM questions WHERE category=:category");
-        $stmt->bindValue(':category', $category);
-        $stmt->execute();
+    function countByCategory($categoryId){
+        $stmt = $this->conn->prepare("SELECT count(*) 
+        FROM (
+            SELECT * FROM category_question
+            WHERE category_id=:categoryId
+        ) AS cq 
+        INNER JOIN questions AS q ON q.question_id = cq.question_id
+        INNER JOIN categories AS c ON c.category_id = cq.category_id");
+        $stmt->bindValue(':categoryId', $categoryId);
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            exit;
+        };
         $rowCount = $stmt->fetch(PDO::FETCH_NUM);
 
         return $rowCount;
@@ -89,13 +132,11 @@ class QuestionModel {
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, ++$view);
         $stmt->bindParam(2, $id);
-        if($stmt->execute()){
-            echo "여기";
-            return true;
-        } else {
-            echo "저기";
-            return false;
-        }
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            exit;
+        };
+        return true;
     }
 
     function updateMe($id, $myQuestion){
@@ -108,24 +149,22 @@ class QuestionModel {
         $stmt->bindParam(3, $myQuestion->content);
         $stmt->bindParam(4, $myQuestion->tags);
         $stmt->bindParam(5, $id);
-        if($stmt->execute()){
-            //echo "여기";
-            return true;
-        } else {
-            echo "저기";
-            return false;
-        }
-    }
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            exit;
+        };
+        return true;
+}
 
     function delete($id){
         $sql = "DELETE FROM `questions` WHERE `question_id` = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $id);
-        if($stmt->execute()){
-            return true;
-        } else {
-            return false;
-        }
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            exit;
+        };
+        return true;
     }
 }
 

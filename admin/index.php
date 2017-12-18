@@ -69,10 +69,10 @@ table .content {
 }
 
 </style>
-<header>
-	<h1 class="text-center">관리자 페이지</h1>
-</header>
-<div id="main-wrapper" style="display:flex;">
+    <header style="width: 2030px">
+        <h1 class="text-center">관리자 페이지</h1>
+    </header>
+    <div id="main-wrapper" style="display:flex; overflow-x: scroll; width: 2030px;">
     <div class="nav">
         <div class="nav-header"><h3>관리 메뉴</h3></div>
         <div>
@@ -87,53 +87,111 @@ table .content {
 
     <div class="main panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading text-center">
-
+        <div id="form" class="panel-heading text-center">
+        <script type="text/handlebars-template" id="question-input-template">
             <h2 style="margin-bottom: 30px;">질문 목록</h2>
 
-            <form class="form-inline" style="display: flex; justify-content: space-around;">
-                <div class="form-group">
-                    <label for="ID(문자열)">User ID</label>
-                    <input type="text" class="form-control" id="inputUserID" placeholder="ID">
+            <form class="form">
+                <div style="width: 100%; display: flex; justify-content: space-between;">
+                    <div class="form-group">
+                        <label for="Question ID">Question ID</label>
+                        <input type="text" class="form-control" name-"questionId" id="inputQuestionID" placeholder="Question ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="User ID">User ID</label>
+                        <input type="text" class="form-control" name-"userId" id="inputUserID" placeholder="User ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="카테고리">Category ID</label>
+                        <input type="number" class="form-control" name="categoryId" id="inputCategory" placeholder="categoryId">
+                    </div>
+                    <div class="form-group">
+                        <label for="제목">Title</label>
+                        <input type="text" class="form-control" name="title" id="inputTitle" placeholder="질문입니다.">
+                    </div>
+                    <div class="form-group">
+                        <label for="조회수">View</label>
+                        <input type="number" class="form-control" name="view" id="inputView" placeholder="조회수">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="카테고리">Category</label>
-                    <input type="text" class="form-control" id="inputCategory" placeholder="육아">
+                <div style="width: 100%; display: flex; justify-content: space-between;">
+                    <div class="form-group" style="width: 100%;>
+                        <label for="내용">Content</label>
+                        <input type="text" class="form-control" name="content" id="inputContent" placeholder="내용입니다.">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="제목">Title</label>
-                    <input type="text" class="form-control" id="inputTitle" placeholder="질문입니다.">
+                <div style="width: 100%; display: flex; justify-content: space-between;">
+                    <div class="form-group">
+                        <label for="태그">Tags</label>
+                        <input type="text" class="form-control" name="tags" id="inputTags" placeholder="태그">
+                    </div>
+                    <div class="form-group">
+                        <label for="채택 답변 ID">Selected Answer ID</label>
+                        <input type="number" class="form-control" name="selectedAnswerId" id="inputSelectedAnswerId" placeholder="채택 답변">
+                    </div>
+                    <div class="form-group">
+                        <label for="등록일">Create Date</label>
+                        <input type="date" class="form-control" name="createDate" id="inputCreateDate" placeholder="등록일">
+                    </div>
+                    <div class="form-group">
+                        <label for="수정일">Modify Date</label>
+                        <input type="date" class="form-control" name="modifyDate" id="inputModifyDate" placeholder="수정일">
+                    </div>
+                    <button type="submit" class="btn btn-default add">추가</button>
                 </div>
-                <div class="form-group">
-                    <label for="내용">Content</label>
-                    <input type="text" class="form-control" id="inputContent" placeholder="내용입니다.">
-                </div>
-                <div class="form-group">
-                    <label for="조회수">View</label>
-                    <input type="number" class="form-control" id="inputView" placeholder="조회수">
-                </div>
-                <button type="submit" class="btn btn-default add">추가</button>
             </form>
-
+        </script>
         </div>
 
         <!-- Table -->
         <table class="table table-hover">
             <thead>
-                <tr>
-                    <th class="text-center">question_id</th>
-                    <th class="text-center">user_id</th>
-                    <th class="text-center">category</th>
-                    <th class="text-center">title</th>
-                    <th class="text-center content">content</th>
-                    <th class="text-center">view</th>
-                    <th class="text-center">create_date</th>
-                    <th class="text-center">modify_date</th>
-                    <th class="text-center">tags</th>
-                    <th class="text-center selected_answer_id">selected_answer_id</th>
-                    <th class="text-center">수정</th>
-                    <th class="text-center">삭제</th>
-                </tr>
+            <script type="text/handlebars-template" id="question-header-template">
+            <tr>
+                <th class="text-center">question_id</th>
+                <th class="text-center">user_id</th>
+                <th class="text-center">category</th>
+                <th class="text-center">title</th>
+                <th class="text-center content">content</th>
+                <th class="text-center">view</th>
+                <th class="text-center">tags</th>
+                <th class="text-center selected_answer_id">selected_answer_id</th>
+                <th class="text-center">create_date</th>
+                <th class="text-center">modify_date</th>
+                <th class="text-center">수정</th>
+                <th class="text-center">삭제</th>
+            </tr>
+            </script>
+            <script type="text/handlebars-template" id="answer-header-template">
+            <tr>
+                <th class="text-center">answer_id</th>
+                <th class="text-center">question_id</th>
+                <th class="text-center">user_id</th>
+                <th class="text-center">title</th>
+                <th class="text-center content">content</th>
+                <th class="text-center">selection</th>
+                <th class="text-center">create_date</th>
+                <th class="text-center">modify_date</th>
+                <th class="text-center">수정</th>
+                <th class="text-center">삭제</th>
+            </tr>
+            </script>
+            <script type="text/handlebars-template" id="category-header-template">
+            <tr>
+                <th class="text-center">question_id</th>
+                <th class="text-center">user_id</th>
+                <th class="text-center">category</th>
+                <th class="text-center">title</th>
+                <th class="text-center content">content</th>
+                <th class="text-center">view</th>
+                <th class="text-center">create_date</th>
+                <th class="text-center">modify_date</th>
+                <th class="text-center">tags</th>
+                <th class="text-center selected_answer_id">selected_answer_id</th>
+                <th class="text-center">수정</th>
+                <th class="text-center">삭제</th>
+            </tr>
+            </script> 
             </thead>
             <tbody>
             <script type="text/handlebars-template" id="question-template">
@@ -157,16 +215,15 @@ table .content {
             <script type="text/handlebars-template" id="answer-template">
             {{#each this}}
             <tr>
-                <td class="text-center">{{question_id}}</td>
-                <td class="text-center">{{user_id}}</td>
-                <td class="text-center">{{category}}</td>
-                <td class="text-center">{{title}}</td>
-                <td class="text-center content">{{content}}</td>
-                <td class="text-center">{{view}}</td>
-                <td class="text-center">{{create_date}}</td>
-                <td class="text-center">{{modify_date}}</td>
-                <td class="text-center">{{tags}}</td>
-                <td class="text-center" selected_answer_id>{{selected_answer_id}}</td>
+            <tr>
+                <td class="text-center">{{answer_id}}</th>
+                <td class="text-center">{{question_id}}</th>
+                <td class="text-center">{{user_id}}</th>
+                <td class="text-center">{{title}}</th>
+                <td class="text-center content">{{content}}</th>
+                <td class="text-center">{{selection}}</th>
+                <td class="text-center">{{create_date}}</th>
+                <td class="text-center">{{modify_date}}</th>
                 <td class="text-center"><button class="update">수정</button></td>
                 <td class="text-center"><button class="delete">삭제</button></td>
             </tr>

@@ -23,8 +23,8 @@ require_once "header.php";
 		<div id="board-header">
 			<div class="title">
 				<h2><?php 
-				if(isset($_GET['category'])){
-					echo $_GET['category'];
+				if(isset($_GET['categoryName'])){
+					echo $_GET['categoryName'];
 					} else {
 						echo "전체 질문";
 					} ?></h2>

@@ -14,17 +14,14 @@ $(document).ready(function () {
     var currentPageNum = 1;
     var lastPageNum = 1;
 
-    var category = $("div.title>h2").text();
+    var categoryId = $("#rank-aside").data("category-id");
     var sortBy = "default";
     var isAsc = false;
 
     init();
 
     function init() {
-        if (category === "전체 질문") {
-            category = undefined; // -> 공백 ""
-        }
-        getQuestions(1, sortBy, category);
+        getQuestions(1, sortBy, categoryId);
 
         // 페이지 네비게이션 이벤트
         $("#pageNav").on("click", "li.previous", prevPage);
@@ -59,14 +56,14 @@ $(document).ready(function () {
             $(this).toggleClass("isasc");
             $(this).hasClass("isasc") ? isAsc = true : isAsc = false;
 
-            getQuestions(currentPageNum, sortBy, category);
+            getQuestions(currentPageNum, sortBy, categoryId);
         })
     }
 
     function prevPage(e){
         if (currentPageNum > 1) {
             currentPageNum--;
-            getQuestions(currentPageNum, sortBy, category);
+            getQuestions(currentPageNum, sortBy, categoryId);
         } else {
             alert("첫 페이지입니다.");
         }
@@ -75,7 +72,7 @@ $(document).ready(function () {
     function nextPage(e){
         if (currentPageNum < lastPageNum) {
             currentPageNum++;
-            getQuestions(currentPageNum, sortBy, category);
+            getQuestions(currentPageNum, sortBy, categoryId);
         } else {
             alert("마지막 페이지입니다.");
         }
@@ -83,18 +80,18 @@ $(document).ready(function () {
 
     function moveToPageNum(e){
         currentPageNum = parseInt($(e.currentTarget).data("num"));
-        getQuestions(currentPageNum, sortBy, category);
+        getQuestions(currentPageNum, sortBy, categoryId);
     }
 
     // 질문 목록을 불러온다.
-    function getQuestions(page, sortBy, category) {
+    function getQuestions(page, sortBy, categoryId) {
         var dataObj = {};
         dataObj['page'] = page;
         dataObj['sortBy'] = sortBy;
         dataObj['isASC'] = isAsc;
         dataObj['limit'] = 5;
-        if (category !== undefined) {
-            dataObj['category'] = category;
+        if (categoryId !== 0) {
+            dataObj['categoryId'] = categoryId;
         }
         $.ajax("http://localhost/ksc/api/Controllers/Question.php", {
             type: "GET",

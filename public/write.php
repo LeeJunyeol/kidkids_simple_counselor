@@ -14,7 +14,6 @@ if(!isset($_SESSION["logged_in"])){
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>타이틀</title>
 	<link href="<?php echo _NODE?>/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-	<link href="<?php echo _CSS?>/Footer-Clean.css" rel="stylesheet">
 	<link href="<?php echo _CSS?>/common.css" rel="stylesheet">
 	<link href="<?php echo _CSS?>/write-question.css" rel="stylesheet">
 </head>
@@ -28,29 +27,15 @@ require_once "header.php";
 		<div class="wrapper">
 			<div class="container">
 				<div class="write category">
-					<div class="dropdown">
-						<button class="btn btn-default dropdown-toggle" type="button" id="dropdown-category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							<span class="top unclicked">카테고리</span>
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							<li>
-								<a href="#">육아/건강</a>
-							</li>
-							<li>
-								<a href="#">교육/놀이</a>
-							</li>
-							<li>
-								<a href="#">안전</a>
-							</li>
-							<li>
-								<a href="#">음식</a>
-							</li>
-							<li>
-								<a href="#">기타</a>
-							</li>
-						</ul>
-					</div>
+					<label>질문 분야를 입력해주세요.</label>
+					<div id="search-category-form" class="input-group stylish-input-group">
+					<input type="text" class="form-control"  placeholder="Search" >
+					<span class="input-group-addon">
+						<button id="search-category" type="submit">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>  
+					</span>
+				</div>
 				</div>
 				<div class="write header">
 					<textarea placeholder="제목"></textarea>

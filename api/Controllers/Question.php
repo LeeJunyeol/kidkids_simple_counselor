@@ -5,9 +5,11 @@ require_once "../Config/Database.php";
 require_once '../Models/QuestionModel.php';
 require_once '../Models/AnswerModel.php';
 require_once '../Models/VoteModel.php';
+require_once '../Models/CategoryModel.php';
 
 $conn = Database::getConnection();
 
+$categoryModel = new CategoryModel($conn);
 $questionModel = new QuestionModel($conn);
 $answerModel = new AnswerModel($conn);
 $voteModel = new VoteModel($conn);
@@ -66,11 +68,11 @@ if(isset($_GET['my'])){
     switch($_SERVER['REQUEST_METHOD']){
         case 'GET':
         // 카테고리별 출력
-        if(isset($_GET['category']) && isset($_GET['page']) && isset($_GET['sortBy']) && isset($_GET['isASC'])){
+        if(isset($_GET['categoryId']) && isset($_GET['page']) && isset($_GET['sortBy']) && isset($_GET['isASC'])){
             $limit = $_GET['page'] * 5;
             $offset = $limit - 5;
 
-            $category = $_GET['category'];
+            $categoryId = $_GET['categoryId'];
             $isASC = $_GET['isASC'];
             $sortBy = "create_date";
             switch($_GET['sortBy']){
@@ -80,18 +82,18 @@ if(isset($_GET['my'])){
                 case "cnt":
                 $sortBy = "view";
             }
-
-            $results = $questionModel->getByCategoryForPage($category, $offset, $limit, $sortBy, $isASC);
-            $rowCount = $questionModel->countByCategory($category);
+            
+            $questions = $questionModel->getByCategoryForPage($categoryId, $offset, $limit, $sortBy, $isASC);
+            $rowCount = $questionModel->countByCategory($categoryId);
             
             echo json_encode([
                 'count'=> $rowCount,
-                'data'=> $results
+                'questions'=> $questions
             ]);
             return;
         }
         // 전체 조회 (카테고리별 X)
-        if(!isset($_GET['category']) && isset($_GET['page']) 
+        if(!isset($_GET['categoryId']) && isset($_GET['page']) 
         && isset($_GET['sortBy']) && isset($_GET['isASC']) 
         && isset($_GET['limit'])){
             $limit = $_GET['limit'];

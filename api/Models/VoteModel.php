@@ -18,6 +18,28 @@ class VoteModel {
             return false;
         }
     }
+
+    function getVoteCount($vote){
+        try {
+            $sql = "SELECT answer_id, COUNT(*) AS vote_cnt FROM votes WHERE vote = :vote GROUP BY answer_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':vote', $vote);
+
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            }
+            $voteCounts = array();
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                $voteCounts[] = $row;
+            }
+            return $voteCounts;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+
     
     function getByUserIdAndAnswerID($userId, $answerId){
         $stmt = $this->conn->prepare("SELECT vote FROM votes WHERE user_id = :user_id AND answer_id = :answer_id");
@@ -30,16 +52,24 @@ class VoteModel {
         return $answer;
     }
 
-    // 점수 순위 조회
-    function getScoreGroupByUser(){
+    // 점수, 채택 답변 점수 합산
+    // 채택 답변 100점, 추천 1점, 비추천 -1점
+    function getScoreLimit10(){
         try {
-            $stmt = $this->conn->prepare("SELECT user_id, SUM(vote) AS score FROM votes, (SELECT @row_number:=0) AS t GROUP BY user_id ORDER BY score DESC limit 10");
-            $stmt->execute();
-            $rankers = array();
+            $sql = "SELECT a.user_id, 
+            (SUM(a.selection) * 100 + SUM(v.vote)) AS score 
+            FROM answers AS a INNER JOIN votes AS v ON a.answer_id = v.answer_id 
+            GROUP BY user_id ORDER BY score DESC LIMIT 10";
+            $stmt = $this->conn->prepare($sql);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            };
+            $scores = array();
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                $rankers[] = $row;
+                $scores[] = $row;
             }
-            return $rankers;
+            return $scores;
         } catch (PDOException $e) {
             print $e->getMessage();
             exit;
@@ -48,10 +78,15 @@ class VoteModel {
 
     function getMyTotalScore($userId){
         try {
-            $stmt = $this->conn->prepare("SELECT SUM(vote) FROM votes WHERE user_id=:user_id");
+            $stmt = $this->conn->prepare("SELECT a.user_id, 
+            (SUM(a.selection) * 100 + SUM(v.vote)) AS score 
+            FROM answers AS a INNER JOIN votes AS v ON a.answer_id = v.answer_id WHERE a.user_id = :user_id");
             $stmt->bindParam(':user_id', $userId);
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_NUM);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            };
+            return $stmt->fetchObject();
         } catch (PDOException $e) {
             print $e->getMessage();
             exit;

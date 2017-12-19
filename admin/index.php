@@ -159,11 +159,11 @@ table .content {
                     </div>
                     <div class="form-group">
                         <label for="등록일">Create Date</label>
-                        <input type="date" class="form-control" name="createDate" id="inputCreateDate" placeholder="등록일">
+                        <input type="text" class="form-control" name="createDate" id="inputCreateDate" placeholder="등록일">
                     </div>
                     <div class="form-group">
                         <label for="수정일">Modify Date</label>
-                        <input type="date" class="form-control" name="modifyDate" id="inputModifyDate" placeholder="수정일">
+                        <input type="text" class="form-control" name="modifyDate" id="inputModifyDate" placeholder="수정일">
                     </div>
                     <button type="submit" class="btn btn-default add">추가</button>
                     <button type="submit" class="btn btn-default update">수정</button>
@@ -171,6 +171,54 @@ table .content {
                 </div>
             </form>
         </script>
+        <script type="text/handlebars-template" id="answer-input-template">
+            <h2 style="margin-bottom: 30px;">답변 목록</h2>
+
+            <form class="form">
+                <div style="width: 100%; display: flex; justify-content: space-between;">
+                    <div class="form-group">
+                        <label for="Answer ID">Anwer ID</label>
+                        <input type="text" class="form-control" name="answerId" id="inputAnswerID" placeholder="Answer ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="Question ID">Question ID</label>
+                        <input type="text" class="form-control" name="questionId" id="inputQuestionID" placeholder="Question ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="User ID">User ID</label>
+                        <input type="text" class="form-control" name="userId" id="inputUserID" placeholder="User ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="제목">Title</label>
+                        <input type="text" class="form-control" name="title" id="inputTitle" placeholder="질문입니다.">
+                    </div>
+                </div>
+                <div style="width: 100%; display: flex; justify-content: space-between;">
+                    <div class="form-group" style="width: 100%;>
+                        <label for="내용">Content</label>
+                        <input type="text" class="form-control" name="content" id="inputContent" placeholder="내용입니다.">
+                    </div>
+                </div>
+                <div style="width: 100%; display: flex; justify-content: space-between;">
+                    <div class="form-group">
+                        <label for="채택여부">채택</label>
+                        <input type="text" class="form-control" name="selection" id="inputSelection" placeholder="채택">
+                    </div>
+                    <div class="form-group">
+                        <label for="등록일">Create Date</label>
+                        <input type="text" class="form-control" name="createDate" id="inputCreateDate" placeholder="등록일">
+                    </div>
+                    <div class="form-group">
+                        <label for="수정일">Modify Date</label>
+                        <input type="text" class="form-control" name="modifyDate" id="inputModifyDate" placeholder="수정일">
+                    </div>
+                    <button type="submit" class="btn btn-default add">추가</button>
+                    <button type="submit" class="btn btn-default update">수정</button>
+                    <button type="submit" class="btn btn-default delete">삭제</button>
+                </div>
+            </form>
+        </script>
+
         </div>
 
         <!-- Table -->
@@ -206,7 +254,7 @@ table .content {
             </tr>
             </script>
             <script type="text/handlebars-template" id="category-header-template">
-            <tr>
+            <!-- <tr>
                 <th class="text-center">question_id</th>
                 <th class="text-center">user_id</th>
                 <th class="text-center">title</th>
@@ -218,7 +266,7 @@ table .content {
                 <th class="text-center selected_answer_id">selected_answer_id</th>
                 <th class="text-center">수정</th>
                 <th class="text-center">삭제</th>
-            </tr>
+            </tr> -->
             </script> 
             </thead>
             <tbody>
@@ -230,10 +278,10 @@ table .content {
                 <td class="text-center">{{title}}</td>
                 <td class="text-center content">{{content}}</td>
                 <td class="text-center">{{view}}</td>
-                <td class="text-center">{{create_date}}</td>
-                <td class="text-center">{{modify_date}}</td>
                 <td class="text-center">{{tags}}</td>
                 <td class="text-center" selected_answer_id>{{selected_answer_id}}</td>
+                <td class="text-center">{{create_date}}</td>
+                <td class="text-center">{{modify_date}}</td>
                 <td class="text-center"><button class="update">수정</button></td>
                 <td class="text-center"><button class="delete">삭제</button></td>
             </tr>
@@ -241,9 +289,7 @@ table .content {
             </script>
             <script type="text/handlebars-template" id="answer-template">
             {{#each this}}
-            <tr data-obj={
-                {{answer_id}}
-            }>
+            <tr data-obj='{"answerId": "{{answer_id}}", "questionId": "{{question_id}}","userId": "{{user_id}}","title": "{{title}}","content": "","selection": "{{selection}}","createDate": "{{create_date}}","modifyDate": "{{modify_date}}"}'>
                 <td class="text-center">{{answer_id}}</th>
                 <td class="text-center">{{question_id}}</th>
                 <td class="text-center">{{user_id}}</th>

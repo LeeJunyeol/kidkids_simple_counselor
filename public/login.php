@@ -20,7 +20,11 @@ if(isset($_SESSION["logged_in"])){
 
 <body>
 <?php
-
+if(isset($_SESSION["message"])){
+	$message = $_SESSION['message'];
+	echo "<script>alert(\"" . $message . "\");</script>";
+	session_unset();
+}
 require_once "header.php";
 ?>
     <article class="login">

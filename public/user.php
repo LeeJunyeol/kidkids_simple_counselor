@@ -21,46 +21,38 @@ require_once "header.php";
     <div id="top-container">
         <div id="profile-box">
             <div class="box" style="position: relative">
-            <?php 
-                $userType = $_SESSION['user_type'];
-                if($userType == '전문가'){
-                    echo "<div style='position: absolute; top: -40px; left: -8px; width: 80px; margin: auto;'>
+                <script type="text/handlebars-template" id="expert-template">
+                <div style='position: absolute; top: -40px; left: -8px; width: 80px; margin: auto;'>
                     <img src='http://localhost/ksc/public/images/giphy.gif' style='display: block; width: 33px; height: 33px; margin: auto;'>
-                    <label class='my-label label label-info' style='display: block; padding: .3em .3em .3em; font-size: 130%;'>".$userType."</label></div>";
-                    }?>
+                    <label class='my-label label label-info' style='display: block; padding: .3em .3em .3em; font-size: 130%;'>{{user_type}}</label>
+                </div>
+                </script>
+                <script type="text/handlebars-template" id="user-template">
                 <div class="my-image" style="width: 200px; height: 100%; margin-top: 6px;">
-                    <img src=<?php echo "http://localhost/ksc/user_images/".$_SESSION['user_image']?> style="width: 100%; height: 100%" />
+                    <img src="http://localhost/ksc/user_images/{{user_pic}}" style="width: 100%; height: 100%" />
                 </div>
                 <div class="my-info" style="width: 100%">
                     <div class="profile-area">
                         <div>
-                            <h2><span><?php echo $_SESSION['name']; ?></span></h2>
+                            <h2><span id="username">{{name}}</span></h2>
                         </div>
                         <div>
                             <label>이메일: </label>
-                            <span><?php echo $_SESSION['email']; ?></span>
+                            <span id="useremail">{{email}}</span>
                         </div>
                     </div>
                     <div class="score-area">
-                        <?php 
-                            $myscore = 0;
-                            if(isset($_SESSION['myscore'])) {
-                                $myscore = $_SESSION['myscore'];
-                            }
-                            $scorePer = $myscore / 500 * 100;
-                            $level = floor($scorePer / 100);
-                            $scorePer = $scorePer - $level * 100;
-                        ?>
-                        <h3>레벨: <?php echo $level ?></h3>
+                        <h3>레벨: <span id="{{userlevel}}">{{userlevel}}</span></h3>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $myscore;?>"
-                            aria-valuemin="0" aria-valuemax="500" style="width: <?php echo $scorePer; ?>%">
+                            <div id="progress" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{score}}"
+                            aria-valuemin="0" aria-valuemax="500" style="width: {{scorePer}}%">
                             <span class="sr-only">10% Complete (success)</span>
                             </div>
                         </div>
                         
                     </div>
                 </div>
+                </script>
             </div>
         </div>
         <div id="rank-box">
@@ -132,7 +124,7 @@ require_once "footer.php";
     <script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
     <script src="<?php echo _JS ?>/util.js"></script>
     <script src="<?php echo _JS ?>/common.js"></script>
-    <script src="<?php echo _JS ?>/my.js"></script>
+    <script src="<?php echo _JS ?>/user.js"></script>
 
 </body>
 

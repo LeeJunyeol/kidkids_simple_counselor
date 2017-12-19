@@ -35,7 +35,6 @@ if(isset($_GET["search"]) && isset($_GET["category"])){
             ]);
         return;
         break;
-
     }
 
 }

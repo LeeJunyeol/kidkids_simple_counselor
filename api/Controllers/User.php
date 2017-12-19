@@ -2,17 +2,39 @@
 require_once "../Config/Database.php";
 require_once '../Models/UserModel.php';
 require_once '../Models/VoteModel.php';
+require_once '../Models/QuestionModel.php';
+require_once '../Models/AnswerModel.php';
+
 
 session_start();
 $conn = Database::getConnection();
 
 $userModel = new UserModel($conn);
 $voteModel = new VoteModel($conn);
+$questionModel = new QuestionModel($conn);
+$answerModel = new AnswerModel($conn);
 
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
-        $userScores = $userModel->getUserScoreAll();
-        echo json_encode($userScores);
+    if(isset($_GET['id'])){
+        $id = $_GET['id'];
+        $user = $userModel->getById($id);
+        $myscore = $voteModel->getMyTotalScore($id);
+        $user->score = $myscore->score;
+
+        $recentAnswer = $answerModel->getMyAnswerRecent5($id);
+        $recentQuestion = $questionModel->getMyQuestionRecent5($id);
+
+        echo json_encode([
+            "success" => true,
+            "user" => $user,
+            "recentAnswer" => $recentAnswer,
+            "recentQuestion" => $recentQuestion
+        ]);
+        return;
+    }
+    $userScores = $userModel->getUserScoreAll();
+    echo json_encode($userScores);
     break;
     case 'POST':
     if(isset($_POST['login'])){
@@ -21,7 +43,7 @@ switch($_SERVER['REQUEST_METHOD']){
         $myscore = $voteModel->getMyTotalScore($id);
         if($user == null){
             $_SESSION['message'] = '아이디가 존재하지 않습니다. 회원가입을 해주세요.';
-            header("location: error.php");
+            header("location: http://localhost/ksc/signup");
             exit;
         } else {
             if ( password_verify($_POST['password'], $user->password) ) {
@@ -32,14 +54,16 @@ switch($_SERVER['REQUEST_METHOD']){
                 $_SESSION['user_image'] = $user->user_pic;
                 $_SESSION['myscore'] = $myscore->score;
                 
-                // This is how we'll know the user is logged in
                 $_SESSION['logged_in'] = true;
 
+                if($_SESSION['id'] == 'admin'){
+                    header("location: http://localhost/ksc/admin");
+                }
                 header("location: http://localhost/ksc/home");
             }
             else {
-                $_SESSION['message'] = "You have entered wrong password, try again!";
-                header("location: error.php");
+                $_SESSION['message'] = "아이디 또는 비밀번호가 일치하지 않습니다.";
+                header("location: http://localhost/ksc/login");
             }
         }
         return;

@@ -53,7 +53,7 @@ if(isset($_GET['my'])){
         break;
         case 'DELETE':
         if(isset($_GET['id'])){
-            if($questionModel->delete($_GET['id'])){
+            if($questionModel->deleteById($_GET['id'])){
                 echo json_encode([
                     'success'=> true,
                     'messages'=> "삭제가 성공했습니다!"
@@ -174,13 +174,43 @@ if(isset($_GET['my'])){
         
         break;
         case 'PUT':
+        if(isset($_GET['id']) && isset($_SESSION['id']) && $_SESSION['id'] == 'admin'){
+            $body = json_decode(file_get_contents('php://input'));
+            if($questionModel->updateById($_GET['id'], $body)){
+                echo json_encode([
+                    'success' => true,
+                    'message' => "수정 되었습니다."
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "수정이 되지 않았습니다."
+                ]);
+            };
+            return;
+        }
         if(isset($_GET['id'])){
             $body = json_decode(file_get_contents('php://input'));
             $questionModel->updateViewById($_GET['id'], $body->view);
+            return;
         }
         break;
         case 'DELETE':
-        echo 'DELETE';
+        // 관리자: 삭제
+        if(isset($_GET['id']) && isset($_SESSION['id']) && $_SESSION['id'] == 'admin'){
+            if($questionModel->deleteById($_GET['id'])){
+                echo json_encode([
+                    "success" => true,
+                    "message" => "삭제 되었습니다."
+                ]);
+            } else {
+                echo json_encode([
+                    "success" => false,
+                    "message" => "삭제가 실패했습니다."
+                ]);
+            }
+            return;
+        }
         break;
     }
 }

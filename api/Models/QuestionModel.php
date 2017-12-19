@@ -7,6 +7,23 @@ class QuestionModel {
         $this->conn = $conn;
     }
 
+    function deleteById($id){
+        try {
+            $sql = "DELETE FROM questions WHERE question_id = $id";
+            $stmt = $this->conn->prepare($sql);
+
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            }
+
+            return true;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+
     function add($question){
         $stmt = $this->conn->prepare("INSERT INTO questions (user_id, title, content, tags) 
         VALUES (:user_id, :title, :content, :tags)");
@@ -136,6 +153,24 @@ class QuestionModel {
         }
         return $results;
     }
+    
+    function updateById($id, $question){
+        $sql = "UPDATE `questions` SET `user_id` = :user_id, 
+        `title` = :title, `tags` = :tags, `view` = :view, `content` = :content WHERE `question_id` = :question_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':user_id', $question->userId);
+        $stmt->bindParam(':title', $question->title);
+        $stmt->bindParam(':tags', $question->tags);
+        $stmt->bindParam(':view', $question->view);
+        $stmt->bindParam(':content', $question->content);
+        $stmt->bindParam(':question_id', $question->questionId);
+        
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            exit;
+        };
+        return true;
+    }
 
     function count(){
         $stmt = $this->conn->query("SELECT count(*) FROM questions");
@@ -183,17 +218,6 @@ class QuestionModel {
         $stmt->bindParam(2, $myQuestion->content);
         $stmt->bindParam(3, $myQuestion->tags);
         $stmt->bindParam(4, $id);
-        if(!$stmt->execute()){
-            print_r($stmt->errorInfo());
-            exit;
-        };
-        return true;
-}
-
-    function delete($id){
-        $sql = "DELETE FROM `questions` WHERE `question_id` = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1, $id);
         if(!$stmt->execute()){
             print_r($stmt->errorInfo());
             exit;

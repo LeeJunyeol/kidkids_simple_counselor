@@ -54,7 +54,7 @@ ul.sub {
 								{{#each this}}
 								<tr>
 									<td class="rank-table-item rank">{{rank}}</td>
-									<td class="rank-table-item id">{{user_id}}</td>
+									<td class="rank-table-item id"><a href="http://localhost/ksc/user/{{user_id}}">{{user_id}}</a></td>
 									<td class="rank-table-item score">{{score}}</td>
 								</tr>
 								{{/each}}

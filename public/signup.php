@@ -19,13 +19,21 @@ if(isset($_SESSION["message"])){
   </head>
 <body>
 <?php
+if(isset($_SESSION['message']) && isset($_SESSION['logged_in'])){
+	if(!$_SESSION['logged_in']){
+		echo "<script>alert(".  $_SESSION['message'] .");</script>";
+  }
+  session_unset();
+}
 require_once "header.php";
 ?>
     <article class="signup">
 		<!-- Modal -->
 		<div id="myLogin" style="background: white; padding-bottom: 35px; padding-left: 35px; padding-right: 35px; padding-top: 15px;">
     <h1>회원가입</h1>
-    <form action="http://localhost/ksc/api/User" enctype="multipart/form-data" method="post" autocomplete="off" accept-charset="utf-8">
+
+
+    <form action="http://localhost/ksc/api/User" enctype="multipart/form-data" method="post" autocomplete="off" accept-charset="utf-8" onsubmit="return checkForm(this);">
     
     <style>
     label {
@@ -43,7 +51,13 @@ require_once "header.php";
         <label>
             비밀번호<span class="req">*</span>
         </label>
-        <input type="password" class="form-control" required autocomplete="off" name='password'/>
+        <input id="password" type="password" class="form-control" required autocomplete="off" name='password'/>
+      </div>
+      <div class="field-wrap">
+        <label>
+            비밀번호 확인<span class="req">*</span>
+        </label>
+        <input id="repassword" type="password" class="form-control" required autocomplete="off" name='repassword'/>
       </div>
       <div class="field-wrap">
         <label>
@@ -65,7 +79,7 @@ require_once "header.php";
       <input type="file" class="form-control" name="image" accept="image/*">
     </div>
     
-    <button type="submit" id="btn-login" name="register" class="btn btn-success btn-block" style="margin-top: 20px">
+    <button type="submit" id="btn-signup" name="register" class="btn btn-success btn-block" style="margin-top: 20px">
 								<span class="glyphicon glyphicon-off"></span> 가입신청</button>
   
     </form>
@@ -81,6 +95,39 @@ require_once "footer.php";
     <script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
     <script src="<?php echo _JS ?>/util.js"></script>
     <script src="<?php echo _JS ?>/common.js"></script>
+    <script>
+    function checkForm(form) {
+      if (form.id.value == "") {
+        alert("아이디를 입력해주세요.");
+        form.id.focus();
+        return false;
+      }
+      re = /^\w+$/;
+      if (!re.test(form.id.value)) {
+        alert("Error: 아이디는 오직 문자열, 숫자, _ 만 포함해야 합니다.");
+        form.id.focus();
+        return false;
+      }
+
+      if (form.password.value != "" && form.password.value == form.repassword.value) {
+        if (form.password.value.length < 6) {
+          alert("비밀번호는 최소 6자리");
+          form.pwd1.focus();
+          return false;
+        }
+      } else {
+          alert("비밀번호를 제대로 입력했는지 확인해주세요.");
+          form.password.focus();
+          return false;
+      }
+      if(form.image.value == ""){
+        alert("사진등록 해주세요.");
+        form.image.focus();
+        return false;
+      }
+      return true;
+  }
+    </script>
 
 </body>
 

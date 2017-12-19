@@ -38,10 +38,13 @@ require_once "header.php";
             <!-- 메인 -->
             <article class="view">
                 <div class="wrapper">
-                    <div id="question-container" class="question container hide">
+                    <div id="question-container" class="question container hide" style="position: relative">
                     <script type="text/handlebars-template" id="question-template">
-                        <div class="header-group" data-id={{user_id}} style="display: flex; align-items: baseline; justify-content: space-between;">
-                            <h3>Q. {{title}}</h3>
+                        <div class="header-group" data-id={{user_id}} style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px;">
+                            <div>
+                                <h3 class="title">Q. {{title}}<small>by {{user_id}}</small></h3>
+                                작성일: {{create_date}}, 수정일: {{modify_date}}
+                            </div>
                             <div class="btn-group not-visible">
                                 <button type="button" class="btn btn-default edit" aria-label="Left Align" style="float: none; position: static;">
                                     <span class="edit glyphicon glyphicon glyphicon-pencil" aria-hidden="true">수정</span>
@@ -64,8 +67,11 @@ require_once "header.php";
 							{{/each}}
 							</ul>
                         </div>
-                        <div>
-                            <button class="btn btn-default reply">답변하기</button>
+                        <div class="panel panel-default" style="display: flex; justify-content: space-between; padding: 10px 10px 10px 5px">
+                            <div class="panel-body">
+                            님의 지식을 나누어 주세요! 감사합니다 ^^* 
+                            </div>
+                            <button class="btn btn-primary reply btn-lg">A 답변하기</button>
                         </div>
                     </script>
 
@@ -102,16 +108,16 @@ require_once "header.php";
                             </div>
                             <div class="reply-footer-group" data-id={{answer_id}}>
                                 <div class="btn-group">
-                                    <button class="btn btn-default view-opinions">댓글{{opinion_cnt}}</button>
+                                    <button class="btn btn-default view-opinions">댓글{{#if opinion_cnt}}{{opinion_cnt}}{{else}}0{{/if}}</button>
                                 </div>
 
                                 <div class="vote-group" {{#if myvote}}data-value={{myvote}}{{/if}}>
                                     <div class="sub-vote-group">
                                         <a class="vote up btn btn-default" href="#" role="button">추천
-                                            <img src="http://localhost/ksc/public/images/up.png" /><span>{{plus_vote_cnt}}</span>
+                                            <img src="http://localhost/ksc/public/images/up.png" /><span>{{#if plus_vote_cnt}}{{plus_vote_cnt}}{{else}}0{{/if}}</span>
                                         </a>
                                         <a class="vote down btn btn-default" href="#" role="button">
-                                            <img src="http://localhost/ksc/public/images/down.png" />비추천<span>{{minus_vote_cnt}}</span>
+                                            <img src="http://localhost/ksc/public/images/down.png" />비추천<span>{{#if minus_vote_cnt}}{{minus_vote_cnt}}{{else}}0{{/if}}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -126,10 +132,9 @@ require_once "header.php";
                                 <div>댓글을 남겨주세요.</div>
                                 <form class="{{#if question_id}}question opinion form{{else}}answer opinion form{{/if}}" action="#" method="post">
                                     {{#if question_id}}
-                                    <input type="text" name="question_id" value={{question_id}} />
-                                    {{/if}}
-                                    {{#if answer_id}}
-                                    <input type="text" name="answer_id" value={{answer_id}} />
+                                    <input type="text" name="id" value={{question_id}} class="hide" />
+                                    {{else}}
+                                    <input type="text" name="id" value={{answer_id}} class="hide" />
                                     {{/if}}
                                     <input type="text" name="content" />
                                     <button type="submit">등록</button>

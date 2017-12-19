@@ -25,6 +25,24 @@ class OpinionModel {
         }
     }
 
+    function addOnAnswer($answerId, $content, $userId){
+        try {
+            $stmt = $this->conn->prepare("INSERT INTO opinions (answer_id, user_id, content, parent_idx, `level`) VALUES (:answer_id, :user_id, :content, 0, 0)");
+            $stmt->bindParam(':answer_id', $answerId);
+            $stmt->bindParam(':user_id', $userId);
+            $stmt->bindParam(':content', $content);
+            
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            }
+            return $this->conn->lastInsertId();
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+
     function getByQuestionOnAnswer($questionId){
         try {
             $sql = "SELECT * FROM opinions WHERE question_id = $questionId AND (answer_id IS NOT NULL)";

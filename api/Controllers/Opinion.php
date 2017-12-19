@@ -45,8 +45,8 @@ switch($_SERVER['REQUEST_METHOD']){
     break;
     case 'POST':
     if(isset($_POST['questionId'])){
-        $questionId = $_POST['questionId'];
         $userId = $_SESSION['id'];
+        $questionId = $_POST['questionId'];
         $content = $_POST['content'];
 
         $insertedId = $opinionModel->addOnQuestion($questionId, $content, $userId);
@@ -65,11 +65,11 @@ switch($_SERVER['REQUEST_METHOD']){
         return;
     }
     if(isset($_POST['answerId'])){
-        $answerId = $_POST['answerId'];
         $userId = $_SESSION['id'];
+        $answerId = $_POST['answerId'];
         $content = $_POST['content'];
 
-        $insertedId = $opinionModel->addOnQuestion($questionId, $content, $userId);
+        $insertedId = $opinionModel->addOnAnswer($answerId, $content, $userId);
         if($insertedId){
             $insertedOpinion = $opinionModel->getById($insertedId);
             echo json_encode([

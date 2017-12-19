@@ -42,12 +42,19 @@ require_once "header.php";
                         </div>
                     </div>
                     <div class="score-area">
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php if(isset($_SESSION['myscore'])) {
+                        <?php 
+                            $myscore = 0;
+                            if(isset($_SESSION['myscore'])) {
                                 $myscore = $_SESSION['myscore'];
-                                $scorePer = $myscore / 1000 * 100;
-                                echo $myscore;
-                                } else { $scorePer = 0; echo 0; } ?>" aria-valuemin="0" aria-valuemax="1000" style="width: <?php echo $scorePer; ?>%">
+                            }
+                            $scorePer = $myscore / 500 * 100;
+                            $level = floor($scorePer / 100);
+                            $scorePer = $scorePer - $level * 100;
+                        ?>
+                        <h3>레벨: <?php echo $level ?></h3>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $myscore;?>"
+                             aria-valuemin="0" aria-valuemax="500" style="width: <?php echo $scorePer; ?>%">
                             <span class="sr-only">10% Complete (success)</span>
                             </div>
                         </div>
@@ -59,83 +66,55 @@ require_once "header.php";
         <div id="rank-box">
             <div class="box">
                 <h2>현재 순위</h2>
-            
+                            
             </div>
         </div>
     </div>
     <div id="second-container">
         <div>
-            <div class="box">
+            <div id="question-box" class="box">
                 <h2>최근 질문</h2>
+                <script type="text/handlebars-template" id="recent-question-template">
                 <ul class="question wrap">
+                    {{#each this}}
                     <li class="question list-group-item" data-id={{question_id}}>
                         <div class="list-header">
-                            <h3><a href="#" class="list-head">{{title}}</a></h3>
+                            <h3><a href="{{link}}" class="list-head">{{title}}</a></h3>
+                        </div>
+                        <div class="list-main">
+                            <p>{{content}}</p>
                         </div>
                         <div class="list-footer">
                             <span class="glyphicon glyphicon-calendar"></span>
-                            <span class="date">{{modify_date}}</span>
-                            조회수 <span class="view-cnt badge">{{view}}</span>
-                            <ul class="tags"> 태그:  
-                                <li class="tags">
-                                    <span class="label label-info">{{this}}</span>
-                                </li>
-                            </ul>
+                            <span class="date">{{create_date}}</span>
                         </div>
                     </li>
-                    <li class="question list-group-item" data-id={{question_id}}>
-                        <div class="list-header">
-                            <h3><a href="#" class="list-head">{{title}}</a></h3>
-                        </div>
-                        <div class="list-footer">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                            <span class="date">{{modify_date}}</span>
-                            조회수 <span class="view-cnt badge">{{view}}</span>
-                            <ul class="tags"> 태그:  
-                                <li class="tags">
-                                    <span class="label label-info">{{this}}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    {{/each}}
                 </ul>
+                </script>
             </div>
         </div>
         <div>
-            <div class="box">
+            <div id="answer-box" class="box">
                 <h2>최근 답변</h2>
+                <script type="text/handlebars-template" id="recent-answer-template">
                 <ul class="answer wrap">
-                    <li class="answer list-group-item" data-id={{question_id}}>
+                    {{#each this}}
+                    <li class="answer list-group-item" data-id={{answer_id}}>
                         <div class="list-header">
-                            <h3><a href="#" class="list-head">{{title}}</a></h3>
+                            <h3><a href="{{link}}" class="list-head">{{title}}</a></h3>
+                        </div>
+                        <div class="list-main">
+                            <span>{{content}}</span>
                         </div>
                         <div class="list-footer">
                             <span class="glyphicon glyphicon-calendar"></span>
-                            <span class="date">{{modify_date}}</span>
-                            조회수 <span class="view-cnt badge">{{view}}</span>
-                            <ul class="tags"> 태그:  
-                                <li class="tags">
-                                    <span class="label label-info">{{this}}</span>
-                                </li>
-                            </ul>
+                            <span class="date">{{create_date}}</span>
                         </div>
                     </li>
-                    <li class="answer list-group-item" data-id={{question_id}}>
-                        <div class="list-header">
-                            <h3><a href="#" class="list-head">{{title}}</a></h3>
-                        </div>
-                        <div class="list-footer">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                            <span class="date">{{modify_date}}</span>
-                            조회수 <span class="view-cnt badge">{{view}}</span>
-                            <ul class="tags"> 태그:  
-                                <li class="tags">
-                                    <span class="label label-info">{{this}}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    {{/each}}
                 </ul>
+                </script>
             </div>
         </div>
     </div>

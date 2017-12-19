@@ -103,7 +103,7 @@ $(document).ready(function () {
             var questions = result['questions'];
             
             for (var i = 0; i < questions.length; i++) {
-                questions[i].modify_date = getFormatDate(questions[i].modify_date);
+                questions[i].modify_date = Utils.getFormatDate(questions[i].modify_date);
                 questions[i].tags = questions[i].tags.split("/");
             }
 
@@ -117,16 +117,6 @@ $(document).ready(function () {
 
             $("ul.pagination").html(paginationTemplate(arr));
         })
-    }
-
-    var WEEK_DAYS = ["일", "월", "화", "수", "목", "금", "토"];
-
-    function getFormatDate(inputDate) {
-        var date = new Date(inputDate);
-
-        return date.getFullYear() + "." +
-            (date.getMonth() + 1) + "." +
-            date.getDate() + "." + "(" + WEEK_DAYS[new Date(inputDate).getDay()] + ")";
     }
 
 

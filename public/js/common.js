@@ -66,9 +66,6 @@ var CommonModule = (function () {
         $("a.btn-signup").on("click", goToSignup);
         $("button.mypage").on("click", goToMyPage);
 
-        // 본문에 모든 a태그 디폴트를 없앰
-        $("article").on("click", "a", (e) => {e.preventDefault()});
-
         $("#search-btn").on("click", (e) => {
             search($(e.currentTarget).closest("div.input-group").find("input").val());
         });

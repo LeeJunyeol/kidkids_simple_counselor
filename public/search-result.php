@@ -7,10 +7,107 @@ require_once "config.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>카테고리 검색</title>
+	<title>카테고리 검색</title>
+	<link href="<?php echo _NODE?>/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+	<link href="<?php echo _CSS?>/common.css" rel="stylesheet">
+	<style>
+	article {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		padding: 0px 20px;
+		background: #FAFBFC;
+		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+	}
+	.box {
+		width: 100%;
+		max-width: 480px;
+		margin: 10px;
+	}
+
+	.box>.head {
+		background-color: yellow;
+	}
+
+	.box>.body {
+		background-color: green;
+		color: white;
+	}
+
+	
+	</style>
 </head>
 <body>
-<div></div>
+<?php
+require_once "header.php";
+?>
+	<article>
+		<div class="search-result box">
+			<div class="search-result head question">
+				<h1>질문 검색 결과</h1>
+			</div>
+			<div class="search-result body question">
+			<script type="text/handlebars-template" id="question-result-template">
+			{{#if this}}
+			<ul>
+			{{#each this}}
+			<li>
+			<h3>{{title}}</h3><br>
+			{{content}}
+			</li>
+			{{/each}}
+			</ul>
+			{{else}}
+			<h2>검색 결과가 없습니다.</h2>
+			{{/if}}
+			</script>
+			</div>
+		</div>
+		<div class="search-result box">
+			<div class="search-result head answer">
+				<h1>답변 검색 결과</h1>
+			</div>
+			<div class="search-result body answer">
+			<script type="text/handlebars-template" id="answer-result-template">
+			{{#if this}}
+			<ul>
+			{{#each this}}
+			<li>
+			<h3>{{title}}</h3><br>
+			{{content}}
+			</li>
+			{{/each}}
+			</ul>
+			{{else}}
+			<h2>검색 결과가 없습니다.</h2>
+			{{/if}}
+			</script>
+
+			</div>
+		</div>
+		<div class="search-result box">
+			<div class="search-result head author">
+				<h1>작성자 검색 결과</h1>
+			</div>
+			<div class="search-result body author">
+			<script type="text/handlebars-template" id="author-result-template">
+			{{#if this}}
+			<ul>
+			{{#each this}}
+			<li>
+			<h3>{{title}}</h3><br>
+			{{content}}
+			</li>
+			{{/each}}
+			</ul>
+			{{else}}
+			<h2>검색 결과가 없습니다.</h2>
+			{{/if}}
+			</script>
+
+			</div>
+		</div>
+	</article>
 
 <?php
 require_once "aside.php";
@@ -22,7 +119,7 @@ require_once "footer.php";
 	<script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
 	<script src="<?php echo _JS ?>/util.js"></script>
 	<script src="<?php echo _JS ?>/common.js"></script>
-	<script src="<?php echo _JS ?>/index.js"></script>
+	<script src="<?php echo _JS ?>/search.js"></script>
 
 </body>
 

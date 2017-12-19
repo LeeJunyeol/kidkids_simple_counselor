@@ -26,6 +26,23 @@ class AnswerModel {
         }
     }
 
+    function searchByKeywords($origin, $kewords){
+        $sql = "SELECT * FROM answers WHERE title LIKE '%$origin%' OR content LIKE '%$origin%'";
+        foreach ($kewords as $key => $value) {
+            $sql = $sql . " UNION SELECT * FROM answers WHERE title LIKE '%$value%' OR content LIKE '%$value%'";
+        }
+        $stmt = $this->conn->prepare($sql);
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            exit;
+        };
+        $answers = array();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $answers[] = $row;
+        }
+        return $answers;
+    }
+
     function add($answer){
         $stmt = $this->conn->prepare("INSERT INTO answers (question_id, user_id, title, content) VALUES (:question_id, :user_id, :title, :content)");
         $stmt->bindParam(':question_id', $answer['question_id']);
@@ -160,13 +177,12 @@ class AnswerModel {
         return $results;
     }
 
-    
     function getJoinOnAnswerByQuestionId($questionId){
-        $stmt = $this->conn->prepare("SELECT c.commnet_id, c.user_id
-        , c.answer_id, c.content
+        $stmt = $this->conn->prepare("SELECT c.opinion_id, o.user_id
+        , o.answer_id, c.content
         , c.parent_idx, c.level, c.seq
         , c.create_date, c.modify_date 
-        FROM answers as a JOIN opinions as c ON a.answer_id = c.answer_id WHERE a.question_id=:question_id");
+        FROM answers as a JOIN opinions as o ON a.answer_id = c.answer_id WHERE a.question_id=:question_id");
         $stmt->bindValue(':question_id', $questionId);
         $stmt->execute();
         $results = array();

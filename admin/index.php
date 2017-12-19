@@ -87,7 +87,39 @@ table .content {
 
     <div class="main panel panel-default">
         <!-- Default panel contents -->
+        <div id="useradmin" class="hide">
+        <script type="text/handlebars-template" id="user-admin-template">
+            <h2 style="margin-bottom: 30px;">회원 등급 관리(전문가 기준: 채택률 60%, 점수 100점 이상)</h2>
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>등급</th>
+                <th>답변채택율</th>
+                <th>점수</th>
+                <th>승급?</th>
+                </tr>
+            </thead>
+            {{#each this}}
+                <tr {{#if ok}}style="background-color: yellow;"{{else}}{{#if no}}style="background-color: pink;"{{/if}}{{/if}}
+                data-user='{"user_id": "{{user_id}}","user_type": "{{user_type}}"}'>
+                <td>{{user_id}}</td>
+                <td>{{name}}</td>
+                <td>{{user_type}}</td>
+                </td>
+                <td>{{selection_percentage}}</td>
+                <td>{{myscore}}</td>
+                <td>{{#if ok}}<button class="advance">전문가 임명!</button>{{else}}{{#if no}}<button class="demolition">강등..</button>{{/if}}{{/if}}</td>
+                </tr>
+            {{/each}}
+            </table>
+        </script>
+        </div>
+        <div id="wrapper">
         <div id="form" class="panel-heading text-center">
+
+
         <script type="text/handlebars-template" id="question-input-template">
             <h2 style="margin-bottom: 30px;">질문 목록</h2>
 
@@ -228,6 +260,7 @@ table .content {
 
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 

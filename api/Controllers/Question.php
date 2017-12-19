@@ -7,12 +7,15 @@ require_once '../Models/AnswerModel.php';
 require_once '../Models/VoteModel.php';
 require_once '../Models/CategoryModel.php';
 require_once '../Models/CategoryQuestionModel.php';
+require_once '../Models/OpinionModel.php';
+require_once "../Util/Util.php";
 
 $conn = Database::getConnection();
 
 $categoryModel = new CategoryModel($conn);
 $questionModel = new QuestionModel($conn);
 $categoryQuestionModel = new CategoryQuestionModel($conn);
+$opinionModel = new OpinionModel($conn);
 $answerModel = new AnswerModel($conn);
 $voteModel = new VoteModel($conn);
 
@@ -127,12 +130,15 @@ if(isset($_GET['my'])){
             $id  = $_GET['id'];
             $question = $questionModel->getById($id);
             $answers = $answerModel->getByQuestionId($id);
-            $opinions = $answerModel->getJoinOnAnswerByQuestionId($id);
+            $questionOpinions = $opinionModel->getByQuestionOnQuestion($id);
+            $answerOpinions = $opinionModel->getByQuestionOnAnswer($id);
+            $answerGroupOpinions = array_group_by($answerOpinions, 'answer_id');
             
             echo json_encode([
                 "question" => $question,
                 "answers" => $answers,
-                "opinions" => $opinions
+                "questionOpinions" => $questionOpinions,
+                "answerOpinions" => $answerGroupOpinions
             ]);
             return;
         }

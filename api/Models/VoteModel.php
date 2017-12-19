@@ -78,8 +78,7 @@ class VoteModel {
 
     function getMyTotalScore($userId){
         try {
-            $stmt = $this->conn->prepare("SELECT a.user_id, 
-            (SUM(a.selection) * 100 + SUM(v.vote)) AS score 
+            $stmt = $this->conn->prepare("SELECT (SUM(a.selection) * 100 + SUM(v.vote)) AS score 
             FROM answers AS a INNER JOIN votes AS v ON a.answer_id = v.answer_id WHERE a.user_id = :user_id");
             $stmt->bindParam(':user_id', $userId);
             if(!$stmt->execute()){

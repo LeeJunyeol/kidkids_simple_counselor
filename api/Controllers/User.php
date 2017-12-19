@@ -1,22 +1,26 @@
 <?php
 require_once "../Config/Database.php";
 require_once '../Models/UserModel.php';
+require_once '../Models/VoteModel.php';
 
 session_start();
 $conn = Database::getConnection();
 
 $userModel = new UserModel($conn);
-
+$voteModel = new VoteModel($conn);
 
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
+        $userScores = $userModel->getUserScoreAll();
+        echo json_encode($userScores);
     break;
     case 'POST':
     if(isset($_POST['login'])){
         $id = $_POST['id'];
         $user = $userModel->getById($id);
+        $myscore = $voteModel->getMyTotalScore($id);
         if($user == null){
-            $_SESSION['message'] = 'User with this email already exists!';
+            $_SESSION['message'] = '아이디가 존재하지 않습니다. 회원가입을 해주세요.';
             header("location: error.php");
             exit;
         } else {
@@ -26,6 +30,7 @@ switch($_SERVER['REQUEST_METHOD']){
                 $_SESSION['name'] = $user->name;
                 $_SESSION['user_type'] = $user->user_type;
                 $_SESSION['user_image'] = $user->user_pic;
+                $_SESSION['myscore'] = $myscore->score;
                 
                 // This is how we'll know the user is logged in
                 $_SESSION['logged_in'] = true;
@@ -117,6 +122,12 @@ switch($_SERVER['REQUEST_METHOD']){
         };
         return;
     };
+    break;
+    case 'PUT':
+    $user = json_decode(file_get_contents('php://input'));
+    $userModel -> updateUserType($user->user_id, $user->user_type);
+    echo json_encode("success");
+    break;
 }
 
 ?>

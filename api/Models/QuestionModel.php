@@ -22,6 +22,23 @@ class QuestionModel {
         return $this->conn->lastInsertId();
     }
 
+    function searchByKeywords($origin, $kewords){
+        $sql = "SELECT * FROM questions WHERE title LIKE '%$origin%' OR content LIKE '%$origin%'";
+        foreach ($kewords as $key => $value) {
+            $sql = $sql . " UNION SELECT * FROM questions WHERE title LIKE '%$value%' OR content LIKE '%$value%'";
+        }
+        $stmt = $this->conn->prepare($sql);
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            exit;
+        };
+        $questions = array();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $questions[] = $row;
+        }
+        return $questions;
+    }
+
     function getMyQuestionRecent5($userId){
         try {
             $sql = "SELECT * FROM questions WHERE user_id = '$userId' ORDER BY create_date DESC LIMIT 5";

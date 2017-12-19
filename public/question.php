@@ -54,7 +54,6 @@ require_once "header.php";
                         <textarea disabled>{{content}}</textarea>
                         <div class="question footer-group">
                             <div class="btn-group">
-                                <button class="btn btn-default reply">답글달기</button>
                                 <button class="btn btn-default view-opinions">댓글{{opinion_cnt}}</button>
                             </div>
                             <ul class="tags"> 태그:  
@@ -64,6 +63,9 @@ require_once "header.php";
 							</li>
 							{{/each}}
 							</ul>
+                        </div>
+                        <div>
+                            <button class="btn btn-default reply">답변하기</button>
                         </div>
                     </script>
 
@@ -104,15 +106,12 @@ require_once "header.php";
                                 </div>
 
                                 <div class="vote-group" {{#if myvote}}data-value={{myvote}}{{/if}}>
-                                    <div class="score">
-                                        <h2 class="votesum"><span style="font-size: 20px;">추천도: </span><span class="score">{{votesum}}</span></h2>
-                                    </div>
                                     <div class="sub-vote-group">
                                         <a class="vote up btn btn-default" href="#" role="button">추천
-                                            <img src="http://localhost/ksc/public/images/up.png" />
+                                            <img src="http://localhost/ksc/public/images/up.png" /><span>{{plus_vote_cnt}}</span>
                                         </a>
                                         <a class="vote down btn btn-default" href="#" role="button">
-                                            <img src="http://localhost/ksc/public/images/down.png" />비추천
+                                            <img src="http://localhost/ksc/public/images/down.png" />비추천<span>{{minus_vote_cnt}}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -122,7 +121,7 @@ require_once "header.php";
                         {{/each}}
                         </script>
                         <script type="text/handlebars-template" id="opinion-template">
-                        <div class="opinion-list" style="margin-top: 10px;">
+                        <div class="opinion-list hide" style="margin-top: 10px;">
                             <div>
                                 <div>댓글을 남겨주세요.</div>
                                 <form class="{{#if question_id}}question opinion form{{else}}answer opinion form{{/if}}" action="#" method="post">
@@ -137,8 +136,49 @@ require_once "header.php";
                                 </form>
                             </div>
                             
-                            <ul class="opinion-list{{#if opinions}}{{else}} hide{{/if}}" style="list-style: none; -webkit-padding-start: 0; border: 2px solid;">
+                            <ul class="opinion-list" style="list-style: none; -webkit-padding-start: 0; border: 2px solid;">
                             {{#each opinions}}
+                                <li style="border-bottom: 1px solid; padding: 10px 10px 5px 5px;">
+                                    <div class="opinion-card-header" style="display: flex; justify-content: space-between;">
+                                        <div style="width: 100%">
+                                            <p class="opinion">
+                                                {{content}}
+                                            </p>
+                                        </div>
+                                        <div class="edit-btn-group" style="float: right; width: 50px;">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            <span cl
+                                            ass="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="opinion-card-footer">
+                                        <span class="author">
+                                            {{user_id}}
+                                        </span>
+                                        <span>
+                                            {{modify_date}}
+                                        </span>
+                                    </div>
+                                </li>
+                            {{/each}}
+                            </ul>
+                            <div>
+                                <a href="#" class="close opinions">댓글 접기</a>
+                            </div>
+                        </div>
+                        </script>
+                        <script type="text/handlebars-template" id="opinion-answer-template">
+                        <div class="opinion-list hide" style="margin-top: 10px;">
+                            <div>
+                                <div>댓글을 남겨주세요.</div>
+                                <form class="answer opinion form" action="#" method="post">
+                                    <input type="text" name="content" />
+                                    <button type="submit">등록</button>
+                                </form>
+                            </div>
+                            
+                            <ul class="opinion-list" style="list-style: none; -webkit-padding-start: 0; border: 2px solid;">
+                            {{#each this}}
                                 <li style="border-bottom: 1px solid; padding: 10px 10px 5px 5px;">
                                     <div class="opinion-card-header" style="display: flex; justify-content: space-between;">
                                         <div style="width: 100%">

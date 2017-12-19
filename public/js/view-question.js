@@ -2,46 +2,13 @@ var API_BASE_URL = "http://localhost/ksc/api";
 var QUESTION_URL = API_BASE_URL + "/Question/";
 var MY_QUESTION_URL = API_BASE_URL + "/my/Question/";
 
-$(document).ready(function () {
-    var questionTemplate = handlebarsHelper("#question-template");
-    var answerTemplate = handlebarsHelper("#answer-template");
+var ViewOpinionModule = (() => {
     var opinionTemplate = handlebarsHelper("#opinion-template");
     var opinionItemTemplate = handlebarsHelper("#opinion-item-template");
-    var questionId = parseInt(location.href.split("/").pop());
-    var userId = $("#welcome").data("id") || "";
 
     var isClicked = false;
-    var re = /\r\n|\r|\n/g; // textarea 엔터자를때 필요한거
 
-    var selected = false;
-
-    init();
-
-    function init() {
-        render();
-        $("div.reply-box").on("click", "a.vote.up", function (e) {
-            e.preventDefault();
-            vote.call(this, 1, userId, $(this).closest(".reply-card").data("id"));
-        });
-        $("div.reply-box").on("click", "a.vote.down", function (e) {
-            e.preventDefault();
-            vote.call(this, -1, userId, $(this).closest(".reply-card").data("id"));
-        });
-        $("#question-container").on("click", ".view-opinions", viewOpinion);
-        // 댓글 클릭 이벤트
-        $("div.reply-box").on("click", ".btn.view-opinions", viewOpinionOnAnswer);
-        $("div.reply-box").on("click", ".select-btn", (e) => {
-            if(!selected){
-                if(confirm("채택 하시겠습니까?(한 번 채택하시면 수정할 수 없습니다)")){
-                    $(e.currentTarget).addClass("selected");
-                    selected = true;
-                    $(".reply-box").find(".select-btn:not(.selected)").hide();
-                }
-            }
-        });
-    }
-
-    function viewOpinionOnAnswer(e){
+    function viewOpinion(e){
         if (!isClicked) {
             var answerId = $(e.currentTarget).closest(".reply-footer-group").data("id");
             isClicked = true;
@@ -93,9 +60,55 @@ $(document).ready(function () {
                 })
             });
         } else {
-            $(e.delegateTarget).find("div.opinion-list").toggle("blind");
+            $(e.currentTarget).closest(".reply-card.container").find("div.opinion-list").toggle("blind");
         }
+    }
 
+    return {
+        viewOpinion
+    }
+})
+
+var ViewModule = (() => {
+    var questionTemplate = handlebarsHelper("#question-template");
+    var answerTemplate = handlebarsHelper("#answer-template");
+    var opinionTemplate = handlebarsHelper("#opinion-template");
+    var opinionAnswerTemplate = handlebarsHelper("#opinion-answer-template");
+    var opinionItemTemplate = handlebarsHelper("#opinion-item-template");
+
+    var questionId = parseInt(location.href.split("/").pop());
+    var userId = $("#welcome").data("id") || "";
+
+    var re = /\r\n|\r|\n/g; // textarea 엔터자를때 필요한거
+
+    var selected = false;
+
+    function init() {
+        render();
+        $("div.reply-box").on("click", "a.vote.up", function (e) {
+            e.preventDefault();
+            vote.call(this, 1, userId, $(this).closest(".reply-card").data("id"));
+        });
+        $("div.reply-box").on("click", "a.vote.down", function (e) {
+            e.preventDefault();
+            vote.call(this, -1, userId, $(this).closest(".reply-card").data("id"));
+        });
+        $("#question-container").on("click", ".view-opinions", function(e){
+            $(e.currentTarget).closest("#question-container").find("div.opinion-list").toggleClass("hide");
+        });
+        // 댓글 클릭 이벤트
+        $("div.reply-box").on("click", ".btn.view-opinions", function(e){
+            $(e.currentTarget).closest(".reply-card.container").find("div.opinion-list").toggleClass("hide");
+        });
+        $("div.reply-box").on("click", ".select-btn", (e) => {
+            if(!selected){
+                if(confirm("채택 하시겠습니까?(한 번 채택하시면 수정할 수 없습니다)")){
+                    $(e.currentTarget).addClass("selected");
+                    selected = true;
+                    $(".reply-box").find(".select-btn:not(.selected)").hide();
+                }
+            }
+        });
     }
 
     // 댓글 클릭 이벤트
@@ -201,8 +214,6 @@ $(document).ready(function () {
         }.bind(this))
     }
 
-
-
     function rearrangeWhenVote(){
 
     }
@@ -216,7 +227,20 @@ $(document).ready(function () {
             var result = JSON.parse(res);
             var question = result['question'];
             var answers = result['answers'];
-            var opinions = result['opinions'];
+            var questionsOpinions = {};
+            questionsOpinions.questions_id = question.question_id;
+            questionsOpinions.opinions = result['questionOpinions'];
+            var answerOpinions = result['answerOpinions'];
+
+            // 댓글 옆에 댓글 숫자 추가
+            question.opinion_cnt = questionsOpinions.opinions.length;
+            answers.forEach(function(v, i){
+                if(answerOpinions[parseInt(v.answer_id)]){
+                    v.opinion_cnt = answerOpinions[parseInt(v.answer_id)].length;
+                } else {
+                    v.opinion_cnt = 0;
+                }
+            });
 
             question.tags = question.tags.split("/");
             answers.forEach(element => {
@@ -225,8 +249,11 @@ $(document).ready(function () {
             
             $("div.question.container").removeClass("hide");
             $("div.question.container").html(questionTemplate(question));
+            $("div.question.container").append(opinionTemplate(questionsOpinions));
             $("div.reply-box").html(answerTemplate(answers));
-            $("div.opinion-list>ul").html(opinionTemplate(opinions));
+            $("div.reply-card.container").each(function(i, ele){
+                $(ele).append(opinionAnswerTemplate(answerOpinions[$(ele).data("id")]));
+            });
 
             var questionContent = question.content;
             var answerContent = answers.content;
@@ -316,6 +343,12 @@ $(document).ready(function () {
 
         $("#write-box").toggle("blind");
     })
+    
+    return {
+        init
+    }
+})();
 
-
+$(document).ready(function () {
+    ViewModule.init();
 });

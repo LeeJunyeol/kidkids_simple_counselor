@@ -12,7 +12,6 @@ var AsideModule = (function () {
         renderRankBox();
     }
 
-
     var renderCategory = (navCategoryTemplate, categoryId) => {
         $.ajax(BASE_URL + "/api/Category", {
             type: 'GET',

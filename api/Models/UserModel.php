@@ -13,6 +13,46 @@ class UserModel {
         return $stmt->fetchObject();
     }
 
+    function updateUserType($user_id, $user_type){
+        try {
+            $sql = "UPDATE `users` SET `user_type` = :user_type WHERE `user_id` = :user_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(":user_id", $user_id);
+            $stmt->bindParam(":user_type", $user_type);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            };
+            return true;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+
+    function getUserScoreAll() {
+        try {
+            $sql = "SELECT a.user_id, u.user_type, u.name,
+            (SUM(a.selection) * 100 + SUM(v.vote)) AS myscore, (SUM(a.selection) / COUNT(*)) * 100 AS selection_percentage
+            FROM answers AS a INNER JOIN votes AS v ON a.answer_id = v.answer_id 
+            INNER JOIN users AS u ON a.user_id = u.user_id
+            GROUP BY user_id ORDER BY selection_percentage DESC";
+            $stmt = $this->conn->prepare($sql);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            }
+            $userScores = array();
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                $userScores[] = $row;
+            }
+            return $userScores;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+
     function register($id, $password, $name, $email, $hash, $pic){
         $stmt = $this->conn->prepare("INSERT INTO users (`user_id`, `name`, `password`, `user_type`, `email`, `hash`, `user_pic`) VALUES (?, ?, ?, '일반', ?, ?, ?)");
         $stmt->bindParam(1, $id);

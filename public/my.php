@@ -28,10 +28,10 @@ require_once "header.php";
                     <img src='http://localhost/ksc/public/images/giphy.gif' style='display: block; width: 33px; height: 33px; margin: auto;'>
                     <label class='my-label label label-info' style='display: block; padding: .3em .3em .3em; font-size: 130%;'>".$userType."</label></div>";
                     }?>
-                <div class="my-image" style="width: 130px; height: 100%; margin-top: 6px;">
+                <div class="my-image" style="width: 200px; height: 100%; margin-top: 6px;">
                     <img src=<?php echo "http://localhost/ksc/user_images/".$_SESSION['user_image']?> style="width: 100%; height: 100%" />
                 </div>
-                <div class="my-info">
+                <div class="my-info" style="width: 100%">
                     <div class="profile-area">
                         <div>
                             <h2><span><?php echo $_SESSION['name']; ?></span></h2>
@@ -42,7 +42,16 @@ require_once "header.php";
                         </div>
                     </div>
                     <div class="score-area">
-                        <?php echo $_SESSION['myscore']; ?>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php if(isset($_SESSION['myscore'])) {
+                                $myscore = $_SESSION['myscore'];
+                                $scorePer = $myscore / 1000 * 100;
+                                echo $myscore;
+                                } else { $scorePer = 0; echo 0; } ?>" aria-valuemin="0" aria-valuemax="1000" style="width: <?php echo $scorePer; ?>%">
+                            <span class="sr-only">10% Complete (success)</span>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>

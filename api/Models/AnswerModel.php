@@ -23,6 +23,21 @@ class AnswerModel {
         }
     }
 
+    function deleteById($id){
+        try {
+            $stmt = $this->conn->prepare("DELETE FROM answers WHERE answer_id = :answer_id");
+            $stmt->bindParam(':answer_id', $id);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            };
+            return true;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+
     function getMyAnswerRecent5($userId){
         try {
             $sql = "SELECT * FROM answers WHERE user_id = '$userId' ORDER BY create_date DESC LIMIT 5";
@@ -107,8 +122,16 @@ class AnswerModel {
         }
 
     }
-        
+
     function getById($id){
+        $stmt = $this->conn->prepare("SELECT * FROM answers WHERE answer_id = :answer_id");
+        $stmt->bindValue(':answer_id', $id);
+        $stmt->execute();
+        $answer = $stmt->fetchObject();
+        return $answer;
+    }
+        
+    function getJoinVoteAndUserById($id){
         $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date, u.user_pic
         , a.modify_date, u.user_type as label, v.user_id, IFNULL(v.vote, 0) AS vote
         FROM answers AS a 

@@ -19,11 +19,13 @@ switch($_SERVER['REQUEST_METHOD']){
     if(isset($_GET['all']) && $_SESSION['logged_in']){
         $recentAnswer = $answerModel->getMyAnswerRecent5($_SESSION['id']);
         $recentQuestion = $questionModel->getMyQuestionRecent5($_SESSION['id']);
+        $currentRank = $userModel->getCurrentRank($_SESSION['id']);
         
         echo json_encode([
             "success" => true,
             "recentAnswer" => $recentAnswer,
-            "recentQuestion" => $recentQuestion
+            "recentQuestion" => $recentQuestion,
+            "currentRank" => $currentRank
             ]);
         return;
     }

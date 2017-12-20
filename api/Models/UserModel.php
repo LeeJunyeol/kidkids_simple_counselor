@@ -6,6 +6,30 @@ class UserModel {
         $this->conn = $conn;
     }
 
+    function getCurrentRank($id){
+        try {
+            $sql = "SELECT u.user_id,
+            (SUM(ifnull(a.selection,0)) * 100 + SUM(ifnull(v.vote, 0))) AS score
+            FROM users AS u 
+            LEFT JOIN answers AS a ON u.user_id = a.user_id 
+            LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+            GROUP BY u.user_id ORDER BY score DESC LIMIT 10";
+            $stmt = $this->conn->prepare($sql);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            };
+            $scores = array();
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                $scores[] = $row;
+            }
+            return $scores;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+
     function getById($id){
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE user_id=:user_id");
         $stmt->bindParam(':user_id', $id);

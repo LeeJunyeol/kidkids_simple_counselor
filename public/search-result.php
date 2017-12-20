@@ -26,19 +26,14 @@ require_once "config.php";
 	}
 
 	.box>.head {
-		background-color: yellow;
 	}
 
 	.box>.body {
-		background-color: green;
-		color: white;
 		padding: 5px;
 	}
 
 	.list-item {
 		margin: 5px;
-		color: black;
-		background-color: yellow;
 	}
 
 	
@@ -49,11 +44,11 @@ require_once "config.php";
 require_once "header.php";
 ?>
 	<article>
-		<div class="search-result box">
-			<div class="search-result head question">
+		<div class="search-result box panel panel-default">
+			<div class="search-result head question panel-heading">
 				<h1>질문 검색 결과</h1>
 			</div>
-			<div class="search-result body question">
+			<div class="search-result body question panel-body">
 			<script type="text/handlebars-template" id="question-result-template">
 			{{#if this}}
 			<ul>
@@ -70,11 +65,11 @@ require_once "header.php";
 			</script>
 			</div>
 		</div>
-		<div class="search-result box">
-			<div class="search-result head answer">
+		<div class="search-result box panel panel-default">
+			<div class="search-result head answer panel-heading">
 				<h1>답변 검색 결과</h1>
 			</div>
-			<div class="search-result body answer">
+			<div class="search-result body answer panel-body">
 			<script type="text/handlebars-template" id="answer-result-template">
 			{{#if this}}
 			<ul>
@@ -92,11 +87,11 @@ require_once "header.php";
 
 			</div>
 		</div>
-		<div class="search-result box">
-			<div class="search-result head author">
+		<div class="search-result box panel panel-default">
+			<div class="search-result head author panel-heading">
 				<h1>작성자 검색 결과</h1>
 			</div>
-			<div class="search-result body author">
+			<div class="search-result body author panel-body">
 			<script type="text/handlebars-template" id="author-result-template">
 			{{#if this}}
 			<ul>

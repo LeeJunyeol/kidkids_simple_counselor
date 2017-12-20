@@ -30,6 +30,10 @@ var WriteModule = (function () {
             }
         })
 
+        $("#btn-cancel-question").on("click", function(e){
+            history.back();
+        });
+
         // 데이터 로드
         var splitedUrl = location.pathname.split("/").splice(-2);
         if (splitedUrl[0] === "update") {

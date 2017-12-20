@@ -18,7 +18,8 @@ ul {
 
 #top-container {
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    position: relative;
 }
 
 #top-container>div {
@@ -27,11 +28,14 @@ ul {
 }
 
 #top-container #profile-box {
-    width: 65%;
+    width: 100%;
 }
 
 #top-container #rank-box {
-    width: 35%;
+    position: absolute;
+    width: 300px;
+    top: 0;
+    left: 100%;
 }
 
 #second-container {

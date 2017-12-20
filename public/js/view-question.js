@@ -114,7 +114,7 @@ var ViewModule = (() => {
                     var answerId = $(e.currentTarget).closest(".reply-card").data("id");
                     selected = true;
                     $(".reply-box").find(".select-btn:not(.selected)").hide();
-
+                    $(e.currentTarget).closest(".reply-card").find("span").removeClass("hide");
                     $.ajax(BASE_URL + "/api/Answer/" + answerId, {
                         type: "PUT",
                         contentType: "application/json",
@@ -128,6 +128,21 @@ var ViewModule = (() => {
                 }
             }
         });
+
+        $("div.reply-box").on("click", ".delete", function (e) {
+            if(confirm("답변을 삭제하시겠습니까?")){
+                var $currentContainer = $(e.currentTarget).closest(".reply-card");
+                var answerId = $currentContainer.data("id");
+                $.ajax(BASE_URL + "/api/Answer/" + answerId, {
+                    type: 'DELETE'
+                }).then(function(res){
+                    res = JSON.parse(res);
+                    alert(res['message']);
+                    this.remove();
+                }.bind($currentContainer));
+            }
+        });
+        
 
         // 수정/삭제 이벤트
         $("#question-container").on("click", ".delete", function (e) {
@@ -145,6 +160,18 @@ var ViewModule = (() => {
         $("#question-container").on("click", ".edit", function (e) {
             location.href = BASE_URL + "/update/" + questionId;
         });
+        // $("#question-container").on("click", ".delete", function (e) {
+        //     console.log("삭제!");
+        //     $.ajax(API_BASE_URL + "/my/Question/" + questionId, {
+        //         type: "DELETE"
+        //     }).then(function (res) {
+        //         console.log(res);
+        //         var result = JSON.parse(res);
+        //         alert(result['messages']);
+
+        //         location.href = BASE_URL + "/home";
+        //     });
+        // });
         // $("#reply-box").on("click", "button.delete", function(e){
         //     $.ajax("/ksc/api/")
         // });
@@ -193,6 +220,9 @@ var ViewModule = (() => {
             $("div.reply-card.container").each(function (i, ele) {
                 if($(ele).data("selection") === 1){
                     $(ele).addClass("selected-answer");
+                    $(ele).find(".select-btn").removeClass("hide");
+                    $(ele).find(".select-btn").addClass("selected");
+                    $(ele).find(".selection-text").removeClass("hide");
                 }
                 $(ele).append(opinionAnswerTemplate(answerOpinions[$(ele).data("id")]));
             });

@@ -37,12 +37,12 @@ label {
 }
 </style>
 
-<button onclick="window.location.href='/ksc/admin'">뒤로가기</button>
 <div id="form" class="panel-heading text-center">
 
 </div>
 <script type="text/handlebars-template" id="question-view-template">
     <h2 style="margin-bottom: 30px;">질문 목록</h2>
+    <button onclick="window.location.href='/ksc/admin'">뒤로가기</button>
 
     <form class="form">
         <div class="form-group">
@@ -63,7 +63,7 @@ label {
         </div>
         <div class="form-group" style="width: 100%;">
             <label for="내용">Content</label>
-            <textarea style="width: 100%; height: 150px;">{{content}}</textarea>
+            <textarea style="width: 100%; height: 350px;">{{content}}</textarea>
         </div>
         <div class="form-group">
             <label for="태그">Tags</label>

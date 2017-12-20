@@ -94,6 +94,7 @@ require_once "header.php";
                             <button type="button" class="select-btn btn btn-default btn-lg hide" style="position: relative; top: 15px; left: 5px; float: right; font-size: 23px; border-radius:45.5%; padding: 10px; margin-left: 20px;">
                                 <span class="glyphicon glyphicon-ok"></span>
                             </button>
+                            <span class="selection-text hide" style="color: #5cb85c; position: relative; top: 15px; left: 5px; float: right; font-size: 23px; border-radius:45.5%; padding: 10px; margin-left: 20px;">채택된 답변입니다.</span>
                             <div class="edit-btn-group btn-group" style="float: right; margin-top: 20px;">
                                 <button type="button" class="btn btn-default edit" aria-label="Left Align" style="float: none; position: static;">
                                     <span class="edit glyphicon glyphicon glyphicon-pencil" aria-hidden="true">수정</span>

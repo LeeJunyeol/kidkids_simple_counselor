@@ -65,8 +65,28 @@ require_once "header.php";
         </div>
         <div id="rank-box">
             <div class="box">
+                <script type="text/handlebars-template" id="current-rank-template">
                 <h2>현재 순위</h2>
-                            
+                <table class="rank-table">
+                    <thead>
+                        <tr>
+                            <th class="rank-table-head rank">순위</th>
+                            <th class="rank-table-head id">아이디</th>
+                            <th class="rank-table-head score">점수</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rank-body">
+                        {{#each this}}
+                        <tr>
+                            <td class="rank-table-item rank">{{rank}}</td>
+                            <td class="rank-table-item id"><a href="/ksc/user/{{user_id}}">{{user_id}}</a></td>
+                            <td class="rank-table-item score">{{score}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+
+                </script>
             </div>
         </div>
     </div>

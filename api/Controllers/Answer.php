@@ -25,6 +25,14 @@ switch($_SERVER['REQUEST_METHOD']){
         ]);
         return;
     }
+    if(isset($_GET['id'])){
+        $answer = $answerModel->getById($_GET['id']);
+    
+        echo json_encode([
+            'answer' => $answer
+        ]);
+        return;
+    }
     break;
     case 'POST':
     if(isset($_POST['answer'])){
@@ -32,7 +40,7 @@ switch($_SERVER['REQUEST_METHOD']){
 
         $insertedId = $answerModel->add($answer);
         if($insertedId){
-            $insertedAnswer = $answerModel->getById($insertedId);
+            $insertedAnswer = $answerModel->getJoinVoteAndUserById($insertedId);
             $insertedAnswer->votesum = 0;
             echo json_encode([
                 'success' => true,
@@ -73,7 +81,17 @@ switch($_SERVER['REQUEST_METHOD']){
             'message'=> "채택 완료!"
         ]);
     }
-    break;    
+    break;
+    case 'DELETE':
+    if(isset($_GET['id'])){
+        $answerModel->deleteById($_GET['id']);
+        echo json_encode([
+            'success' => true,
+            'message' => '답글을 삭제했습니다.'
+        ]);
+        return;
+    }
+    break;
 }
 
 ?>

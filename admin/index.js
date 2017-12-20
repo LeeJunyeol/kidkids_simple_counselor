@@ -25,19 +25,24 @@ var AdminModule = (function () {
         $("#pageNav").on("click", "li.next", nextPage);
         $("#pageNav").on("click", "li.pageNum", moveToPageNum);
 
-        $("#menu>li:eq(0)").on("click", function (e) {
+        $("#menu>a:eq(0)").on("click", function (e) {
             am = QuestionModule;
             am.init();
             hideUserAdmin();
             $("#wrapper").removeClass("hide");
             $("#useradmin").addClass("hide");
         })
-        $("#menu>li:eq(1)").on("click", function (e) {
+        $("#menu>a:eq(1)").on("click", function (e) {
             am = AnswerModule;
             am.init();
             hideUserAdmin();
             $("#wrapper").removeClass("hide");
             $("#useradmin").addClass("hide");
+        })
+        $("#menu>a:eq(2)").on("click", function (e) {
+            getUserScores().then(drawUserTemplate).then(bindAdvancementEvents);
+            $("#useradmin").removeClass("hide");
+            $("#wrapper").addClass("hide");
         })
         // $("#menu>li:eq(2)").on("click", function (e) {
         //     getCategories(1);
@@ -45,11 +50,6 @@ var AdminModule = (function () {
         //     $("#wrapper").removeClass("hide");
         //     $("#useradmin").addClass("hide");
         // })
-        $("#menu>li:eq(3)").on("click", function (e) {
-            getUserScores().then(drawUserTemplate).then(bindAdvancementEvents);
-            $("#useradmin").removeClass("hide");
-            $("#wrapper").addClass("hide");
-        })
 
         $("tbody").on("click", "tr", function(e) {
             var obj = $(e.currentTarget).data("obj");

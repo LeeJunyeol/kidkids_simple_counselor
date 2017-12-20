@@ -69,7 +69,8 @@ require_once "header.php";
 					</div>
 				</div>
 				<div class="submit">
-					<button id="btn-post-question" class="btn btn-default post" type="submit">등록</button>
+					<button id="btn-post-question" class="btn btn-info post" type="submit">등록</button>
+					<button id="btn-cancel-question" class="btn btn-warning cancel">취소</button>
 				</div>
 			</div>
 		</div>

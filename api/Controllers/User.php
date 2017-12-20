@@ -24,12 +24,15 @@ switch($_SERVER['REQUEST_METHOD']){
 
         $recentAnswer = $answerModel->getMyAnswerRecent5($id);
         $recentQuestion = $questionModel->getMyQuestionRecent5($id);
-
+        $currentRank = $userModel->getCurrentRank($id);
+        
         echo json_encode([
             "success" => true,
             "user" => $user,
             "recentAnswer" => $recentAnswer,
-            "recentQuestion" => $recentQuestion
+            "recentQuestion" => $recentQuestion,
+            "currentRank" => $currentRank
+
         ]);
         return;
     }
@@ -58,8 +61,10 @@ switch($_SERVER['REQUEST_METHOD']){
 
                 if($_SESSION['id'] == 'admin'){
                     header("location: /ksc/admin");
+                    return;
                 }
                 header("location: /ksc/home");
+                return;
             }
             else {
                 $_SESSION['message'] = "아이디 또는 비밀번호가 일치하지 않습니다.";

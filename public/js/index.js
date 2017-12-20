@@ -112,11 +112,9 @@ $(document).ready(function () {
             $("div.board > ul.list-group").html(questionTemplate(questions));
 
             var arr = [];
-
             for (lastPageNum = 0; lastPageNum < parseInt(result['count']) / 5; lastPageNum++) {
                 arr.push(lastPageNum + 1);
             }
-
             $("ul.pagination").html(paginationTemplate(arr));
         })
     }

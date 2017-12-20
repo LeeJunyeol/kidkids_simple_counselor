@@ -1,5 +1,6 @@
 var WriteModule = (function () {
     var BASE_URL = location.origin + "/ksc";
+    var API_BASE_URL = BASE_URL + "/api";
 
     var $titleArea = $("div.write.header>textarea");
     var $contentArea = $("div.write.content>textarea");

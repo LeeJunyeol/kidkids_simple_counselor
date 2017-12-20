@@ -7,6 +7,22 @@ class AnswerModel {
         require_once "../Util/Util.php";
     }
 
+    function getCountAll(){
+        try {
+            $stmt = $this->conn->query("SELECT count(*) FROM answers");
+            $rowCount = $stmt->fetch(PDO::FETCH_NUM);
+
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            };
+            return $rowCount;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+
     function getMyAnswerRecent5($userId){
         try {
             $sql = "SELECT * FROM answers WHERE user_id = '$userId' ORDER BY create_date DESC LIMIT 5";

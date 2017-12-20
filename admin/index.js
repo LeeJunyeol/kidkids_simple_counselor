@@ -3,48 +3,63 @@ var AdminModule = (function () {
     var QUESTION_API_URL = BASE_URL + "/api/Question"
 
     // 등록/수정/삭제 판넬
-    var questionInputTemplate = handlebarsHelper("#question-input-template");
-    var answerInputTemplate = handlebarsHelper("#answer-input-template");
     // var categoryHeaderTemplate = handlebarsHelper("#category-header-template");
     var userAdminTemplate = handlebarsHelper("#user-admin-template");
 
     // 테이블 헤더 템플릿
-    var questionHeaderTemplate = handlebarsHelper("#question-header-template");
-    var answerHeaderTemplate = handlebarsHelper("#answer-header-template");
     var categoryHeaderTemplate = handlebarsHelper("#category-header-template");
 
     // 템플릿
-    var questionTemplate = handlebarsHelper("#question-template");
-    var answerTemplate = handlebarsHelper("#answer-template");
     //    var categoryTemplate = handlebarsHelper("#category-template");
 
     var $selectedRow; // 선택한 행
 
+    var am;
+
     function init() {
-        getQuestions(1);
+        am = QuestionModule;
+        am.init();
+
+        // 페이지 네비게이션 이벤트
+        $("#pageNav").on("click", "li.previous", prevPage);
+        $("#pageNav").on("click", "li.next", nextPage);
+        $("#pageNav").on("click", "li.pageNum", moveToPageNum);
+
         $("#menu>li:eq(0)").on("click", function (e) {
-            getQuestions(1);
+            am = QuestionModule;
+            am.init();
             hideUserAdmin();
             $("#wrapper").removeClass("hide");
             $("#useradmin").addClass("hide");
         })
         $("#menu>li:eq(1)").on("click", function (e) {
-            getAnswers(1);
+            am = AnswerModule;
+            am.init();
             hideUserAdmin();
             $("#wrapper").removeClass("hide");
             $("#useradmin").addClass("hide");
         })
-        $("#menu>li:eq(2)").on("click", function (e) {
-            getCategories(1);
-            hideUserAdmin();
-            $("#wrapper").removeClass("hide");
-            $("#useradmin").addClass("hide");
-        })
+        // $("#menu>li:eq(2)").on("click", function (e) {
+        //     getCategories(1);
+        //     hideUserAdmin();
+        //     $("#wrapper").removeClass("hide");
+        //     $("#useradmin").addClass("hide");
+        // })
         $("#menu>li:eq(3)").on("click", function (e) {
             getUserScores().then(drawUserTemplate).then(bindAdvancementEvents);
             $("#useradmin").removeClass("hide");
             $("#wrapper").addClass("hide");
         })
+
+        $("tbody").on("click", "tr", function(e) {
+            var obj = $(e.currentTarget).data("obj");
+            if(obj['answerId'] !== undefined){
+                location.href = BASE_URL + "/admin/answer/" + obj['answerId'];
+            } else {
+                location.href = BASE_URL + "/admin/question/" + obj['questionId'];
+            }
+        })
+
         // 맨위에 값 업데이트
         $("table").on("click", "tr", function (e) {
             $selectedRow = $(e.currentTarget);
@@ -65,68 +80,91 @@ var AdminModule = (function () {
             }.bind(selectedData));
         });
 
-        bindDeleteEvent();
-        bindUpdateEvent();
+        // bindDeleteEvent();
+        // bindUpdateEvent();
     }
 
-    function bindUpdateEvent() {
-        $("#form").on("click", "button.update", function (e) {
-            e.preventDefault();
-
-            var thisData = $(e.delegateTarget).data("obj");
-            var thisDataKeys = Object.keys(thisData);
-            $(".form-control").each(function (i, v) {
-                thisData[$(v).prop("name")] = $(v).val();
-            });
-
-            var id = $(e.delegateTarget).data("id");
-            var targetController;
-            var callbackFunc;
-            switch (Object.keys(thisData)[0]) {
-                case "questionId":
-                    targetController = "Question";
-                    callbackFunc = getQuestions;
-                    break;
-                case "answerId":
-                    targetController = "Answer";
-                    break;
-            }
-            var url = BASE_URL + "/api/" + targetController + "/" + id;
-            $.ajax(url, {
-                type: 'PUT',
-                contentType: 'application/json',
-                data: JSON.stringify(thisData)
-            }).then(function (res) {
-                window.alert(JSON.parse(res)['message']);
-                this(1);
-            }.bind(callbackFunc));
-        })
+    function prevPage(e) {
+        if (currentPageNum > 1) {
+            currentPageNum--;
+            am.get(currentPageNum, sortBy);
+        } else {
+            alert("첫 페이지입니다.");
+        }
     }
 
-    function bindDeleteEvent() {
-        $("#form").on("click", "button.delete", function (e) {
-            e.preventDefault();
-
-            var thisData = $(e.delegateTarget).data("obj");
-            var id = $(e.delegateTarget).data("id");
-            var targetController;
-            switch (Object.keys(thisData)[0]) {
-                case "questionId":
-                    targetController = "Question";
-                    break;
-                case "answerId":
-                    targetController = "Answer";
-                    break;
-            }
-            var url = "/ksc/api/" + targetController + "/" + id;
-            $.ajax(url, {
-                type: 'DELETE'
-            }).then(function (res) {
-                alert(JSON.parse(res)['message']);
-                $selectedRow.remove();
-            });
-        })
+    function nextPage(e) {
+        if (currentPageNum < lastPageNum) {
+            currentPageNum++;
+            am.get(currentPageNum, sortBy);
+        } else {
+            alert("마지막 페이지입니다.");
+        }
     }
+
+    function moveToPageNum(e) {
+        currentPageNum = parseInt($(e.currentTarget).data("num"));
+        am.get(currentPageNum, sortBy);
+    }
+
+    // function bindUpdateEvent() {
+    //     $("#form").on("click", "button.update", function (e) {
+    //         e.preventDefault();
+
+    //         var thisData = $(e.delegateTarget).data("obj");
+    //         var thisDataKeys = Object.keys(thisData);
+    //         $(".form-control").each(function (i, v) {
+    //             thisData[$(v).prop("name")] = $(v).val();
+    //         });
+
+    //         var id = $(e.delegateTarget).data("id");
+    //         var targetController;
+    //         var callbackFunc;
+    //         switch (Object.keys(thisData)[0]) {
+    //             case "questionId":
+    //                 targetController = "Question";
+    //                 callbackFunc = getQuestions;
+    //                 break;
+    //             case "answerId":
+    //                 targetController = "Answer";
+    //                 break;
+    //         }
+    //         var url = BASE_URL + "/api/" + targetController + "/" + id;
+    //         $.ajax(url, {
+    //             type: 'PUT',
+    //             contentType: 'application/json',
+    //             data: JSON.stringify(thisData)
+    //         }).then(function (res) {
+    //             window.alert(JSON.parse(res)['message']);
+    //             this(1);
+    //         }.bind(callbackFunc));
+    //     })
+    // }
+
+    // function bindDeleteEvent() {
+    //     $("#form").on("click", "button.delete", function (e) {
+    //         e.preventDefault();
+
+    //         var thisData = $(e.delegateTarget).data("obj");
+    //         var id = $(e.delegateTarget).data("id");
+    //         var targetController;
+    //         switch (Object.keys(thisData)[0]) {
+    //             case "questionId":
+    //                 targetController = "Question";
+    //                 break;
+    //             case "answerId":
+    //                 targetController = "Answer";
+    //                 break;
+    //         }
+    //         var url = BASE_URL + "/api/" + targetController + "/" + id;
+    //         $.ajax(url, {
+    //             type: 'DELETE'
+    //         }).then(function (res) {
+    //             alert(JSON.parse(res)['message']);
+    //             $selectedRow.remove();
+    //         });
+    //     })
+    // }
 
     function bindAdvancementEvents() {
         $("#useradmin").on("click", ".advance", function (e) {
@@ -144,7 +182,7 @@ var AdminModule = (function () {
     }
 
     function updateUserType(user) {
-        $.ajax(BASE_URL + "/ksc/api/User", {
+        $.ajax(BASE_URL + "/api/User", {
             type: "PUT",
             contentType: "application/json",
             data: JSON.stringify(user)
@@ -167,7 +205,7 @@ var AdminModule = (function () {
     }
 
     function getUserScores() {
-        return $.ajax(BASE_URL + "/ksc/api/Controllers/User.php", {
+        return $.ajax(BASE_URL + "/api/Controllers/User.php", {
             type: 'GET',
             contentType: "application/json"
         }).then(function (res) {
@@ -198,56 +236,27 @@ var AdminModule = (function () {
         }
     }
 
-
-    function getCategories() {
-        $.ajax(BASE_URL + "/ksc/api/Controllers/Question.php", {
-            type: 'GET',
-            contentType: "application/json",
-            data: dataObj
-        }).then(function (res) {
-            var results = JSON.parse(res);
-            console.log(results);
-            // $("#form").html(questionInputTemplate());
-            $("thead").html(questionHeaderTemplate());
-            $("tbody").html(questionTemplate(results['questions']));
-        })
+    function prevPage(e) {
+        if (currentPageNum > 1) {
+            currentPageNum--;
+            am.get(currentPageNum);
+        } else {
+            alert("첫 페이지입니다.");
+        }
     }
 
-    function getQuestions(page) {
-        var dataObj = {};
-        dataObj['page'] = page;
-        dataObj['sortBy'] = "id";
-        dataObj['isASC'] = "true";
-        dataObj['limit'] = 20;
-        $.ajax(BASE_URL + "/ksc/api/Controllers/Question.php", {
-            type: 'GET',
-            contentType: "application/json",
-            data: dataObj
-        }).then(function (res) {
-            var results = JSON.parse(res);
-            console.log(results);
-            $("#form").html(questionInputTemplate());
-            $("thead").html(questionHeaderTemplate());
-            $("tbody").html(questionTemplate(results['questions']));
-        })
+    function nextPage(e) {
+        if (currentPageNum < lastPageNum) {
+            currentPageNum++;
+            am.get(currentPageNum);
+        } else {
+            alert("마지막 페이지입니다.");
+        }
     }
 
-    function getAnswers(page) {
-        var dataObj = {};
-        dataObj['page'] = page;
-        dataObj['limit'] = 20;
-
-        $.ajax(BASE_URL + "/ksc/api/Controllers/Answer.php", {
-            type: 'GET',
-            contentType: "application/json",
-            data: dataObj
-        }).then(function (res) {
-            var results = JSON.parse(res);
-            console.log(results);
-            $("#form").html(answerInputTemplate());
-            $("thead").html(answerHeaderTemplate());
-            $("tbody").html(answerTemplate(results['answers']));
-        })
+    function moveToPageNum(e) {
+        currentPageNum = parseInt($(e.currentTarget).data("num"));
+        am.get(currentPageNum);
     }
 
     return {
@@ -258,3 +267,134 @@ var AdminModule = (function () {
 $(document).ready(function () {
     AdminModule.init();
 })
+
+var AnswerModule = (() => {
+    var answerInputTemplate = handlebarsHelper("#answer-input-template");
+    var answerHeaderTemplate = handlebarsHelper("#answer-header-template");
+    var answerTemplate = handlebarsHelper("#answer-template");
+    var paginationTemplate = handlebarsHelper("#pagination-template");
+
+    var BASE_URL = location.origin + "/ksc";
+    var $selectedRow; // 선택한 행
+
+    var currentPageNum = 1;
+    var lastPageNum = 1;
+
+    var sortBy = "default";
+    var isAsc = false;
+
+    var init = () => {
+        get(1);
+    }
+
+    function get(page) {
+        var dataObj = {};
+        dataObj['page'] = page;
+        dataObj['limit'] = 10;
+
+        $.ajax(BASE_URL + "/api/Controllers/Answer.php", {
+            type: 'GET',
+            contentType: "application/json",
+            data: dataObj
+        }).then(function (res) {
+            var results = JSON.parse(res);
+            console.log(results);
+            $("#form").html(answerInputTemplate());
+            $("thead").html(answerHeaderTemplate());
+            results['answers'].forEach((element) => {
+                if(element['content'].length > 100){
+                    element['content'] = element['content'].substring(0, 100) + "...";
+                }
+            })
+            $("tbody").html(answerTemplate(results['answers']));
+            var arr = [];
+            for (lastPageNum = 0; lastPageNum <= parseInt(results['count'][0]) / 10; lastPageNum++) {
+                arr.push(lastPageNum + 1);
+            }
+            $("ul.pagination").html(paginationTemplate(arr));
+        })
+    }
+
+    return {
+        init,
+        get
+    }
+
+})();
+
+var QuestionModule = (() => {
+    var questionInputTemplate = handlebarsHelper("#question-input-template");
+    var questionHeaderTemplate = handlebarsHelper("#question-header-template");
+    var questionTemplate = handlebarsHelper("#question-template");
+    var paginationTemplate = handlebarsHelper("#pagination-template");
+
+    var BASE_URL = location.origin + "/ksc";
+    var $selectedRow; // 선택한 행
+
+    var currentPageNum = 1;
+    var lastPageNum = 1;
+
+    var sortBy = "default";
+    var isAsc = false;
+
+
+    var init = () => {
+        get(1);
+    }
+
+    // function prevPage(e){
+    //     if (currentPageNum > 1) {
+    //         currentPageNum--;
+    //         getQuestions(currentPageNum, sortBy);
+    //     } else {
+    //         alert("첫 페이지입니다.");
+    //     }
+    // }
+
+    // function nextPage(e){
+    //     if (currentPageNum < lastPageNum) {
+    //         currentPageNum++;
+    //         getQuestions(currentPageNum, sortBy);
+    //     } else {
+    //         alert("마지막 페이지입니다.");
+    //     }
+    // }
+
+    // function moveToPageNum(e){
+    //     currentPageNum = parseInt($(e.currentTarget).data("num"));
+    //     getQuestions(currentPageNum, sortBy);
+    // }
+
+    function get(page) {
+        var dataObj = {};
+        dataObj['page'] = page;
+        dataObj['sortBy'] = "id";
+        dataObj['isASC'] = "true";
+        dataObj['limit'] = 10;
+        $.ajax(BASE_URL + "/api/Controllers/Question.php", {
+            type: 'GET',
+            contentType: "application/json",
+            data: dataObj
+        }).then(function (res) {
+            var results = JSON.parse(res);
+            $("#form").html(questionInputTemplate());
+            $("thead").html(questionHeaderTemplate());
+            results['questions'].forEach((element) => {
+                if (element['content'].length > 150) {
+                    element['content'] = element['content'].substring(0, 150) + "...";
+                }
+            });
+            $("tbody").html(questionTemplate(results['questions']));
+            var arr = [];
+            for (lastPageNum = 0; lastPageNum <= parseInt(results['count'][0]) / 10; lastPageNum++) {
+                arr.push(lastPageNum + 1);
+            }
+            $("ul.pagination").html(paginationTemplate(arr));
+        })
+    }
+
+    return {
+        init,
+        get
+    }
+})();

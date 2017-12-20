@@ -71,7 +71,7 @@ require_once "header.php";
                     {{#each this}}
                     <li class="question list-group-item" data-id={{question_id}}>
                         <div class="list-header">
-                            <h3><a href="{{link}}" class="list-head">{{question_id}}번에 대한 답변입니다.</a></h3>
+                            <h3><a href="{{link}}" class="list-head">{{title}}</a></h3>
                         </div>
                         <div class="list-main">
                             <p>{{content}}</p>

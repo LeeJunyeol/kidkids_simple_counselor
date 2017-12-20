@@ -43,7 +43,7 @@ switch($_SERVER['REQUEST_METHOD']){
         $myscore = $voteModel->getMyTotalScore($id);
         if($user == null){
             $_SESSION['message'] = '아이디가 존재하지 않습니다. 회원가입을 해주세요.';
-            header("location: http://localhost/ksc/signup");
+            header("location: /ksc/signup");
             exit;
         } else {
             if ( password_verify($_POST['password'], $user->password) ) {
@@ -57,13 +57,13 @@ switch($_SERVER['REQUEST_METHOD']){
                 $_SESSION['logged_in'] = true;
 
                 if($_SESSION['id'] == 'admin'){
-                    header("location: http://localhost/ksc/admin");
+                    header("location: /ksc/admin");
                 }
-                header("location: http://localhost/ksc/home");
+                header("location: /ksc/home");
             }
             else {
                 $_SESSION['message'] = "아이디 또는 비밀번호가 일치하지 않습니다.";
-                header("location: http://localhost/ksc/login");
+                header("location: /ksc/login");
             }
         }
         return;
@@ -80,17 +80,17 @@ switch($_SERVER['REQUEST_METHOD']){
 
 		if(empty($id)){
 			$_SESSION['message'] = "Please Enter User ID.";
-            header("location: http://localhost/ksc/signup");
+            header("location: /ksc/signup");
             exit;
 		}
 		else if(empty($name)){
 			$_SESSION['message'] = "Please Enter Your Name.";
-            header("location: http://localhost/ksc/signup");
+            header("location: /ksc/signup");
             exit;
 		}
 		else if(empty($imgFile)){
 			$_SESSION['message'] = "Please Select Image File.";
-            header("location: http://localhost/ksc/signup");
+            header("location: /ksc/signup");
             exit;
 		}
 		else
@@ -113,13 +113,13 @@ switch($_SERVER['REQUEST_METHOD']){
 				}
 				else{
 					$_SESSION['message'] = "Sorry, your file is too large.";
-                    header("location: http://localhost/ksc/signup");
+                    header("location: /ksc/signup");
                     exit;
                 }
 			}
 			else{
 				$_SESSION['message'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";		
-                header("location: http://localhost/ksc/signup");
+                header("location: /ksc/signup");
                 exit;
             }
 		}
@@ -128,13 +128,13 @@ switch($_SERVER['REQUEST_METHOD']){
 
         if($userModel->getById($id) != null){
             $_SESSION['message'] = 'User with this email already exists!';
-            header("location: http://localhost/ksc/signup");
+            header("location: /ksc/signup");
             exit;
         }
 
         if($userModel->register($id, $password, $name, $email, $hash, $userpic)){
             $_SESSION['message'] = '회원으로 등록되었습니다. 로그인해주세요!';
-            header("location: http://localhost/ksc/login");
+            header("location: /ksc/login");
         } else {
             $_SESSION['message'] = '회원가입에 실패하였습니다.';
         };

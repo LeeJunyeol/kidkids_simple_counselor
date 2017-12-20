@@ -276,7 +276,7 @@ table .content {
                 <td class="text-center">{{question_id}}</td>
                 <td class="text-center">{{user_id}}</td>
                 <td class="text-center">{{title}}</td>
-                <td class="text-center content">{{content}}</td>
+                <td class="content">{{content}}</td>
                 <td class="text-center">{{view}}</td>
                 <td class="text-center">{{tags}}</td>
                 <td class="text-center" selected_answer_id>{{selected_answer_id}}</td>
@@ -294,7 +294,7 @@ table .content {
                 <td class="text-center">{{question_id}}</th>
                 <td class="text-center">{{user_id}}</th>
                 <td class="text-center">{{title}}</th>
-                <td class="text-center content">{{content}}</th>
+                <td class="content">{{content}}</th>
                 <td class="text-center">{{selection}}</th>
                 <td class="text-center">{{create_date}}</th>
                 <td class="text-center">{{modify_date}}</th>
@@ -335,13 +335,15 @@ table .content {
 <style>
 footer {
     background: #2A2730;
+    width: 2030px;
     padding-top: 60px;
     padding-bottom: 60px;
+    padding-right: 100px;
     color: white;
 }
 
 footer>.container {
-    width: 1100px;
+    width: 100%;
     text-align: right;
 }
 

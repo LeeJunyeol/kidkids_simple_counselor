@@ -17,9 +17,11 @@ switch($_SERVER['REQUEST_METHOD']){
         $offset = ($_GET['page'] - 1) * $limit;
         
         $answers = $answerModel->getForPage($offset, $limit);
+        $count = $answerModel->getCountAll();
 
         echo json_encode([
-            'answers' => $answers
+            'answers' => $answers,
+            'count' => $count
         ]);
         return;
     }

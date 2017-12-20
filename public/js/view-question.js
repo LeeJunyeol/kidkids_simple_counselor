@@ -75,7 +75,7 @@ var ViewModule = (() => {
                     var insertedAnswer = result['data'];
                     $("div.reply-box").append(answerTemplate([insertedAnswer]));
                     $("div.reply-box>.reply-card:last-child").append(opinionAnswerTemplate());
-                    $("div.reply-box>.reply-card:last-child").height = insertedAnswer['content'].split(re).length * 22;
+                    $("div.reply-box>.reply-card:last-child").find("textarea").height(insertedAnswer['content'].split(re).length * 21);
                     $("#write-box").toggle("blind");
                     $("button.btn.reply").toggleClass("btn-danger").text("답글달기");
                     $("div.reply-card.container").each(function(i, v){
@@ -180,7 +180,7 @@ var ViewModule = (() => {
 
             question.tags = question.tags.split("/");
             answers.forEach(element => {
-                element.height = element.content.split(re).length * 22;
+                element.height = element.content.split(re).length * 21;
             });
 
             $("div.question.container").removeClass("hide");
@@ -199,7 +199,7 @@ var ViewModule = (() => {
 
             var questionContent = question.content;
             var answerContent = answers.content;
-            $("div.question.container").find("textarea").height(questionContent.split(re).length * 28);
+            $("div.question.container").find("textarea").height(questionContent.split(re).length * 21);
 
             $("div.reply-card.container").each(function(i, v){
                 var $spanSpecial = $(v).find("span.user-type");

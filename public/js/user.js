@@ -1,4 +1,6 @@
 var MyModule = (function(){
+    var BASE_URL = location.origin + "/ksc";
+
     // 템플릿들
     var expertTemplate = handlebarsHelper("#expert-template");
     var userTemplate = handlebarsHelper("#user-template");
@@ -9,7 +11,7 @@ var MyModule = (function(){
     }
 
     var load = () => {
-        $.ajax("http://localhost/ksc/api/User/" + location.href.split("/").slice(-1), {
+        $.ajax(BASE_URL + "/api/User/" + location.href.split("/").slice(-1), {
             type: 'GET'
         }).then((res) => {
             res = JSON.parse(res);
@@ -19,19 +21,23 @@ var MyModule = (function(){
             var recentAnswers = res['recentAnswer'];
 
             recentQuestions.forEach(element => {
+                element['content'] = element['content'].substring(0, 100) + "...";
                 element['create_date'] = Utils.getFormatDate(element['create_date']);
-                element['link'] = "http://localhost/ksc/question/" + element['question_id']; 
+                element['link'] = "/ksc/question/" + element['question_id']; 
             });
             recentAnswers.forEach(element => {
+                element['content'] = element['content'].substring(0, 100) + "...";
                 element['create_date'] = Utils.getFormatDate(element['create_date']);
-                element['link'] = "http://localhost/ksc/question/" + element['question_id'];
+                element['link'] = "/ksc/question/" + element['question_id'];
             });
 
             var scorePer = user['score'] / 500 * 100;
             user['userlevel'] = Math.floor(scorePer / 100);
             user['scorePer'] = scorePer - user['userlevel'] * 100;
 
-            $("#profile-box>.box").append(expertTemplate(user));
+            if(user['user_type'] === '전문가'){
+                $("#profile-box>.box").append(expertTemplate(user));
+            }
             $("#profile-box>.box").append(userTemplate(user));
             $("#question-box").append(recentQuestionTemplate(recentQuestions));
             $("#answer-box").append(recentAnswerTemplate(recentAnswers));

@@ -2,7 +2,7 @@ function handlebarsHelper(templateId){
     return Handlebars.compile($(templateId).html());
 }
 
-var Utils = (() => {
+var Utils = (function(){
     var WEEK_DAYS = ["일", "월", "화", "수", "목", "금", "토"];
     
     function getFormatDate(inputDate) {
@@ -14,8 +14,8 @@ var Utils = (() => {
     }
 
     return {
-        getFormatDate
-    }
+        getFormatDate: getFormatDate
+    };
     
 })();
 

@@ -29,7 +29,7 @@
         </div>
         <div class="title">
             <h1>키드키즈 고민상담소!</h1>
-            <a href="http://localhost/ksc/home" id="logo">
+            <a href="/ksc/home" id="logo">
                 <img id="logoimg" src="<?php echo _IMG ?>/char_hooni.png" />
             </a>
         </div>
@@ -57,8 +57,14 @@
         </div>
     </div>
 </header>
-<div class="row">
-    <div class="col-sm-6 col-sm-offset-3" style="display: flex;">
+<?php 
+$url = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+$pattern = '/\/ksc\/user+|\/ksc\/my+/';
+?>
+
+<div class="row <?php if(preg_match($pattern, $url)){ echo "hide"; }?>">
+<!-- class="col-sm-6 col-sm-offset-3"  -->
+    <div style="display: flex; max-width: 1260px; width: 50%; margin-left: 489px; position: relative; left: -45px;">
         <div class="btn-group" style="display: flex; margin-top: 10px;">
             <button type="button" class="btn btn-info">전체</button>
             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -71,7 +77,7 @@
                 <li><a href="#">작성자</a></li>
             </ul>
         </div>
-        <div id="imaginary_container"> 
+        <div id="imaginary_container" style="width: 100%"> 
             <div class="input-group stylish-input-group">
                 <input type="text" class="form-control"  placeholder="Search" >
                 <span class="input-group-addon">

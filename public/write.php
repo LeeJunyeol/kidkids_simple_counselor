@@ -27,8 +27,13 @@ require_once "header.php";
 		<div class="wrapper">
 			<div class="container">
 				<div class="write category">
-					<label>질문 분야를 입력해주세요.</label>
+					<label>카테고리를 선택 또는 검색해주세요.</label>
 					<div id="search-category-form" class="input-group stylish-input-group">
+					<span class="input-group-addon">
+						<button id="click-category" type="submit" data-target="#modalForm">
+							<span>카테고리 선택</span>
+						</button>
+					</span>
 					<input type="text" class="form-control"  placeholder="Search" >
 					<span class="input-group-addon">
 						<button id="search-category" type="submit" data-target="#modalForm">
@@ -107,6 +112,19 @@ require_once "footer.php";
 				{{/each}}
 				</script>
 				</ul>
+				<ul id="ul-category-all-list">
+				<script type="text/handlebars-template" id="category-all-list-template">
+				{{#each this}}
+					<li>
+					<div class="input-group">
+						<span class="input-group-addon"><input type="radio" name="category-list" value={{category_id}} data-name={{category_name}} data-cid-set={{category_id_set}}></span>
+						<input type="text" class="form-control" aria-label="..." value="{{category_string}}" readonly>
+				    </div><!-- /input-group -->
+					</li>
+				{{/each}}
+				</script>
+				</ul>
+
 				</form>
             </div>
             

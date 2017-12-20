@@ -307,6 +307,28 @@ table .content {
             </tbody>
         </table>
         </div>
+
+        <nav id="pageNav" aria-label="Page navigation">
+            <ul class="pagination">
+            <script type="text/handlebars-template" id="pagination-template">
+                <li class="previous">
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {{#each this}}
+                <li class="pageNum" data-num={{this}}>
+                    <a href="#">{{this}}</a>
+                </li>
+                {{/each}}
+                <li class="next">
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                </script>
+            </ul>
+        </nav>
     </div>
 </div>
 

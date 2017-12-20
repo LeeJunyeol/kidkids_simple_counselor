@@ -1,6 +1,6 @@
-var API_BASE_URL = "http://localhost/ksc/api";
-
 var WriteModule = (function () {
+    var BASE_URL = location.origin + "/ksc";
+
     var $titleArea = $("div.write.header>textarea");
     var $contentArea = $("div.write.content>textarea");
     var $ulTags = $("ul.tags");
@@ -8,6 +8,10 @@ var WriteModule = (function () {
     // var $categorySpan = $("button>span.top"); // 카테고리 드롭다운(보여지는거)
     var $categoryH3 = $(".selected-category>h3");
     var $btnPostQuestion = $("#btn-post-question"); // 등록/수정 버튼
+
+
+    var searchCategoryListTemplate = handlebarsHelper("#search-category-template");
+    var categoryAllListTemplate = handlebarsHelper("#category-all-list-template");
 
     var tagTemplateScript = $("#tag-template").html();
     var tagTemplate = Handlebars.compile(tagTemplateScript);
@@ -29,7 +33,7 @@ var WriteModule = (function () {
         var splitedUrl = location.pathname.split("/").splice(-2);
         if (splitedUrl[0] === "update") {
             $(".write.category").addClass("hide");
-            $.ajax(API_BASE_URL + "/my/Question/" + splitedUrl[1], {
+            $.ajax(BASE_URL + "/api/my/Question/" + splitedUrl[1], {
                 type: "GET"
             }).then(function (res) {
                 res = JSON.parse(res);
@@ -48,6 +52,44 @@ var WriteModule = (function () {
             }.call(this, splitedUrl[1]));
         }
 
+        $("#search-category-form").on("click", "#click-category", function(e){
+            var searchStr = $(e.delegateTarget).find("input").val();
+            $("#modalForm").modal("show");
+            $.ajax(BASE_URL + "/api/Category?search-category-string=" + searchStr, {
+                type: "GET"
+            }).then(function (res) {
+                var result = JSON.parse(res);
+                var categoriesAll = result['categoriesAll'];
+                var resultArr2 = [];
+                for (var i = 0; i < categoriesAll.length; i++) {
+                    var nameSet = new Set();
+                    var idSet = new Set();
+                    for (var j = 0; j < categoriesAll.length; j++) {
+                        if (i !== j && categoriesAll[i].parent_idx === categoriesAll[j].category_id) {
+                            nameSet.add(categoriesAll[j].p_c_name);
+                            nameSet.add(categoriesAll[j].category_name);
+                            idSet.add(categoriesAll[j].p_c_id);
+                            idSet.add(categoriesAll[j].category_id);
+                        }
+                    }
+                    nameSet.add(categoriesAll[i].p_c_name);
+                    nameSet.add(categoriesAll[i].category_name);
+                    idSet.add(categoriesAll[i].p_c_id);
+                    idSet.add(categoriesAll[i].category_id);
+
+                    var dataObj = {
+                        category_id: categoriesAll[i].category_id,
+                        category_id_set: Array.from(idSet),
+                        category_name: categoriesAll[i].category_name,
+                        category_string: Array.from(nameSet).join(" > ")
+                    }
+                    resultArr2.push(dataObj);
+                }
+                $("#ul-category-all-list").html(categoryAllListTemplate(resultArr2));
+            });
+
+        })
+
         // 카테고리 검색 팝업 띄우기
         $("#search-category-form").on("click", "#search-category", function (e) {
             var searchStr = $(e.delegateTarget).find("input").val();
@@ -56,11 +98,12 @@ var WriteModule = (function () {
                 return;
             };
             $("#modalForm").modal("show");
-            $.ajax("http://localhost/ksc/api/Category?search-category-string=" + searchStr, {
+            $.ajax(BASE_URL + "/api/Category?search-category-string=" + searchStr, {
                 type: "GET"
             }).then(function (res) {
                 var result = JSON.parse(res);
                 var categories = result['categories'];
+                var categoriesAll = result['categoriesAll'];
                 var resultArr = [];
                 for (var i = 0; i < categories.length; i++) {
                     var nameSet = new Set();
@@ -86,7 +129,32 @@ var WriteModule = (function () {
                     }
                     resultArr.push(dataObj);
                 }
-                var searchCategoryListTemplate = handlebarsHelper("#search-category-template");
+                var resultArr2 = [];
+                for (var i = 0; i < categoriesAll.length; i++) {
+                    var nameSet = new Set();
+                    var idSet = new Set();
+                    for (var j = 0; j < categoriesAll.length; j++) {
+                        if (i !== j && categoriesAll[i].parent_idx === categoriesAll[j].category_id) {
+                            nameSet.add(categoriesAll[j].p_c_name);
+                            nameSet.add(categoriesAll[j].category_name);
+                            idSet.add(categoriesAll[j].p_c_id);
+                            idSet.add(categoriesAll[j].category_id);
+                        }
+                    }
+                    nameSet.add(categoriesAll[i].p_c_name);
+                    nameSet.add(categoriesAll[i].category_name);
+                    idSet.add(categoriesAll[i].p_c_id);
+                    idSet.add(categoriesAll[i].category_id);
+
+                    var dataObj = {
+                        category_id: categoriesAll[i].category_id,
+                        category_id_set: Array.from(idSet),
+                        category_name: categoriesAll[i].category_name,
+                        category_string: Array.from(nameSet).join(" > ")
+                    }
+                    resultArr2.push(dataObj);
+                }
+                $("#ul-category-all-list").html(categoryAllListTemplate(resultArr2));
                 $("#ul-search-list").html(searchCategoryListTemplate(resultArr));
             });
         });

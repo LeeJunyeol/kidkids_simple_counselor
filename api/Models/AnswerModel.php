@@ -27,9 +27,9 @@ class AnswerModel {
     }
 
     function searchByKeywords($origin, $kewords){
-        $sql = "SELECT * FROM answers WHERE title LIKE '%$origin%' OR content LIKE '%$origin%'";
+        $sql = "SELECT * FROM answers WHERE content LIKE '%$origin%'";
         foreach ($kewords as $key => $value) {
-            $sql = $sql . " UNION SELECT * FROM answers WHERE title LIKE '%$value%' OR content LIKE '%$value%'";
+            $sql = $sql . " UNION SELECT * FROM answers WHERE content LIKE '%$value%'";
         }
         $stmt = $this->conn->prepare($sql);
         if(!$stmt->execute()){
@@ -44,10 +44,9 @@ class AnswerModel {
     }
 
     function add($answer){
-        $stmt = $this->conn->prepare("INSERT INTO answers (question_id, user_id, title, content) VALUES (:question_id, :user_id, :title, :content)");
+        $stmt = $this->conn->prepare("INSERT INTO answers (question_id, user_id, content) VALUES (:question_id, :user_id, :content)");
         $stmt->bindParam(':question_id', $answer['question_id']);
         $stmt->bindParam(':user_id', $answer['user_id']);
-        $stmt->bindParam(':title', $answer['title']);
         $stmt->bindParam(':content', $answer['content']);
         
         if($stmt->execute()){
@@ -72,10 +71,30 @@ class AnswerModel {
             exit;
         }
     }
+
+    function updateSelection($answerId, $selection){
+        if($selection === true){
+            try {
+                $sql = "UPDATE answers SET selection = :selection WHERE answer_id = :answer_id";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(':answer_id', $answerId);
+                $stmt->bindParam(':selection', $selection);
+                if(!$stmt->execute()){
+                    print_r($stmt->errorInfo());
+                    exit;
+                };
+                return $stmt->fetchObject();
+            } catch (PDOException $e) {
+                print $e->getMessage();
+                exit;
+            }
+        }
+
+    }
         
     function getById($id){
-        $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
-        , a.modify_date, u.user_type as label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
+        $stmt = $this->conn->prepare("SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date, u.user_pic
+        , a.modify_date, u.user_type as label, v.user_id, IFNULL(v.vote, 0) AS vote
         FROM answers AS a 
         LEFT JOIN votes AS v ON a.answer_id = v.answer_id
         LEFT JOIN users AS u ON a.user_id = u.user_id
@@ -87,7 +106,7 @@ class AnswerModel {
     }
 
     function getByQuestionIdAndUserId($questionId, $userId){
-        $sql = "SELECT a.answer_id, a.question_id, a.user_id AS author, a.content, a.create_date, a.modify_date, a.title, u.user_type AS label, IFNULL(plus.plus_vote_cnt, 0) AS plus_vote_cnt, IFNULL(minus.minus_vote_cnt, 0) AS minus_vote_cnt FROM answers AS a 
+        $sql = "SELECT a.answer_id, a.question_id, a.user_id AS author, a.content, a.create_date, a.modify_date, u.user_type AS label, IFNULL(plus.plus_vote_cnt, 0) AS plus_vote_cnt, IFNULL(minus.minus_vote_cnt, 0) AS minus_vote_cnt FROM answers AS a 
         LEFT JOIN (SELECT answer_id, COUNT(*) AS plus_vote_cnt FROM votes WHERE vote = 1 GROUP BY answer_id) AS plus ON plus.answer_id = a.answer_id
         LEFT JOIN (SELECT answer_id, COUNT(*) AS minus_vote_cnt FROM votes WHERE vote = -1 GROUP BY answer_id) AS minus ON minus.answer_id = a.answer_id
         LEFT JOIN users AS u ON a.user_id = u.user_id
@@ -139,11 +158,12 @@ class AnswerModel {
     }
 
     function getByQuestionId($questionId){
-        $sql = "SELECT a.answer_id, a.question_id, a.user_id AS author, a.content, a.create_date, a.modify_date, a.title, u.user_type AS label, IFNULL(plus.plus_vote_cnt, 0) AS plus_vote_cnt, IFNULL(minus.minus_vote_cnt, 0) AS minus_vote_cnt FROM answers AS a 
+        $sql = "SELECT a.answer_id, a.question_id, a.user_id AS author, a.content, a.create_date, a.modify_date, a.selection, u.user_pic,
+        u.user_type AS label, IFNULL(plus.plus_vote_cnt, 0) AS plus_vote_cnt, IFNULL(minus.minus_vote_cnt, 0) AS minus_vote_cnt FROM answers AS a 
         LEFT JOIN (SELECT answer_id, COUNT(*) AS plus_vote_cnt FROM votes WHERE vote = 1 GROUP BY answer_id) AS plus ON plus.answer_id = a.answer_id
         LEFT JOIN (SELECT answer_id, COUNT(*) AS minus_vote_cnt FROM votes WHERE vote = -1 GROUP BY answer_id) AS minus ON minus.answer_id = a.answer_id
         LEFT JOIN users AS u ON a.user_id = u.user_id
-        WHERE question_id = :question_id";
+        WHERE question_id = :question_id ORDER BY a.selection DESC";
         // $sql = "SELECT a.answer_id, a.question_id, a.user_id as author, a.content, a.create_date
         // , a.modify_date, u.user_type as label, a.title, v.user_id, IFNULL(v.vote, 0) AS vote
         // FROM answers AS a 

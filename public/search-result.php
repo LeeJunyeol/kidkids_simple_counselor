@@ -32,6 +32,13 @@ require_once "config.php";
 	.box>.body {
 		background-color: green;
 		color: white;
+		padding: 5px;
+	}
+
+	.list-item {
+		margin: 5px;
+		color: black;
+		background-color: yellow;
 	}
 
 	
@@ -51,8 +58,8 @@ require_once "header.php";
 			{{#if this}}
 			<ul>
 			{{#each this}}
-			<li>
-			<h3>{{title}}</h3><br>
+			<li class="list-item">
+			<h3><a href="/ksc/question/{{question_id}}">{{title}}</a></h3>
 			{{content}}
 			</li>
 			{{/each}}
@@ -72,8 +79,8 @@ require_once "header.php";
 			{{#if this}}
 			<ul>
 			{{#each this}}
-			<li>
-			<h3>{{title}}</h3><br>
+			<li class="list-item">
+			<h3><a href="/ksc/question/{{question_id}}">{{question_id}}번 글 답변입니다.</a></h3>
 			{{content}}
 			</li>
 			{{/each}}
@@ -94,7 +101,7 @@ require_once "header.php";
 			{{#if this}}
 			<ul>
 			{{#each this}}
-			<li>
+			<li class="list-item">
 			<h3>{{title}}</h3><br>
 			{{content}}
 			</li>

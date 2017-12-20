@@ -25,11 +25,11 @@ require_once "header.php";
                 $userType = $_SESSION['user_type'];
                 if($userType == '전문가'){
                     echo "<div style='position: absolute; top: -40px; left: -8px; width: 80px; margin: auto;'>
-                    <img src='http://localhost/ksc/public/images/giphy.gif' style='display: block; width: 33px; height: 33px; margin: auto;'>
+                    <img src='/ksc/public/images/giphy.gif' style='display: block; width: 33px; height: 33px; margin: auto;'>
                     <label class='my-label label label-info' style='display: block; padding: .3em .3em .3em; font-size: 130%;'>".$userType."</label></div>";
                     }?>
                 <div class="my-image" style="width: 200px; height: 100%; margin-top: 6px;">
-                    <img src=<?php echo "http://localhost/ksc/user_images/".$_SESSION['user_image']?> style="width: 100%; height: 100%" />
+                    <img src=<?php echo "/ksc/user_images/".$_SESSION['user_image']?> style="width: 100%; height: 100%" />
                 </div>
                 <div class="my-info" style="width: 100%">
                     <div class="profile-area">
@@ -102,7 +102,7 @@ require_once "header.php";
                     {{#each this}}
                     <li class="answer list-group-item" data-id={{answer_id}}>
                         <div class="list-header">
-                            <h3><a href="{{link}}" class="list-head">{{title}}</a></h3>
+                            <h3><a href="{{link}}" class="list-head">{{question_id}}번에 대한 답변입니다.</a></h3>
                         </div>
                         <div class="list-main">
                             <span>{{content}}</span>

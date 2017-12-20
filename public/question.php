@@ -27,6 +27,9 @@ require_once "config.php";
         background-color: #68FF9C;
         color: white;
     }
+    .selected-answer {
+        border: blue solid !important;
+    }
     
     </style>
 </head>
@@ -77,9 +80,6 @@ require_once "header.php";
 
                     </div>
                     <div id="write-box" class="container" style="display: none">
-                        <div class="write header">
-                            <textarea placeholder="제목"></textarea>
-                        </div>
                         <div class="write content">
                             <textarea placeholder="내용을 입력하세요."></textarea>
                         </div>
@@ -90,17 +90,29 @@ require_once "header.php";
                     <div class="reply-box">
                         <script type="text/handlebars-template" id="answer-template">
                         {{#each this}}
-                        <div class="reply-card container" data-id={{answer_id}} data-score={{votesum}} style="position: relative">
-                            <button type="button" class="select-btn btn btn-default btn-lg hide" style="position: relative; top: 15px; left: 5px; float: right; font-size: 23px; border-radius:45.5%; padding: 10px;">
+                        <div class="reply-card container" data-id={{answer_id}} data-score={{votesum}} style="position: relative" data-selection={{selection}}>
+                            <button type="button" class="select-btn btn btn-default btn-lg hide" style="position: relative; top: 15px; left: 5px; float: right; font-size: 23px; border-radius:45.5%; padding: 10px; margin-left: 20px;">
                                 <span class="glyphicon glyphicon-ok"></span>
                             </button>
+                            <div class="edit-btn-group btn-group" style="float: right; margin-top: 20px;">
+                                <button type="button" class="btn btn-default edit" aria-label="Left Align" style="float: none; position: static;">
+                                    <span class="edit glyphicon glyphicon glyphicon-pencil" aria-hidden="true">수정</span>
+                                </button>
+                                <button type="button" class="btn btn-default delete" aria-label="Left Align" style="float: none; position: static; margin-left: -5px;">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true">삭제</span>
+                                </button>
+                            </div>
                             <div class="reply-title-group">
                                 <div class="page-header">
-                                    <span class="label label-success special">{{label}}</span>
-                                    <h3 class="reply title">
-                                        {{title}}
-                                        <small>by {{author}}</small>
-                                    </h3>
+                                    <span class="label label-success user-type">{{label}}</span>
+                                    <div style="display: flex; align-items: center;">
+                                        <div class="img-div hide" style="width: 100px; height: 120px; margin-top: 20px; margin-right: 20px;">
+                                            <img style="width: 100%; height: 100%" src="/ksc/user_images/{{user_pic}}"/>
+                                        </div>
+                                        <h3 class="reply title">
+                                            <span><span class="answer-author">{{author}}</span>님의 답변입니다.</span>
+                                        </h3>
+                                    </div>
                                 </div>
                             </div>
                             <div class="reply-content-group">
@@ -114,10 +126,10 @@ require_once "header.php";
                                 <div class="vote-group" {{#if myvote}}data-value={{myvote}}{{/if}}>
                                     <div class="sub-vote-group">
                                         <a class="vote up btn btn-default" href="#" role="button">추천
-                                            <img src="http://localhost/ksc/public/images/up.png" /><span>{{#if plus_vote_cnt}}{{plus_vote_cnt}}{{else}}0{{/if}}</span>
+                                            <img src="/ksc/public/images/up.png" /><span>{{#if plus_vote_cnt}}{{plus_vote_cnt}}{{else}}0{{/if}}</span>
                                         </a>
                                         <a class="vote down btn btn-default" href="#" role="button">
-                                            <img src="http://localhost/ksc/public/images/down.png" />비추천<span>{{#if minus_vote_cnt}}{{minus_vote_cnt}}{{else}}0{{/if}}</span>
+                                            <img src="/ksc/public/images/down.png" />비추천<span>{{#if minus_vote_cnt}}{{minus_vote_cnt}}{{else}}0{{/if}}</span>
                                         </a>
                                     </div>
                                 </div>

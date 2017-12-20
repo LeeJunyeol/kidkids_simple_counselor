@@ -1,22 +1,21 @@
-var BASE_URL = "http://localhost/ksc";
-
 var AsideModule = (function () {
-    
-    var init = () => {
+    var BASE_URL = location.origin + "/ksc";
+
+    var init = function () {
         var navCategoryTemplate = handlebarsHelper("#nav-category-template");
         var categoryId = $("#rank-aside").data("category-id");
 
         $("#category-list").on("click", ".category-item>a", goToHomeByCategory);
-        
+
         renderCategory(navCategoryTemplate, categoryId);
         renderRankBox();
     }
 
-    var renderCategory = (navCategoryTemplate, categoryId) => {
+    var renderCategory = function (navCategoryTemplate, categoryId) {
         $.ajax(BASE_URL + "/api/Category", {
             type: 'GET',
             data: {
-                categoryId
+                categoryId: categoryId
             }
         }).then(function (res) {
             var result = JSON.parse(res);
@@ -26,12 +25,12 @@ var AsideModule = (function () {
         })
     }
 
-    var goToHomeByCategory = (e) => {
+    var goToHomeByCategory = function (e) {
         $listItem = $(e.currentTarget).closest("li");
         location.href = BASE_URL + "/home?categoryId=" + $listItem.data("id") + "&categoryName=" + $(e.currentTarget).text();
     }
 
-    var renderRankBox = () => {
+    var renderRankBox = function () {
         var rankBodyTemplate = handlebarsHelper("#rank-body-template");
 
         $.ajax(BASE_URL + "/api/Rank", {
@@ -50,13 +49,14 @@ var AsideModule = (function () {
     }
 
     return {
-        init
+        init: init
     }
 
 })();
 
 
 var CommonModule = (function () {
+    var BASE_URL = location.origin + "/ksc";
 
     function init() {
         $(".btn.login").on("click", goToLogin);
@@ -66,13 +66,13 @@ var CommonModule = (function () {
         $("a.btn-signup").on("click", goToSignup);
         $("button.mypage").on("click", goToMyPage);
 
-        $("#search-btn").on("click", (e) => {
+        $("#search-btn").on("click", function (e) {
             search($(e.currentTarget).closest("div.input-group").find("input").val());
         });
     }
 
     function search(keywords) {
-        location.href = "http://localhost/ksc/search?search=" + keywords + "&category=" + "all";
+        location.href = BASE_URL + "/search?search=" + keywords + "&category=" + "all";
     }
 
     function goToLogin() {
@@ -88,15 +88,15 @@ var CommonModule = (function () {
     }
 
     function goToSignup() {
-        location.href = location.origin + "/ksc/signup";
+        location.href = BASE_URL + "/signup";
     }
 
     function goToWrite() {
-        location.href = location.origin + "/ksc/write";
+        location.href = BASE_URL + "/write";
     }
 
     return {
-        init
+        init: init
     }
 })();
 

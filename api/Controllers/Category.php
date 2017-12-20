@@ -32,9 +32,11 @@ switch($_SERVER['REQUEST_METHOD']){
     }
     if(isset($_GET['search-category-string'])){
         $categories = $categoryModel->searchByCategoryName($_GET['search-category-string']);
+        $categoriesAll = $categoryModel->searchAll();
         echo json_encode([
             "success" => true,
-            "categories" => $categories
+            "categories" => $categories,
+            "categoriesAll" => $categoriesAll
         ]);
         return;
     }

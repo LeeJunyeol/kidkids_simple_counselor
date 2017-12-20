@@ -1,8 +1,10 @@
-var API_BASE_URL = "http://localhost/ksc/api";
-var QUESTION_URL = API_BASE_URL + "/Question/";
-var MY_QUESTION_URL = API_BASE_URL + "/my/Question/";
 
 $(document).ready(function () {
+    var BASE_URL = location.origin + "/ksc";
+    var API_BASE_URL = location.origin + "/ksc/api";
+    var QUESTION_URL = API_BASE_URL + "/Question/";
+    var MY_QUESTION_URL = API_BASE_URL + "/my/Question/";
+
     var url = "";
 
     var questionTemplateScript = $("#questions-template").html();
@@ -32,7 +34,7 @@ $(document).ready(function () {
         $("div.board>ul.list-group").on("click", ".list-header a", function (e) {
             e.preventDefault();
             var questionId = $(this).closest("li").data("id");
-            $.ajax(API_BASE_URL + "/Question/" + questionId, {
+            $.ajax(BASE_URL + "/api/Question/" + questionId, {
                 type: "PUT",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -93,7 +95,7 @@ $(document).ready(function () {
         if (categoryId !== 0) {
             dataObj['categoryId'] = categoryId;
         }
-        $.ajax("http://localhost/ksc/api/Controllers/Question.php", {
+        $.ajax(BASE_URL + "/api/Controllers/Question.php", {
             type: "GET",
             contentType: "application/json",
             data: dataObj

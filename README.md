@@ -13,7 +13,7 @@ htdocs 디렉토리에 소스코드를 복사합니다.
 
 xampp control panel을 열어 apache 서버를 실행한 후, url에 아래의 주소를 입력합니다.
 
-http://localhost/kidkids_simple_counselor/home
+/kidkids_simple_counselor/home
 
 
 # URL Map

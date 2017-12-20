@@ -33,7 +33,7 @@ require_once "header.php";
     <h1>회원가입</h1>
 
 
-    <form action="http://localhost/ksc/api/User" enctype="multipart/form-data" method="post" autocomplete="off" accept-charset="utf-8" onsubmit="return checkForm(this);">
+    <form action="/ksc/api/User" enctype="multipart/form-data" method="post" autocomplete="off" accept-charset="utf-8" onsubmit="return checkForm(this);">
     
     <style>
     label {
@@ -112,7 +112,7 @@ require_once "footer.php";
       if (form.password.value != "" && form.password.value == form.repassword.value) {
         if (form.password.value.length < 6) {
           alert("비밀번호는 최소 6자리");
-          form.pwd1.focus();
+          form.password.focus();
           return false;
         }
       } else {

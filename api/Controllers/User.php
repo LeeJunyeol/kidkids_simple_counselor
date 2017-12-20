@@ -133,16 +133,10 @@ switch($_SERVER['REQUEST_METHOD']){
         }
 
         if($userModel->register($id, $password, $name, $email, $hash, $userpic)){
-            echo json_encode([
-                'success'=> true,
-                'messages'=> "회원가입에 성공했습니다!"
-            ]);
-            header("location: http://localhost/ksc/home");
+            $_SESSION['message'] = '회원으로 등록되었습니다. 로그인해주세요!';
+            header("location: http://localhost/ksc/login");
         } else {
-            echo json_encode([
-                'success'=> false,
-                'messages'=> "회원가입에 실패했습니다!"
-            ]);
+            $_SESSION['message'] = '회원가입에 실패하였습니다.';
         };
         return;
     };

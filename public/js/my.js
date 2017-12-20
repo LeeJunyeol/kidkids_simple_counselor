@@ -1,4 +1,6 @@
 var MyModule = (function(){
+    var BASE_URL = location.origin + "/ksc";
+
     // 템플릿들
     var recentQuestionTemplate = handlebarsHelper("#recent-question-template");
     var recentAnswerTemplate = handlebarsHelper("#recent-answer-template");
@@ -7,7 +9,7 @@ var MyModule = (function(){
     }
 
     var load = () => {
-        $.ajax("http://localhost/ksc/api/My?all", {
+        $.ajax(BASE_URL + "/api/My?all", {
             type: 'GET'
         }).then((res) => {
             res = JSON.parse(res);
@@ -15,12 +17,14 @@ var MyModule = (function(){
             var recentAnswers = res['recentAnswer'];
 
             recentQuestions.forEach(element => {
+                element['content'] = element['content'].substring(0, 100) + "...";
                 element['create_date'] = Utils.getFormatDate(element['create_date']);
-                element['link'] = "http://localhost/ksc/question/" + element['question_id']; 
+                element['link'] = "/ksc/question/" + element['question_id']; 
             });
             recentAnswers.forEach(element => {
+                element['content'] = element['content'].substring(0, 100) + "...";
                 element['create_date'] = Utils.getFormatDate(element['create_date']);
-                element['link'] = "http://localhost/ksc/question/" + element['question_id'];
+                element['link'] = "/ksc/question/" + element['question_id'];
             });
             $("#question-box").append(recentQuestionTemplate(recentQuestions));
             $("#answer-box").append(recentAnswerTemplate(recentAnswers));

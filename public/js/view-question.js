@@ -1,75 +1,10 @@
-var API_BASE_URL = "http://localhost/ksc/api";
-var QUESTION_URL = API_BASE_URL + "/Question/";
-var MY_QUESTION_URL = API_BASE_URL + "/my/Question/";
-
-var ViewOpinionModule = (() => {
-    var opinionTemplate = handlebarsHelper("#opinion-template");
-    var opinionItemTemplate = handlebarsHelper("#opinion-item-template");
-
-    var isClicked = false;
-
-    function viewOpinion(e) {
-        if (!isClicked) {
-            var answerId = $(e.currentTarget).closest(".reply-footer-group").data("id");
-            isClicked = true;
-
-            $.ajax("http://localhost/ksc/api/Opinion", {
-                type: "GET",
-                data: {
-                    answer_id: answerId
-                }
-            }).then(function (res) {
-                var result = JSON.parse(res);
-                var data;
-                if (result['success']) {
-                    data = {
-                        answer_id: answerId,
-                        opinions: result['opinions']
-                    }
-                } else {
-                    data = {
-                        answer_id: answerId,
-                    }
-                }
-                $(e.currentTarget).closest(".reply-card.container").append(opinionTemplate(data));
-                $("a.close.opinions").on("click", function (e) {
-                    $(e.currentTarget).closest(".opinion-list").toggle("blind");
-                });
-            }.bind(e)).then(function () {
-                $("form.question").on("click", "button[type='submit']", function (e) {
-                    e.preventDefault();
-                    var $form = $(e.delegateTarget);
-                    var content = $form.find("input[name='content']").val();
-
-                    $.ajax("http://localhost/ksc/api/Opinion", {
-                        type: 'POST',
-                        data: {
-                            answerId,
-                            content
-                        }
-                    }).then(function (res) {
-                        var result = JSON.parse(res);
-                        if (result['success']) {
-                            alert("댓글이 등록되었습니다.");
-                            $(this).append(opinionItemTemplate(result['myopinion']));
-                            $(this).removeClass("hide");
-                        } else {
-                            alert("댓글 등록에 실패하였습니다.");
-                        }
-                    }.bind($form.closest(".opinion-list").find("ul.opinion-list")));
-                })
-            });
-        } else {
-            $(e.currentTarget).closest(".reply-card.container").find("div.opinion-list").toggle("blind");
-        }
-    }
-
-    return {
-        viewOpinion
-    }
-})
 
 var ViewModule = (() => {
+    var BASE_URL = location.origin + "/ksc";
+    var API_BASE_URL = "/ksc/api";
+    var QUESTION_URL = API_BASE_URL + "/Question/";
+    var MY_QUESTION_URL = API_BASE_URL + "/my/Question/";
+    
     var questionTemplate = handlebarsHelper("#question-template");
     var answerTemplate = handlebarsHelper("#answer-template");
     var opinionTemplate = handlebarsHelper("#opinion-template");
@@ -123,7 +58,7 @@ var ViewModule = (() => {
             var title = $("div.write.header>textarea").val();
             var content = $("div.write.content>textarea").val();
 
-            $.ajax("http://localhost/ksc/api/Controllers/Answer.php", {
+            $.ajax(BASE_URL + "/api/Controllers/Answer.php", {
                 type: "POST",
                 contentType: "application/x-www-form-urlencoded",
                 data: {
@@ -140,8 +75,16 @@ var ViewModule = (() => {
                     var insertedAnswer = result['data'];
                     $("div.reply-box").append(answerTemplate([insertedAnswer]));
                     $("div.reply-box>.reply-card:last-child").append(opinionAnswerTemplate());
+                    $("div.reply-box>.reply-card:last-child").height = insertedAnswer['content'].split(re).length * 22;
                     $("#write-box").toggle("blind");
                     $("button.btn.reply").toggleClass("btn-danger").text("답글달기");
+                    $("div.reply-card.container").each(function(i, v){
+                        var $spanSpecial = $(v).find("span.user-type");
+                        if($spanSpecial.text() === "전문가"){
+                            $spanSpecial.addClass("special");
+                            $spanSpecial.closest("div.page-header").find(".img-div").removeClass("hide");
+                        }
+                    })
                     alert("답변이 등록되었습니다!");
                 } else {
                     alert("등록이 실패하였습니다.");
@@ -172,11 +115,12 @@ var ViewModule = (() => {
                     selected = true;
                     $(".reply-box").find(".select-btn:not(.selected)").hide();
 
-                    $.ajax("http://localhost/ksc/api/Answer/" + answerId, {
+                    $.ajax(BASE_URL + "/api/Answer/" + answerId, {
                         type: "PUT",
                         contentType: "application/json",
                         data: JSON.stringify({
-                            selection: true
+                            selection: true,
+                            questionId
                         })
                     }).then(function(res){
                         alert("채택이 완료되었습니다.");
@@ -195,12 +139,19 @@ var ViewModule = (() => {
                 var result = JSON.parse(res);
                 alert(result['messages']);
 
-                location.href = "http://localhost/ksc/home";
+                location.href = BASE_URL + "/home";
             });
         });
         $("#question-container").on("click", ".edit", function (e) {
-            location.href = "http://localhost/ksc/update/" + questionId;
+            location.href = BASE_URL + "/update/" + questionId;
         });
+        // $("#reply-box").on("click", "button.delete", function(e){
+        //     $.ajax("/ksc/api/")
+        // });
+    }
+
+    function deleteAnswer() {
+
     }
 
     // 템플릿을 그린다.
@@ -240,12 +191,23 @@ var ViewModule = (() => {
             $("div.question.container").append(opinionTemplate(questionsOpinions));
             $("div.reply-box").html(answerTemplate(answers));
             $("div.reply-card.container").each(function (i, ele) {
+                if($(ele).data("selection") === 1){
+                    $(ele).addClass("selected-answer");
+                }
                 $(ele).append(opinionAnswerTemplate(answerOpinions[$(ele).data("id")]));
             });
 
             var questionContent = question.content;
             var answerContent = answers.content;
             $("div.question.container").find("textarea").height(questionContent.split(re).length * 28);
+
+            $("div.reply-card.container").each(function(i, v){
+                var $spanSpecial = $(v).find("span.user-type");
+                if($spanSpecial.text() === "전문가"){
+                    $spanSpecial.addClass("special");
+                    $spanSpecial.closest("div.page-header").find("img").removeClass("hide");
+                }
+            })
 
             // 수정/삭제 버튼 표시
             if ($("div.question.container").find(".header-group").data("id") === userId) {
@@ -254,6 +216,13 @@ var ViewModule = (() => {
                     $(".select-btn").removeClass("hide");
                 }
             }
+
+            $("div.reply-box").find("span.answer-author").each(function(i,v){
+                if($(v).text() !== userId){
+                    $(v).closest(".reply-card.container").find(".edit-btn-group").addClass("not-visible");
+                }
+            });
+
             $(".vote-group").each(function (i, ele) {
                 var $ele = $(ele);
                 var myvote = $ele.data("value");
@@ -280,7 +249,7 @@ var ViewModule = (() => {
                     data.answerId = id;
                 }
 
-                $.ajax("http://localhost/ksc/api/Opinion", {
+                $.ajax("/ksc/api/Opinion", {
                     type: 'POST',
                     data: data
                 }).then(function (res) {

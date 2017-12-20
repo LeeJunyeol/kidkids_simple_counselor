@@ -32,11 +32,12 @@ class UserModel {
 
     function getUserScoreAll() {
         try {
-            $sql = "SELECT a.user_id, u.user_type, u.name,
-            (SUM(a.selection) * 100 + SUM(v.vote)) AS myscore, (SUM(a.selection) / COUNT(*)) * 100 AS selection_percentage
-            FROM answers AS a INNER JOIN votes AS v ON a.answer_id = v.answer_id 
-            INNER JOIN users AS u ON a.user_id = u.user_id
-            GROUP BY user_id ORDER BY selection_percentage DESC";
+            $sql = "SELECT u.user_id, u.user_type, u.name,
+            (SUM(ifnull(a.selection,0)) * 100 + SUM(ifnull(v.vote, 0))) AS myscore, (SUM(ifnull(a.selection, 0)) / COUNT(*)) * 100 AS selection_percentage
+            FROM users AS u 
+            LEFT JOIN answers AS a ON u.user_id = a.user_id 
+            LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+            GROUP BY u.user_id ORDER BY selection_percentage DESC";
             $stmt = $this->conn->prepare($sql);
             if(!$stmt->execute()){
                 print_r($stmt->errorInfo());

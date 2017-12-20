@@ -24,6 +24,23 @@ class QuestionModel {
         }
     }
 
+    function updateSelectedAnswerId($answerId, $questionId){
+        try {
+            $sql = "UPDATE questions SET selected_answer_id = :sai WHERE question_id = :question_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':sai', $answerId);
+            $stmt->bindParam(':question_id', $questionId);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            };
+            return true;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+
     function add($question){
         $stmt = $this->conn->prepare("INSERT INTO questions (user_id, title, content, tags) 
         VALUES (:user_id, :title, :content, :tags)");

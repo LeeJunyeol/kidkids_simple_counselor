@@ -2,11 +2,13 @@
 require_once "../Config/Database.php";
 require_once '../Models/AnswerModel.php';
 require_once '../Models/VoteModel.php';
+require_once '../Models/QuestionModel.php';
 
 $conn = Database::getConnection();
 
 $answerModel = new AnswerModel($conn);
 $voteModel = new VoteModel($conn);
+$questionModel = new QuestionModel($conn);
 
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
@@ -57,7 +59,17 @@ switch($_SERVER['REQUEST_METHOD']){
                     'message'=> "이미 투표하셨습니다."
                 ]);
             };
+            return;
         }
+    }
+    $body = json_decode(file_get_contents('php://input'));
+    if(isset($body->selection)){
+        $answerModel->updateSelection($_GET['id'], $body->selection);
+        $questionModel->updateSelectedAnswerId($_GET['id'], $body->questionId);
+        echo json_encode([
+            'success' => true,
+            'message'=> "채택 완료!"
+        ]);
     }
     break;    
 }

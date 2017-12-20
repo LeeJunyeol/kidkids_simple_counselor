@@ -1,5 +1,5 @@
 var AdminModule = (function () {
-    var BASE_URL = "http://localhost/ksc";
+    var BASE_URL = location.origin + "/ksc";
     var QUESTION_API_URL = BASE_URL + "/api/Question"
 
     // 등록/수정/삭제 판넬
@@ -91,7 +91,7 @@ var AdminModule = (function () {
                     targetController = "Answer";
                     break;
             }
-            var url = "http://localhost/ksc/api/" + targetController + "/" + id;
+            var url = BASE_URL + "/api/" + targetController + "/" + id;
             $.ajax(url, {
                 type: 'PUT',
                 contentType: 'application/json',
@@ -118,7 +118,7 @@ var AdminModule = (function () {
                     targetController = "Answer";
                     break;
             }
-            var url = "http://localhost/ksc/api/" + targetController + "/" + id;
+            var url = "/ksc/api/" + targetController + "/" + id;
             $.ajax(url, {
                 type: 'DELETE'
             }).then(function (res) {
@@ -144,7 +144,7 @@ var AdminModule = (function () {
     }
 
     function updateUserType(user) {
-        $.ajax("http://localhost/ksc/api/User", {
+        $.ajax(BASE_URL + "/ksc/api/User", {
             type: "PUT",
             contentType: "application/json",
             data: JSON.stringify(user)
@@ -167,7 +167,7 @@ var AdminModule = (function () {
     }
 
     function getUserScores() {
-        return $.ajax("http://localhost/ksc/api/Controllers/User.php", {
+        return $.ajax(BASE_URL + "/ksc/api/Controllers/User.php", {
             type: 'GET',
             contentType: "application/json"
         }).then(function (res) {
@@ -200,7 +200,7 @@ var AdminModule = (function () {
 
 
     function getCategories() {
-        $.ajax("http://localhost/ksc/api/Controllers/Question.php", {
+        $.ajax(BASE_URL + "/ksc/api/Controllers/Question.php", {
             type: 'GET',
             contentType: "application/json",
             data: dataObj
@@ -219,7 +219,7 @@ var AdminModule = (function () {
         dataObj['sortBy'] = "id";
         dataObj['isASC'] = "true";
         dataObj['limit'] = 20;
-        $.ajax("http://localhost/ksc/api/Controllers/Question.php", {
+        $.ajax(BASE_URL + "/ksc/api/Controllers/Question.php", {
             type: 'GET',
             contentType: "application/json",
             data: dataObj
@@ -237,7 +237,7 @@ var AdminModule = (function () {
         dataObj['page'] = page;
         dataObj['limit'] = 20;
 
-        $.ajax("http://localhost/ksc/api/Controllers/Answer.php", {
+        $.ajax(BASE_URL + "/ksc/api/Controllers/Answer.php", {
             type: 'GET',
             contentType: "application/json",
             data: dataObj

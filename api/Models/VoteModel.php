@@ -56,10 +56,16 @@ class VoteModel {
     // 채택 답변 100점, 추천 1점, 비추천 -1점
     function getScoreLimit10(){
         try {
-            $sql = "SELECT a.user_id, 
-            (SUM(a.selection) * 100 + SUM(v.vote)) AS score 
-            FROM answers AS a INNER JOIN votes AS v ON a.answer_id = v.answer_id 
-            GROUP BY user_id ORDER BY score DESC LIMIT 10";
+            $sql = "SELECT u.user_id,
+            (SUM(ifnull(a.selection,0)) * 100 + SUM(ifnull(v.vote, 0))) AS score, (SUM(ifnull(a.selection, 0)) / COUNT(*)) * 100 AS selection_percentage
+            FROM users AS u 
+            LEFT JOIN answers AS a ON u.user_id = a.user_id 
+            LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
+            GROUP BY u.user_id ORDER BY score DESC LIMIT 10";
+            // $sql = "SELECT a.user_id, 
+            // (SUM(ifnull(a.selection, 0)) * 100 + SUM(ifnull(v.vote, 0))) AS score 
+            // FROM answers AS a INNER JOIN votes AS v ON a.answer_id = v.answer_id 
+            // GROUP BY a.user_id ORDER BY score DESC LIMIT 10";
             $stmt = $this->conn->prepare($sql);
             if(!$stmt->execute()){
                 print_r($stmt->errorInfo());

@@ -154,7 +154,7 @@ if(isset($_GET['my'])){
             // 질문을 등록한다.
             echo json_encode([
                 'success' => true,
-                'message'=> "Inserted!"
+                'message'=> "질문이 등록되었습니다!"
             ]);
             return;
         } else {

@@ -51,7 +51,7 @@ require_once "header.php";
 							</div>
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" value="" checked>아이디 기억하기</label>
+									<input type="checkbox" value="" disabled>아이디 기억하기</label>
 							</div>
 							<button type="submit" id="btn-login" name="login" class="btn btn-success btn-block">
 								<span class="glyphicon glyphicon-off"></span> 로그인</button>

@@ -17,7 +17,11 @@ if(!isset($_SESSION["logged_in"])){
 	<link href="<?php echo _CSS?>/common.css" rel="stylesheet">
 	<link href="<?php echo _CSS?>/write-question.css" rel="stylesheet">
 </head>
-
+<style>
+	h3 {
+		margin: 5px;
+	}
+</style>
 <body>
 <?php
 require_once "header.php";
@@ -41,12 +45,12 @@ require_once "header.php";
 						</button>  
 					</span>
 				</div>
-				<div class="selected-category hide">
-				<h3></h3>
+				<div class="selected-category hide" style="display: flex; align-items: center; margin-top: 10px;">
+				<span>카테고리: </span><h3></h3>
 				</div>
 				</div>
 				<div class="write header">
-					<textarea placeholder="제목"></textarea>
+					<textarea placeholder="제목을 입력하세요."></textarea>
 				</div>
 				<div class="write content">
 					<textarea placeholder="내용을 입력하세요."></textarea>

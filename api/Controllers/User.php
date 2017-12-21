@@ -5,7 +5,6 @@ require_once '../Models/VoteModel.php';
 require_once '../Models/QuestionModel.php';
 require_once '../Models/AnswerModel.php';
 
-
 session_start();
 $conn = Database::getConnection();
 
@@ -37,7 +36,14 @@ switch($_SERVER['REQUEST_METHOD']){
         return;
     }
     $userScores = $userModel->getUserScoreAll();
-    echo json_encode($userScores);
+    $answerCnt = $userModel->getAnswerCountGroupByUser();
+    $questionCnt = $userModel->getQuestionCountGroupByUser();
+    
+    echo json_encode([
+        "userScores" => $userScores,
+        "answerCnt" => $answerCnt,
+        "questionCnt" => $questionCnt
+        ]);
     break;
     case 'POST':
     if(isset($_POST['login'])){

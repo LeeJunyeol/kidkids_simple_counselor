@@ -25,9 +25,10 @@ class OpinionModel {
         }
     }
 
-    function addOnAnswer($answerId, $content, $userId){
+    function addOnAnswer($questionId, $answerId, $content, $userId){
         try {
-            $stmt = $this->conn->prepare("INSERT INTO opinions (answer_id, user_id, content, parent_idx, `level`) VALUES (:answer_id, :user_id, :content, 0, 0)");
+            $stmt = $this->conn->prepare("INSERT INTO opinions (question_id, answer_id, user_id, content, parent_idx, `level`) VALUES (:question_id, :answer_id, :user_id, :content, 0, 0)");
+            $stmt->bindParam(':question_id', $questionId);
             $stmt->bindParam(':answer_id', $answerId);
             $stmt->bindParam(':user_id', $userId);
             $stmt->bindParam(':content', $content);

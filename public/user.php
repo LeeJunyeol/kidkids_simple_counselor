@@ -58,8 +58,8 @@ require_once "header.php";
         <div id="rank-box">
             <div class="box">
             <script type="text/handlebars-template" id="current-rank-template">
-            <h2>현재 순위</h2>
-            <table class="rank-table">
+            <h3 class="text-center" style="margin-bottom: 10px";>현재 순위</h3>
+            <table class="rank-table table table-striped" style="border-top: 2px solid #ddd;">
                 <thead>
                     <tr>
                         <th class="rank-table-head rank">순위</th>

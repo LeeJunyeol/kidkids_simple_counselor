@@ -248,10 +248,10 @@ table .content {
             </tr> -->
             </script> 
             </thead>
-            <tbody>
+            <tbody id="table-main-body">
             <script type="text/handlebars-template" id="question-template">
             {{#each this}}
-            <tr data-obj='{"questionId": "{{question_id}}","userId": "{{user_id}}","title": "{{title}}","content": "","view": "{{view}}","createDate": "{{create_date}}","modifyDate": "{{modify_date}}","tags": "{{tags}}","selectedAnswerId": "{{selected_answer_id}}"}'>
+            <tr data-question-id={{question_id}} data-obj='{"questionId": "{{question_id}}","userId": "{{user_id}}","title": "{{title}}","content": "","view": "{{view}}","createDate": "{{create_date}}","modifyDate": "{{modify_date}}","tags": "{{tags}}","selectedAnswerId": "{{selected_answer_id}}"}'>
                 <td class="text-center">{{question_id}}</td>
                 <td class="text-center">{{user_id}}</td>
                 <td class="text-center">{{title}}</td>
@@ -262,13 +262,13 @@ table .content {
                 <td class="text-center">{{create_date}}</td>
                 <td class="text-center">{{modify_date}}</td>
                 <!-- <td class="text-center"><button class="update">수정</button></td> -->
-                <td class="text-center"><button class="delete">삭제</button></td>
+                <td class="text-center"><button class="btn btn-danger delete">삭제</button></td>
             </tr>
             {{/each}}
             </script>
             <script type="text/handlebars-template" id="answer-template">
             {{#each this}}
-            <tr data-obj='{"answerId": "{{answer_id}}", "questionId": "{{question_id}}","userId": "{{user_id}}","title": "{{title}}","content": "","selection": "{{selection}}","createDate": "{{create_date}}","modifyDate": "{{modify_date}}"}'>
+            <tr data-answer-id={{answer_id}} data-obj='{"answerId": "{{answer_id}}", "questionId": "{{question_id}}","userId": "{{user_id}}","title": "{{title}}","content": "","selection": "{{selection}}","createDate": "{{create_date}}","modifyDate": "{{modify_date}}"}'>
                 <td class="text-center">{{answer_id}}</th>
                 <td class="text-center">{{question_id}}</th>
                 <td class="text-center">{{user_id}}</th>
@@ -278,7 +278,7 @@ table .content {
                 <td class="text-center">{{create_date}}</th>
                 <td class="text-center">{{modify_date}}</th>
                 <!-- <td class="text-center"><button class="update">수정</button></td> -->
-                <td class="text-center"><button class="delete">삭제</button></td>
+                <td class="text-center"><button class="btn btn-danger delete">삭제</button></td>
             </tr>
             {{/each}}
             </script>

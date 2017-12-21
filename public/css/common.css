@@ -28,7 +28,7 @@ textarea:disabled {
 }
 
 article {
-    width: 100%;
+    width: 87%;
 }
 
 /* 헤더 */
@@ -136,6 +136,8 @@ footer {
     padding-top: 15px;
     display: flex;
     justify-content: center;
+    position: relative;
+    min-height: 600px;
 }
 
 a { text-decoration:none !important }
@@ -143,15 +145,17 @@ a { text-decoration:none !important }
 /* aside 공통 */
 
 aside {
-    width: 200px;
+    width: 230px;
     margin-left: 15px;
+    left: 95%;
+    position: absolute;
 }
 
 aside>div {
     width: 100%;
-    min-width: 140px;
+    min-width: 180px;
     background: #FAFBFC;
-    padding: 15px;
+    padding: 13px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-wrap: wrap;
@@ -160,7 +164,6 @@ aside>div {
 
 aside>div>div.head {
     width: 100%;
-    color: #1DB51A;
 }
 
 aside h3 {

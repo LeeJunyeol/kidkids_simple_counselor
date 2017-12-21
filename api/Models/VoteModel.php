@@ -57,7 +57,7 @@ class VoteModel {
     function getScoreLimit10(){
         try {
             $sql = "SELECT u.user_id,
-            (SUM(ifnull(a.selection,0)) * 100 + SUM(ifnull(v.vote, 0))) AS score, (SUM(ifnull(a.selection, 0)) / COUNT(*)) * 100 AS selection_percentage
+            (SUM(ifnull(a.selection,0)) * 100 + SUM(ifnull(v.vote * 5, 0))) AS score, (SUM(ifnull(a.selection, 0)) / COUNT(*)) * 100 AS selection_percentage
             FROM users AS u 
             LEFT JOIN answers AS a ON u.user_id = a.user_id 
             LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
@@ -84,7 +84,7 @@ class VoteModel {
 
     function getMyTotalScore($userId){
         try {
-            $stmt = $this->conn->prepare("SELECT (SUM(a.selection) * 100 + SUM(v.vote)) AS score 
+            $stmt = $this->conn->prepare("SELECT (SUM(a.selection) * 100 + SUM(v.vote * 5)) AS score 
             FROM answers AS a INNER JOIN votes AS v ON a.answer_id = v.answer_id WHERE a.user_id = :user_id");
             $stmt->bindParam(':user_id', $userId);
             if(!$stmt->execute()){

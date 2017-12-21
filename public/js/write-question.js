@@ -283,7 +283,6 @@ var WriteModule = (function () {
             myQuestion['category'] = $(".selected-category>h3").text();
             myQuestion['user_id'] = $("#welcome").data("id");
 
-            console.log(myQuestion);
             questionId = $(this).data("id");
             $.ajax({
                 type: "POST",
@@ -295,7 +294,6 @@ var WriteModule = (function () {
                     tags: myQuestion['tags']
                 }
             }).then(function (res) {
-                console.log(res);
                 var result = JSON.parse(res);
                 alert(result["message"]);
                 if (result["success"]) {

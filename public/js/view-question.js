@@ -1,10 +1,9 @@
-
 var ViewModule = (() => {
     var BASE_URL = location.origin + "/ksc";
     var API_BASE_URL = "/ksc/api";
     var QUESTION_URL = API_BASE_URL + "/Question/";
     var MY_QUESTION_URL = API_BASE_URL + "/my/Question/";
-    
+
     var questionTemplate = handlebarsHelper("#question-template");
     var answerTemplate = handlebarsHelper("#answer-template");
     var opinionTemplate = handlebarsHelper("#opinion-template");
@@ -43,6 +42,7 @@ var ViewModule = (() => {
     // 답글달기 버튼 클릭했을 때, 답글 등록할 때 이벤트
     function bindReplyEvents() {
         $("#question-container").on("click", "button.btn.reply", function (e) {
+            if (userId === "") return alert("로그인이 필요합니다.");
             if (!$(this).hasClass("btn-danger")) {
                 $(this).text("취소");
             } else {
@@ -55,6 +55,7 @@ var ViewModule = (() => {
 
         // 답글등록 이벤트
         $("#btn-post-reply").on("click", function (e) {
+            if (userId === "") return alert("로그인이 필요합니다.");
             var title = $("div.write.header>textarea").val();
             var content = $("div.write.content>textarea").val();
 
@@ -78,9 +79,9 @@ var ViewModule = (() => {
                     $("div.reply-box>.reply-card:last-child").find("textarea").height(insertedAnswer['content'].split(re).length * 21);
                     $("#write-box").toggle("blind");
                     $("button.btn.reply").toggleClass("btn-danger").text("답글달기");
-                    $("div.reply-card.container").each(function(i, v){
+                    $("div.reply-card.container").each(function (i, v) {
                         var $spanSpecial = $(v).find("span.user-type");
-                        if($spanSpecial.text() === "전문가"){
+                        if ($spanSpecial.text() === "전문가") {
                             $spanSpecial.addClass("special");
                             $spanSpecial.closest("div.page-header").find(".img-div").removeClass("hide");
                         }
@@ -89,15 +90,9 @@ var ViewModule = (() => {
                 } else {
                     alert("등록이 실패하였습니다.");
                 }
-                if (JSON.parse(res)) {
-
-                }
             }, function (res) {
-                console.log("서버 오류");
             });
         });
-
-
     }
 
     function init() {
@@ -122,7 +117,7 @@ var ViewModule = (() => {
                             selection: true,
                             questionId
                         })
-                    }).then(function(res){
+                    }).then(function (res) {
                         alert("채택이 완료되었습니다.");
                     });
                 }
@@ -130,27 +125,24 @@ var ViewModule = (() => {
         });
 
         $("div.reply-box").on("click", ".delete", function (e) {
-            if(confirm("답변을 삭제하시겠습니까?")){
+            if (confirm("답변을 삭제하시겠습니까?")) {
                 var $currentContainer = $(e.currentTarget).closest(".reply-card");
                 var answerId = $currentContainer.data("id");
                 $.ajax(BASE_URL + "/api/Answer/" + answerId, {
                     type: 'DELETE'
-                }).then(function(res){
+                }).then(function (res) {
                     res = JSON.parse(res);
                     alert(res['message']);
                     this.remove();
                 }.bind($currentContainer));
             }
         });
-        
 
         // 수정/삭제 이벤트
         $("#question-container").on("click", ".delete", function (e) {
-            console.log("삭제!");
             $.ajax(API_BASE_URL + "/my/Question/" + questionId, {
                 type: "DELETE"
             }).then(function (res) {
-                console.log(res);
                 var result = JSON.parse(res);
                 alert(result['messages']);
 
@@ -160,25 +152,6 @@ var ViewModule = (() => {
         $("#question-container").on("click", ".edit", function (e) {
             location.href = BASE_URL + "/update/" + questionId;
         });
-        // $("#question-container").on("click", ".delete", function (e) {
-        //     console.log("삭제!");
-        //     $.ajax(API_BASE_URL + "/my/Question/" + questionId, {
-        //         type: "DELETE"
-        //     }).then(function (res) {
-        //         console.log(res);
-        //         var result = JSON.parse(res);
-        //         alert(result['messages']);
-
-        //         location.href = BASE_URL + "/home";
-        //     });
-        // });
-        // $("#reply-box").on("click", "button.delete", function(e){
-        //     $.ajax("/ksc/api/")
-        // });
-    }
-
-    function deleteAnswer() {
-
     }
 
     // 템플릿을 그린다.
@@ -186,7 +159,7 @@ var ViewModule = (() => {
         $.ajax(API_BASE_URL + "/Question/" + questionId, {
             type: "GET",
             contentType: "application/json"
-        }).then(function (res) {            // 템플릿을 그린다.(각종 효과 추가)
+        }).then(function (res) { // 템플릿을 그린다.(각종 효과 추가)
             var result = JSON.parse(res);
             var question = result['question'];
             var answers = result['answers'];
@@ -218,7 +191,7 @@ var ViewModule = (() => {
             $("div.question.container").append(opinionTemplate(questionsOpinions));
             $("div.reply-box").html(answerTemplate(answers));
             $("div.reply-card.container").each(function (i, ele) {
-                if($(ele).data("selection") === 1){
+                if ($(ele).data("selection") === 1) {
                     $(ele).addClass("selected-answer");
                     $(ele).find(".select-btn").removeClass("hide");
                     $(ele).find(".select-btn").addClass("selected");
@@ -231,11 +204,11 @@ var ViewModule = (() => {
             var answerContent = answers.content;
             $("div.question.container").find("textarea").height(questionContent.split(re).length * 21);
 
-            $("div.reply-card.container").each(function(i, v){
+            $("div.reply-card.container").each(function (i, v) {
                 var $spanSpecial = $(v).find("span.user-type");
-                if($spanSpecial.text() === "전문가"){
+                if ($spanSpecial.text() === "전문가") {
                     $spanSpecial.addClass("special");
-                    $spanSpecial.closest("div.page-header").find("img").removeClass("hide");
+                    $spanSpecial.closest("div.page-header").find("div.img-div").removeClass("hide");
                 }
             })
 
@@ -247,8 +220,8 @@ var ViewModule = (() => {
                 }
             }
 
-            $("div.reply-box").find("span.answer-author").each(function(i,v){
-                if($(v).text() !== userId){
+            $("div.reply-box").find("span.answer-author").each(function (i, v) {
+                if ($(v).text() !== userId) {
                     $(v).closest(".reply-card.container").find(".edit-btn-group").addClass("not-visible");
                 }
             });
@@ -265,9 +238,11 @@ var ViewModule = (() => {
                 }
             });
         }).then(function () {
-            $("form.opinion").on("click", "button[type='submit']", function (e) {
+            $("div.opinion-list").on("click", "button[type='submit']", function (e) {
+                if (userId === "") return alert("로그인이 필요합니다.");
                 e.preventDefault();
-                var $form = $(e.delegateTarget);
+
+                var $form = $(e.delegateTarget).find("form");
                 var id = $form.closest(".container").data("id");
                 var content = $form.find("input[name='content']").val();
                 var data = {
@@ -276,6 +251,7 @@ var ViewModule = (() => {
                 if ($form.hasClass("question")) {
                     data.questionId = id;
                 } else {
+                    data.questionId = location.href.split("/").pop();
                     data.answerId = id;
                 }
 

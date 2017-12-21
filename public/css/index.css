@@ -36,6 +36,7 @@ article div.board>ul.list-group>li.list-group-item {
 article div.board>ul.list-group>li.list-group-item>div.list-header>h3{
     margin-top: 0;
     margin-bottom: 15px;
+    max-width: 850px;
 }
 
 article div.board>ul.list-group>li.list-group-item>div.list-header>h3>a{

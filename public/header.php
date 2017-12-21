@@ -64,7 +64,7 @@ $pattern = '/\/ksc\/user+|\/ksc\/my+/';
 
 <div class="row <?php if(preg_match($pattern, $url)){ echo "hide"; }?>">
 <!-- class="col-sm-6 col-sm-offset-3"  -->
-    <div style="display: flex; max-width: 1260px; width: 50%; margin-left: 489px; position: relative; left: -45px;">
+    <div style="display: flex; max-width: 1260px; width: 50%; margin-left: 25%; position: relative;">
         <div class="btn-group" style="display: flex; margin-top: 10px;">
             <button type="button" class="btn btn-info">전체</button>
             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -100,7 +100,6 @@ $(document).ready(function () {
             contentType: "application/json",
             data: dataObj
         }).then(function (res) {
-//            console.log(res);
             var result = JSON.parse(res);
             var questions = result['questions'];
             

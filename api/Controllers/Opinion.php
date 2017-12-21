@@ -44,12 +44,13 @@ switch($_SERVER['REQUEST_METHOD']){
     // break;
     break;
     case 'POST':
-    if(isset($_POST['questionId'])){
+    if(isset($_POST['answerId']) && isset($_POST['questionId'])){
         $userId = $_SESSION['id'];
+        $answerId = $_POST['answerId'];
         $questionId = $_POST['questionId'];
         $content = $_POST['content'];
 
-        $insertedId = $opinionModel->addOnQuestion($questionId, $content, $userId);
+        $insertedId = $opinionModel->addOnAnswer($questionId, $answerId, $content, $userId);
         if($insertedId){
             $insertedOpinion = $opinionModel->getById($insertedId);
             echo json_encode([
@@ -64,12 +65,12 @@ switch($_SERVER['REQUEST_METHOD']){
         };
         return;
     }
-    if(isset($_POST['answerId'])){
+    if(isset($_POST['questionId'])){
         $userId = $_SESSION['id'];
-        $answerId = $_POST['answerId'];
+        $questionId = $_POST['questionId'];
         $content = $_POST['content'];
 
-        $insertedId = $opinionModel->addOnAnswer($answerId, $content, $userId);
+        $insertedId = $opinionModel->addOnQuestion($questionId, $content, $userId);
         if($insertedId){
             $insertedOpinion = $opinionModel->getById($insertedId);
             echo json_encode([

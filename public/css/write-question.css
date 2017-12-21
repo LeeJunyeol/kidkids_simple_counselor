@@ -15,7 +15,10 @@ div.wrapper>div.container>.write>textarea {
 
 div.wrapper>div.container>.write {
     border-bottom: 2px solid #ddd;
-    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 div.wrapper>div.container>.write.content {
@@ -53,11 +56,13 @@ div.wrapper>div.container>.write.tags ul {
 }
 
 div.wrapper>div.container>.write.header>textarea {
-    font-size: 30px;
+    font-size: 20px;
+    height: 50px;
 }
 
 div.wrapper>div.container>.write.content>textarea {
     width: 100%;
+    min-height: 290px;
 }
     
 

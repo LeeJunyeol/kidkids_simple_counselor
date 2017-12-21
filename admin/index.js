@@ -25,6 +25,33 @@ var AdminModule = (function () {
         $("#pageNav").on("click", "li.next", nextPage);
         $("#pageNav").on("click", "li.pageNum", moveToPageNum);
 
+
+        $("#table-main-body").on("click", "button.delete", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if(confirm("삭제 하시겠습니까?")){
+                var $currentRow = $(e.currentTarget).closest("tr");
+                var id;
+                var targetController;
+                if($currentRow.data("question-id")){
+                    id = $currentRow.data("question-id");
+                    targetController = "Question";
+                } else if($currentRow.data("answer-id")){
+                    id = $currentRow.data("answer-id");
+                    targetController = "Answer";
+                }
+    
+                var url = BASE_URL + "/api/" + targetController + "/" + id;
+                $.ajax(url, {
+                    type: 'DELETE'
+                }).then(function (res) {
+                    alert(JSON.parse(res)['message']);
+                    $currentRow.remove();
+                });
+            }
+        })
+
         $("#menu>a:eq(0)").on("click", function (e) {
             am = QuestionModule;
             am.init();
@@ -52,6 +79,7 @@ var AdminModule = (function () {
         // })
 
         $("tbody").on("click", "tr", function(e) {
+            e.stopPropagation();
             var obj = $(e.currentTarget).data("obj");
             if(obj['answerId'] !== undefined){
                 location.href = BASE_URL + "/admin/answer/" + obj['answerId'];
@@ -62,7 +90,7 @@ var AdminModule = (function () {
 
         // 맨위에 값 업데이트
         $("table").on("click", "tr", function (e) {
-            $selectedRow = $(e.currentTarget);
+            $tedRow = $(e.currentTarget);
 
             var selectedData = $(e.currentTarget).data("obj");
             selectedData["content"] = $(e.currentTarget).find(".content").text();
@@ -210,7 +238,7 @@ var AdminModule = (function () {
             contentType: "application/json"
         }).then(function (res) {
             var results = JSON.parse(res);
-            results.forEach(function (user, i) {
+            results['userScores'].forEach(function (user, i) {
                 var 승급가능 = 사용자가승급가능한지(user);
                 if (승급가능 > 0) {
                     user['ok'] = true;
@@ -218,7 +246,33 @@ var AdminModule = (function () {
                     user['no'] = true;
                 }
             });
-            return results;
+            var answerCntMap = {};
+            results['answerCnt'].forEach((element) => {
+                answerCntMap[[element['user_id']]] = element['answer_cnt'];
+            })
+            var questionCntMap = {};
+            results['questionCnt'].forEach((element) => {
+                questionCntMap[[element['user_id']]] = element['question_cnt'];
+            })
+            // var questionCntMap = results['questionCnt'].map(function(obj){
+            //     var rObj = {};
+            //     rObj[obj['user_id']] = obj['question_cnt'];
+            //     return rObj;
+            // })
+            var reformatRes = results['userScores'];
+            reformatRes.forEach((element) => {
+                if(questionCntMap[element['user_id']]){
+                    element['question_cnt'] = questionCntMap[element['user_id']];  
+                } else {
+                    element['question_cnt'] = 0;
+                }
+                if(answerCntMap[element['user_id']]){
+                    element['answer_cnt'] = answerCntMap[element['user_id']];  
+                } else {
+                    element['answer_cnt'] = 0;
+                }
+            });
+            return reformatRes;
         })
     }
 
@@ -298,7 +352,6 @@ var AnswerModule = (() => {
             data: dataObj
         }).then(function (res) {
             var results = JSON.parse(res);
-            console.log(results);
             $("#form").html(answerInputTemplate());
             $("thead").html(answerHeaderTemplate());
             results['answers'].forEach((element) => {

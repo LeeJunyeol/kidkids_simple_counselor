@@ -12,26 +12,6 @@ require_once "config.php";
     <link href="<?php echo _NODE?>/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="<?php echo _CSS?>/common.css" rel="stylesheet">
     <link href="<?php echo _CSS?>/view-question.css" rel="stylesheet">
-    <style>
-    .selected { 
-        border-color: #fff;
-        background-color: #68FF9C;
-        color: white;
-    }
-    .select-btn:not(.selected):focus { 
-        outline: none;
-    }
-    .select-btn.selected:focus { 
-        outline: none;
-        border-color: #fff;
-        background-color: #68FF9C;
-        color: white;
-    }
-    .selected-answer {
-        border: blue solid !important;
-    }
-    
-    </style>
 </head>
 
 <body>
@@ -44,7 +24,7 @@ require_once "header.php";
                     <div id="question-container" class="question container hide" style="position: relative">
                     <script type="text/handlebars-template" id="question-template">
                         <div class="header-group" data-id={{user_id}} style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px;">
-                            <div>
+                            <div class="head-wrap" style="max-width: 700px;">
                                 <h3 class="title">Q. {{title}}<small>by {{user_id}}</small></h3>
                                 작성일: {{create_date}}, 수정일: {{modify_date}}
                             </div>
@@ -142,16 +122,17 @@ require_once "header.php";
                         <script type="text/handlebars-template" id="opinion-template">
                         <div class="opinion-list hide" style="margin-top: 10px;">
                             <div>
-                                <div>댓글을 남겨주세요.</div>
                                 <form class="{{#if question_id}}question opinion form{{else}}answer opinion form{{/if}}" action="#" method="post">
-                                    {{#if question_id}}
-                                    <input type="text" name="id" value={{question_id}} class="hide" />
-                                    {{else}}
-                                    <input type="text" name="id" value={{answer_id}} class="hide" />
-                                    {{/if}}
-                                    <input type="text" name="content" />
-                                    <button type="submit">등록</button>
+                                    <div>댓글을 남겨주세요.
+                                        {{#if question_id}}
+                                        <input type="text" name="id" value={{question_id}} class="hide" />
+                                        {{else}}
+                                        <input type="text" name="id" value={{answer_id}} class="hide" />
+                                        {{/if}}
+                                        <input type="text" name="content" class="form-control"/>
+                                    </div>
                                 </form>
+                                <button type="submit" class="btn btn-primary" style="width: 100px;">등록</button>
                             </div>
                             
                             <ul class="opinion-list" style="list-style: none; -webkit-padding-start: 0; border: 2px solid;">
@@ -188,11 +169,12 @@ require_once "header.php";
                         <script type="text/handlebars-template" id="opinion-answer-template">
                         <div class="opinion-list hide" style="margin-top: 10px;">
                             <div>
-                                <div>댓글을 남겨주세요.</div>
                                 <form class="answer opinion form" action="#" method="post">
-                                    <input type="text" name="content" />
-                                    <button type="submit">등록</button>
+                                    <div>댓글을 남겨주세요.
+                                        <input type="text" name="content" class="form-control"/>
+                                    </div>
                                 </form>
+                                <button type="submit" class="btn btn-primary" style="width: 100px;">등록</button>
                             </div>
                             
                             <ul class="opinion-list" style="list-style: none; -webkit-padding-start: 0; border: 2px solid;">

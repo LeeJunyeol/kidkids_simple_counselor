@@ -63,14 +63,21 @@ div.wrapper>div.reply-box>.reply-card {
     position: relative;
 }
 
+.reply-title-group .page-header>span.label {
+    position: absolute;
+    top: -5px;
+    left: -25px;
+    font-weight: normal;
+}
+
 .reply-title-group .page-header>span.special {
     position: absolute;
     top: -5px;
-    left: -20px;
-    height: 20px;
-    font-size: 12px;
+    left: -30px;
+    height: 25px;
+    font-size: 15px;
     font-weight: normal;
-    background: #FF9800;
+    background: #2e6da4;
 }
 
 .reply-title-group .page-header small {
@@ -120,3 +127,22 @@ div.wrapper>div.reply-box>.reply-card {
     margin : 1px;
     height: 100%;
 }    
+
+ul.opinion-list {
+    margin-top: 20px;
+}
+
+.selected { 
+    border-color: #fff;
+    background-color: #68FF9C;
+    color: white;
+}
+.select-btn:not(.selected):focus { 
+    outline: none;
+}
+.select-btn.selected:focus { 
+    outline: none;
+    border-color: #fff;
+    background-color: #68FF9C;
+    color: white;
+}

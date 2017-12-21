@@ -9,7 +9,7 @@ class UserModel {
     function getCurrentRank($id){
         try {
             $sql = "SELECT u.user_id,
-            (SUM(ifnull(a.selection,0)) * 100 + SUM(ifnull(v.vote, 0))) AS score
+            (SUM(ifnull(a.selection,0)) * 100 + SUM(ifnull(v.vote * 5, 0))) AS score
             FROM users AS u 
             LEFT JOIN answers AS a ON u.user_id = a.user_id 
             LEFT JOIN votes AS v ON a.answer_id = v.answer_id 
@@ -54,10 +54,38 @@ class UserModel {
         }
     }
 
+    function getAnswerCountGroupByUser(){
+        $sql = "SELECT user_id, COUNT(*) as answer_cnt FROM answers GROUP BY user_id";
+        $stmt = $this->conn->prepare($sql);
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            exit;
+        }
+        $answerCnt = array();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $answerCnt[] = $row;
+        }
+        return $answerCnt;
+    }
+
+    function getQuestionCountGroupByUser(){
+        $sql = "SELECT user_id, COUNT(*) as question_cnt FROM questions GROUP BY user_id";
+        $stmt = $this->conn->prepare($sql);
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            exit;
+        }
+        $questionCnt = array();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $questionCnt[] = $row;
+        }
+        return $questionCnt;
+    }
+
     function getUserScoreAll() {
         try {
             $sql = "SELECT u.user_id, u.user_type, u.name,
-            (SUM(ifnull(a.selection,0)) * 100 + SUM(ifnull(v.vote, 0))) AS myscore, (SUM(ifnull(a.selection, 0)) / COUNT(*)) * 100 AS selection_percentage
+            (SUM(ifnull(a.selection,0)) * 100 + SUM(ifnull(v.vote * 5, 0))) AS myscore, (SUM(ifnull(a.selection, 0)) / COUNT(*)) * 100 AS selection_percentage
             FROM users AS u 
             LEFT JOIN answers AS a ON u.user_id = a.user_id 
             LEFT JOIN votes AS v ON a.answer_id = v.answer_id 

@@ -3,11 +3,9 @@ ul {
 	list-style: none;
 	padding-left: 0;
 }
-
 ul.sub {
 	padding-left: 10px;
 }
-
 </style>
 <aside id="rank-aside" class="rank-aside" data-category-id=<?php 
 				if(isset($_GET['categoryId'])){
@@ -41,7 +39,7 @@ ul.sub {
 						<h3>지식 랭킹</h3>
 					</div>
 					<div>
-						<table class="rank-table">
+						<table class="rank-table table table-striped">
 							<thead>
 								<tr>
 									<th class="rank-table-head rank">순위</th>

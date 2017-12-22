@@ -102,5 +102,7 @@ var CommonModule = (function () {
 
 $(document).ready(function () {
     CommonModule.init();
+    
+    // aside 템플릿이 있을 때, asdie 모듈을 초기화한다.
     if ($("#nav-category-template").length > 0) AsideModule.init();
 });

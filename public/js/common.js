@@ -1,14 +1,22 @@
 var AsideModule = (function () {
-    var BASE_URL = location.origin + "/ksc";
+    var BASE_URL = location.origin,
+        rankBodyTemplate = handlebarsHelper("#rank-body-template"),
+        navCategoryTemplate = handlebarsHelper("#nav-category-template"),
+
+        $categoryList = $("#category-list"),
+
+        categoryId = $("#rank-aside").data("category-id");
 
     var init = function () {
-        var navCategoryTemplate = handlebarsHelper("#nav-category-template");
-        var categoryId = $("#rank-aside").data("category-id");
-
-        $("#category-list").on("click", ".category-item>a", goToHomeByCategory);
+        $categoryList.on("click", ".category-item>a", goToHomeByCategory);
 
         renderCategory(navCategoryTemplate, categoryId);
         renderRankBox();
+    }
+
+    var goToHomeByCategory = function (e) {
+        $listItem = $(e.currentTarget).closest("li");
+        location.href = BASE_URL + "/home?categoryId=" + $listItem.data("id") + "&categoryName=" + $(e.currentTarget).text();
     }
 
     var renderCategory = function (navCategoryTemplate, categoryId) {
@@ -19,20 +27,11 @@ var AsideModule = (function () {
             }
         }).then(function (res) {
             var result = JSON.parse(res);
-            // categories = result['categories'];
-            var $categoryList = $("#category-list");
             $categoryList.append(navCategoryTemplate(result));
         })
     }
 
-    var goToHomeByCategory = function (e) {
-        $listItem = $(e.currentTarget).closest("li");
-        location.href = BASE_URL + "/home?categoryId=" + $listItem.data("id") + "&categoryName=" + $(e.currentTarget).text();
-    }
-
     var renderRankBox = function () {
-        var rankBodyTemplate = handlebarsHelper("#rank-body-template");
-
         $.ajax(BASE_URL + "/api/Rank", {
             type: 'GET',
             data: {
@@ -51,12 +50,10 @@ var AsideModule = (function () {
     return {
         init: init
     }
-
 })();
 
-
 var CommonModule = (function () {
-    var BASE_URL = location.origin + "/ksc";
+    var BASE_URL = location.origin + "";
 
     function init() {
         $(".btn.login").on("click", goToLogin);
@@ -102,7 +99,7 @@ var CommonModule = (function () {
 
 $(document).ready(function () {
     CommonModule.init();
-    
+
     // aside 템플릿이 있을 때, asdie 모듈을 초기화한다.
     if ($("#nav-category-template").length > 0) AsideModule.init();
 });

@@ -1,5 +1,5 @@
 var MyModule = (function(){
-    var BASE_URL = location.origin + "/ksc";
+    var BASE_URL = location.origin + "";
 
     // 템플릿들
     var expertTemplate = handlebarsHelper("#expert-template");
@@ -39,12 +39,12 @@ var MyModule = (function(){
             recentQuestions.forEach(element => {
                 element['content'] = element['content'].substring(0, 100) + "...";
                 element['create_date'] = Utils.getFormatDate(element['create_date']);
-                element['link'] = "/ksc/question/" + element['question_id']; 
+                element['link'] = "/question/" + element['question_id']; 
             });
             recentAnswers.forEach(element => {
                 element['content'] = element['content'].substring(0, 100) + "...";
                 element['create_date'] = Utils.getFormatDate(element['create_date']);
-                element['link'] = "/ksc/question/" + element['question_id'];
+                element['link'] = "/question/" + element['question_id'];
             });
 
             var scorePer = user['score'] / 500 * 100;

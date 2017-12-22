@@ -2,7 +2,7 @@
 require_once "config.php";
 if(isset($_SESSION["logged_in"])){
 	echo "<script>alert(\"이미 로그인 되어 있습니다.\");
-	location.href=\"/ksc/home\"</script>";
+	location.href=\"/home\"</script>";
 }
 ?>
 <!DOCTYPE html>
@@ -38,7 +38,7 @@ require_once "header.php";
 						<h1>로그인</h1>
 					</div>
 					<div class="login-body" style="padding:0px 50px;">
-						<form role="form" action="/ksc/api/User" method="post" accept-charset="utf-8">
+						<form role="form" action="/api/User" method="post" accept-charset="utf-8">
 							<div class="form-group">
 								<label for="usrname">
 									<span class="glyphicon glyphicon-user"></span> 아이디</label>

@@ -31,17 +31,6 @@ switch($_SERVER['REQUEST_METHOD']){
         ]);
         return;        
     }
-    // if(isset($_GET['id'])){
-    //     $answerId = $_GET['id'];
-    //     $opinions = getByAnswerId($conn, $answerId);
-    //     $success = count($opinions) > 0? true : false;
-    //     echo json_encode([
-    //         "success" => $success,
-    //         "opinions" => $opinions
-    //     ]);
-    //     return;        
-    // }
-    // break;
     break;
     case 'POST':
     if(isset($_POST['answerId']) && isset($_POST['questionId'])){

@@ -19,10 +19,10 @@ ul.sub {
 						<div class="wrapper">
 							<ul>
 								<li id="category-list">
-									<a href="/ksc/home"> 분류 전체 보기</a><br>
+									<a href="/home"> 분류 전체 보기</a><br>
 									<script type="text/handlebars-template" id="nav-category-template">
-									{{#if currentCategory.parent_idx}}<a href="/ksc/home?categoryId={{currentCategory.parent_idx}}">뒤로 가기</a><br>{{/if}}
-									<a href="/ksc/home?categoryId={{currentCategory.category_id}}">{{currentCategory.category_name}}</a>
+									{{#if currentCategory.parent_idx}}<a href="/home?categoryId={{currentCategory.parent_idx}}">뒤로 가기</a><br>{{/if}}
+									<a href="/home?categoryId={{currentCategory.category_id}}">{{currentCategory.category_name}}</a>
 									<ul class="sub">
 										{{#each categories}}
 										<li class="category-item" data-id={{category_id}} data-depth={{depth}} data-parent-idx={{parent_idx}}><a href="#">{{category_name}}</a></li>
@@ -52,7 +52,7 @@ ul.sub {
 								{{#each this}}
 								<tr>
 									<td class="rank-table-item rank">{{rank}}</td>
-									<td class="rank-table-item id"><a href="/ksc/user/{{user_id}}">{{user_id}}</a></td>
+									<td class="rank-table-item id"><a href="/user/{{user_id}}">{{user_id}}</a></td>
 									<td class="rank-table-item score">{{score}}</td>
 								</tr>
 								{{/each}}

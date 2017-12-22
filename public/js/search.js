@@ -1,5 +1,5 @@
 var SearchModule = (() => {
-    var BASE_URL = location.origin + "/ksc";
+    var BASE_URL = location.origin + "";
     var questionResultTemplate = handlebarsHelper("#question-result-template");
     var answerResultTemplate = handlebarsHelper("#answer-result-template");
     var authorResultTemplate = handlebarsHelper("#author-result-template");

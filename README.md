@@ -18,7 +18,7 @@ xampp control panel을 열어 apache 서버를 실행한 후, url에 아래의 �
 
 # URL Map
 
-- ErrorDocument 404     /ksc/public/404.php
+- ErrorDocument 404     /public/404.php
 
 - RewriteRule ^home$ public/home.php
 - RewriteRule ^write\/?$ public/write.php

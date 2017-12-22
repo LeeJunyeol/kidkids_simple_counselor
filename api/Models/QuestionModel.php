@@ -104,73 +104,6 @@ class QuestionModel {
         return $stmt->fetchObject();
     }
 
-    function getForPage($offset, $limit, $sortBy, $isASC){
-        $ascChar = "ASC";
-        if($isASC === "false"){
-            $ascChar = "DESC";
-        }
-
-        try {
-            $sql = "SELECT q.question_id, q.user_id, q.title, q.content, q.view, q.tags
-            , q.selected_answer_id, q.create_date, q.modify_date, c.category_name AS category, c.category_id
-            FROM 
-            (
-                SELECT * FROM category_question
-            ) AS cq 
-            INNER JOIN questions AS q
-            ON q.question_id = cq.question_id
-            INNER JOIN categories AS c
-            ON c.category_id = cq.category_id
-            WHERE c.depth = 0 
-            ORDER BY $sortBy $ascChar LIMIT $offset, $limit";
-            $stmt = $this->conn->prepare($sql);
-            if(!$stmt->execute()){
-                print_r($stmt->errorInfo());
-                exit;
-            };
-            
-            $questions = array();
-            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                $questions[] = $row;
-            }
-            return $questions;
-        } catch (PDOException $e) {
-            print $e->getMessage();
-            exit;
-        }
-    }
-
-    function getByCategoryForPage($categoryId, $offset, $limit, $sortBy, $isASC){
-        $ascChar = "DESC";
-        if($isASC === "true"){
-            $ascChar = "ASC";
-        }
-        $sql = "SELECT q.question_id, q.user_id, q.title, q.content, q.view, q.tags
-        , q.selected_answer_id, q.create_date, q.modify_date, c.category_name AS category, c.category_id 
-        FROM (
-            SELECT * FROM category_question
-            WHERE category_id=:categoryId
-        ) AS cq 
-        INNER JOIN questions AS q ON q.question_id = cq.question_id
-        INNER JOIN categories AS c ON c.category_id = cq.category_id 
-        ORDER BY q.$sortBy $ascChar LIMIT $offset, $limit";
-        $stmt = $this->conn->prepare($sql);
-        // $stmt = $this->conn->prepare("SELECT q.question_id, q.user_id, q.category_id, q.title, q.content, q.view, q.tags
-        // , q.selected_answer_id, q.create_date, q.modify_date, c.category_name as category 
-        // FROM questions as q JOIN categories AS c ON q.category_id = c.category_id 
-        // WHERE q.category_id=:categoryId ORDER BY q.$sortBy $ascChar LIMIT $offset, $limit");
-        $stmt->bindValue(':categoryId', $categoryId);
-        if(!$stmt->execute()){
-            print_r($stmt->errorInfo());
-            exit;
-        };
-        $results = array();
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $results[] = $row;
-        }
-        return $results;
-    }
-    
     function updateById($id, $question){
         $sql = "UPDATE `questions` SET `user_id` = :user_id, 
         `title` = :title, `tags` = :tags, `view` = :view, `content` = :content WHERE `question_id` = :question_id";
@@ -191,24 +124,6 @@ class QuestionModel {
 
     function count(){
         $stmt = $this->conn->query("SELECT count(*) FROM questions");
-        $rowCount = $stmt->fetch(PDO::FETCH_NUM);
-
-        return $rowCount;
-    }
-
-    function countByCategory($categoryId){
-        $stmt = $this->conn->prepare("SELECT count(*) 
-        FROM (
-            SELECT * FROM category_question
-            WHERE category_id=:categoryId
-        ) AS cq 
-        INNER JOIN questions AS q ON q.question_id = cq.question_id
-        INNER JOIN categories AS c ON c.category_id = cq.category_id");
-        $stmt->bindValue(':categoryId', $categoryId);
-        if(!$stmt->execute()){
-            print_r($stmt->errorInfo());
-            exit;
-        };
         $rowCount = $stmt->fetch(PDO::FETCH_NUM);
 
         return $rowCount;

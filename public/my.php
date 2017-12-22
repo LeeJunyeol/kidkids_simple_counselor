@@ -19,19 +19,27 @@ require_once "header.php";
 ?>
 <article>
     <div id="top-container">
-        <div id="profile-box">
+        <div id="profile-box" style:>
             <div class="box" style="position: relative">
             <?php 
                 $userType = $_SESSION['user_type'];
                 if($userType == '전문가'){
                     echo "<div style='position: absolute; top: -40px; left: -8px; width: 80px; margin: auto;'>
-                    <img src='/ksc/public/images/giphy.gif' style='display: block; width: 33px; height: 33px; margin: auto;'>
+                    <img src='/public/images/giphy.gif' style='display: block; width: 33px; height: 33px; margin: auto;'>
                     <label class='my-label label label-info' style='display: block; padding: .3em .3em .3em; font-size: 130%;'>".$userType."</label></div>";
                     }?>
                 <div class="my-image" style="width: 200px; height: 100%; margin-top: 6px;">
-                    <img src=<?php echo "/ksc/user_images/".$_SESSION['user_image']?> style="width: 100%; height: 100%" />
+                    <img src=<?php echo "/user_images/".$_SESSION['user_image']?> style="width: 100%; height: 100%" />
                 </div>
-                <div class="my-info" style="width: 100%">
+                <div class="my-info" style="width: 100%; position: relative;">
+                    <div class="edit-btn-group btn-group" style="position: absoulte; left: 79%; top: 0;">
+                        <button type="button" class="btn btn-default edit" aria-label="Left Align">
+                            <span class="edit glyphicon glyphicon glyphicon-pencil" aria-hidden="true">수정</span>
+                        </button>
+                        <button type="button" class="btn btn-default delete" aria-label="Left Align" style="margin-left: -5px;">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true">회원 탈퇴</span>
+                        </button>
+                    </div>
                     <div class="profile-area">
                         <div>
                             <h2><span><?php echo $_SESSION['name']; ?></span></h2>
@@ -79,7 +87,7 @@ require_once "header.php";
                         {{#each this}}
                         <tr>
                             <td class="rank-table-item rank">{{rank}}</td>
-                            <td class="rank-table-item id"><a href="/ksc/user/{{user_id}}">{{user_id}}</a></td>
+                            <td class="rank-table-item id"><a href="/user/{{user_id}}">{{user_id}}</a></td>
                             <td class="rank-table-item score">{{score}}</td>
                         </tr>
                         {{/each}}

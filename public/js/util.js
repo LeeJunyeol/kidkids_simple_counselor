@@ -1,5 +1,10 @@
 function handlebarsHelper(templateId){
-    return Handlebars.compile($(templateId).html());
+    var $templateId = $(templateId);
+    if($templateId.length > 0){
+        return Handlebars.compile($templateId.html());
+    } else {
+        return {"error" : "해당하는 템플릿이 없습니다."};
+    }
 }
 
 var Utils = (function(){
@@ -18,4 +23,3 @@ var Utils = (function(){
     };
     
 })();
-

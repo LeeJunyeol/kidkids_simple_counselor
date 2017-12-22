@@ -1,5 +1,5 @@
 var AdminModule = (function () {
-    var BASE_URL = location.origin + "/ksc";
+    var BASE_URL = location.origin + "";
     var QUESTION_API_URL = BASE_URL + "/api/Question"
 
     // 등록/수정/삭제 판넬
@@ -328,7 +328,7 @@ var AnswerModule = (() => {
     var answerTemplate = handlebarsHelper("#answer-template");
     var paginationTemplate = handlebarsHelper("#pagination-template");
 
-    var BASE_URL = location.origin + "/ksc";
+    var BASE_URL = location.origin + "";
     var $selectedRow; // 선택한 행
 
     var currentPageNum = 1;
@@ -381,7 +381,7 @@ var QuestionModule = (() => {
     var questionTemplate = handlebarsHelper("#question-template");
     var paginationTemplate = handlebarsHelper("#pagination-template");
 
-    var BASE_URL = location.origin + "/ksc";
+    var BASE_URL = location.origin + "";
     var $selectedRow; // 선택한 행
 
     var currentPageNum = 1;

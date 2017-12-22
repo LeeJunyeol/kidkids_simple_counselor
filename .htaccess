@@ -1,10 +1,10 @@
-RewriteEngine on
+Options +FollowSymLinks
+RewriteEngine On
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-l
 
-ErrorDocument 404     /ksc/public/404.php
+ErrorDocument 404     /public/404.php
 
 RewriteRule ^home$ public/home.php
 RewriteRule ^write\/?$ public/write.php

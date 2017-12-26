@@ -1,103 +1,114 @@
-var AsideModule = (function () {
-    var BASE_URL = location.origin + "/ksc";
+import { HandlebarsHelper, Utils } from "./util";
 
-    var init = function () {
-        var navCategoryTemplate = handlebarsHelper("#nav-category-template");
-        var categoryId = $("#rank-aside").data("category-id");
+var AsideModule = (function() {
+  var BASE_URL = location.origin + "/ksc";
 
-        $("#category-list").on("click", ".category-item>a", goToHomeByCategory);
+  var init = function() {
+    var navCategoryTemplate = HandlebarsHelper("#nav-category-template");
+    var categoryId = $("#rank-aside").data("category-id");
 
-        renderCategory(navCategoryTemplate, categoryId);
-        renderRankBox();
-    }
+    $("#category-list").on("click", ".category-item>a", goToHomeByCategory);
 
-    var renderCategory = function (navCategoryTemplate, categoryId) {
-        $.ajax(BASE_URL + "/api/Category", {
-            type: 'GET',
-            data: {
-                categoryId: categoryId
-            }
-        }).then(function (res) {
-            var result = JSON.parse(res);
-            // categories = result['categories'];
-            var $categoryList = $("#category-list");
-            $categoryList.append(navCategoryTemplate(result));
-        })
-    }
+    renderCategory(navCategoryTemplate, categoryId);
+    renderRankBox();
+  };
 
-    var goToHomeByCategory = function (e) {
-        $listItem = $(e.currentTarget).closest("li");
-        location.href = BASE_URL + "/home?categoryId=" + $listItem.data("id") + "&categoryName=" + $(e.currentTarget).text();
-    }
+  var renderCategory = function(navCategoryTemplate, categoryId) {
+    $.ajax(BASE_URL + "/api/Category", {
+      type: "GET",
+      data: {
+        categoryId: categoryId
+      }
+    }).then(function(res) {
+      var result = JSON.parse(res);
+      // categories = result['categories'];
+      var $categoryList = $("#category-list");
+      $categoryList.append(navCategoryTemplate(result));
+    });
+  };
 
-    var renderRankBox = function () {
-        var rankBodyTemplate = handlebarsHelper("#rank-body-template");
+  var goToHomeByCategory = function(e) {
+    var $listItem = $(e.currentTarget).closest("li");
+    location.href =
+      BASE_URL +
+      "/home?categoryId=" +
+      $listItem.data("id") +
+      "&categoryName=" +
+      $(e.currentTarget).text();
+  };
 
-        $.ajax(BASE_URL + "/api/Rank", {
-            type: 'GET',
-            data: {
-                ranker: true
-            }
-        }).then(function (res) {
-            var result = JSON.parse(res);
-            var rankers = result['ranker'];
-            rankers.map(function (v, i) {
-                v['rank'] = ++i;
-            })
-            $("#rank-body").html(rankBodyTemplate(rankers));
-        })
-    }
+  var renderRankBox = function() {
+    var rankBodyTemplate = HandlebarsHelper("#rank-body-template");
 
-    return {
-        init: init
-    }
+    $.ajax(BASE_URL + "/api/Rank", {
+      type: "GET",
+      data: {
+        ranker: true
+      }
+    }).then(function(res) {
+      var result = JSON.parse(res);
+      var rankers = result["ranker"];
+      rankers.map(function(v, i) {
+        v["rank"] = ++i;
+      });
+      $("#rank-body").html(rankBodyTemplate(rankers));
+    });
+  };
 
+  return {
+    init: init
+  };
 })();
 
+var CommonModule = (function() {
+  var BASE_URL = location.origin + "/ksc";
 
-var CommonModule = (function () {
-    var BASE_URL = location.origin + "/ksc";
+  function init() {
+    $(".btn.login").on("click", goToLogin);
+    $(".btn.question").on("click", goToWrite);
+    $(".logout").on("click", logout);
+    $("button.signup").on("click", goToSignup);
+    $("a.btn-signup").on("click", goToSignup);
+    $("button.mypage").on("click", goToMyPage);
 
-    function init() {
-        $(".btn.login").on("click", goToLogin);
-        $(".btn.question").on("click", goToWrite);
-        $(".logout").on("click", logout);
-        $("button.signup").on("click", goToSignup);
-        $("a.btn-signup").on("click", goToSignup);
-        $("button.mypage").on("click", goToMyPage);
+    $("#search-btn").on("click", function(e) {
+      search(
+        $(e.currentTarget)
+          .closest("div.input-group")
+          .find("input")
+          .val()
+      );
+    });
+  }
 
-        $("#search-btn").on("click", function (e) {
-            search($(e.currentTarget).closest("div.input-group").find("input").val());
-        });
-    }
+  function search(keywords) {
+    location.href =
+      BASE_URL + "/search?search=" + keywords + "&category=" + "all";
+  }
 
-    function search(keywords) {
-        location.href = BASE_URL + "/search?search=" + keywords + "&category=" + "all";
-    }
+  function goToLogin() {
+    location.href = BASE_URL + "/login";
+  }
 
-    function goToLogin() {
-        location.href = BASE_URL + "/login";
-    }
+  function goToMyPage() {
+    location.href = BASE_URL + "/my";
+  }
 
-    function goToMyPage() {
-        location.href = BASE_URL + "/my";
-    }
+  function logout(e) {
+    location.href = BASE_URL + "/public/logout.php";
+  }
 
-    function logout(e) {
-        location.href = BASE_URL + "/public/logout.php";
-    }
+  function goToSignup() {
+    location.href = BASE_URL + "/signup";
+  }
 
-    function goToSignup() {
-        location.href = BASE_URL + "/signup";
-    }
+  function goToWrite() {
+    location.href = BASE_URL + "/write";
+  }
 
-    function goToWrite() {
-        location.href = BASE_URL + "/write";
-    }
-
-    return {
-        init: init
-    }
+  return {
+    init: init
+  };
 })();
 
 export { AsideModule, CommonModule };

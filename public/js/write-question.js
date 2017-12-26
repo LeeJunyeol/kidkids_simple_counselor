@@ -1,4 +1,5 @@
 import { AsideModule, CommonModule } from './common';
+import { HandlebarsHelper, Utils } from "./util";
 
 var WriteModule = (function () {
     var BASE_URL = location.origin + "/ksc";
@@ -13,8 +14,8 @@ var WriteModule = (function () {
     var $btnPostQuestion = $("#btn-post-question"); // 등록/수정 버튼
 
 
-    var searchCategoryListTemplate = handlebarsHelper("#search-category-template");
-    var categoryAllListTemplate = handlebarsHelper("#category-all-list-template");
+    var searchCategoryListTemplate = HandlebarsHelper("#search-category-template");
+    var categoryAllListTemplate = HandlebarsHelper("#category-all-list-template");
 
     var tagTemplateScript = $("#tag-template").html();
     var tagTemplate = Handlebars.compile(tagTemplateScript);

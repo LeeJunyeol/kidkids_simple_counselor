@@ -149,8 +149,6 @@ require_once "footer.php";
     <script src="<?php echo _NODE ?>/jquery/dist/jquery.js"></script>
     <script src="<?php echo _NODE ?>/jquery.redirect/jquery.redirect.js"></script>
     <script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
-    <script src="<?php echo _JS ?>/util.js"></script>
     <script src="<?php echo _DISTJS ?>/my.js"></script>
 
 </body>

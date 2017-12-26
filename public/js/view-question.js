@@ -1,4 +1,5 @@
 import { AsideModule, CommonModule } from './common';
+import { HandlebarsHelper, Utils } from "./util";
 
 var ViewModule = (() => {
     var BASE_URL = location.origin + "/ksc";
@@ -6,11 +7,11 @@ var ViewModule = (() => {
     var QUESTION_URL = API_BASE_URL + "/Question/";
     var MY_QUESTION_URL = API_BASE_URL + "/my/Question/";
 
-    var questionTemplate = handlebarsHelper("#question-template");
-    var answerTemplate = handlebarsHelper("#answer-template");
-    var opinionTemplate = handlebarsHelper("#opinion-template");
-    var opinionAnswerTemplate = handlebarsHelper("#opinion-answer-template");
-    var opinionItemTemplate = handlebarsHelper("#opinion-item-template");
+    var questionTemplate = HandlebarsHelper("#question-template");
+    var answerTemplate = HandlebarsHelper("#answer-template");
+    var opinionTemplate = HandlebarsHelper("#opinion-template");
+    var opinionAnswerTemplate = HandlebarsHelper("#opinion-answer-template");
+    var opinionItemTemplate = HandlebarsHelper("#opinion-item-template");
 
     var questionId = parseInt(location.href.split("/").pop());
     var userId = $("#welcome").data("id") || "";

@@ -143,10 +143,7 @@ require_once "footer.php";
 </div>
 	<script src="<?php echo _NODE ?>/jquery/dist/jquery.js"></script>
 	<script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
-	<script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
-	<script src="<?php echo _JS ?>/util.js"></script>
-	<script src="<?php echo _JS ?>/common.js"></script>
-	<script src="<?php echo _JS ?>/write-question.js"></script>
+	<script src="<?php echo _DISTJS ?>/write.js"></script>
 	<script>
 		$(document).ready(function () {
 			$('div.write').on('keyup', 'textarea', function (e) {

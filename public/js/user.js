@@ -1,4 +1,4 @@
-import { AsideModule, CommonModule } from './common';
+import { CommonModule } from './common';
 import { HandlebarsHelper, Utils } from "./util";
 
 var MyModule = (function(){

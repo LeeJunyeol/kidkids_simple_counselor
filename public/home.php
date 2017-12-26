@@ -92,8 +92,7 @@ require_once "footer.php";
 	<script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
 	<script src="<?php echo _JS ?>/util.js"></script>
-	<script src="<?php echo _JS ?>/common.js"></script>
-	<script src="<?php echo _JS ?>/index.js"></script>
+	<script src="<?php echo _DISTJS ?>/home.js"></script>
 
 </body>
 

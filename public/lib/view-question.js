@@ -1,6 +1,6 @@
-import { AsideModule, CommonModule } from './common';
+"use strict";
 
-var ViewModule = (() => {
+var ViewModule = function () {
     var BASE_URL = location.origin + "/ksc";
     var API_BASE_URL = "/ksc/api";
     var QUESTION_URL = API_BASE_URL + "/Question/";
@@ -53,7 +53,7 @@ var ViewModule = (() => {
             $(this).toggleClass("btn-danger");
 
             $("#write-box").toggle("blind");
-        })
+        });
 
         // 답글등록 이벤트
         $("#btn-post-reply").on("click", function (e) {
@@ -66,8 +66,8 @@ var ViewModule = (() => {
                 contentType: "application/x-www-form-urlencoded",
                 data: {
                     answer: {
-                        title,
-                        content,
+                        title: title,
+                        content: content,
                         question_id: questionId,
                         user_id: userId
                     }
@@ -87,13 +87,12 @@ var ViewModule = (() => {
                             $spanSpecial.addClass("special");
                             $spanSpecial.closest("div.page-header").find(".img-div").removeClass("hide");
                         }
-                    })
+                    });
                     alert("답변이 등록되었습니다!");
                 } else {
                     alert("등록이 실패하였습니다.");
                 }
-            }, function (res) {
-            });
+            }, function (res) {});
         });
     }
 
@@ -104,7 +103,7 @@ var ViewModule = (() => {
         bindViewOpinionsClickEvents();
         bindReplyEvents();
 
-        $("div.reply-box").on("click", ".select-btn", (e) => {
+        $("div.reply-box").on("click", ".select-btn", function (e) {
             if (!selected) {
                 if (confirm("채택 하시겠습니까?(한 번 채택하시면 수정할 수 없습니다)")) {
                     $(e.currentTarget).addClass("selected");
@@ -117,7 +116,7 @@ var ViewModule = (() => {
                         contentType: "application/json",
                         data: JSON.stringify({
                             selection: true,
-                            questionId
+                            questionId: questionId
                         })
                     }).then(function (res) {
                         alert("채택이 완료되었습니다.");
@@ -161,7 +160,8 @@ var ViewModule = (() => {
         $.ajax(API_BASE_URL + "/Question/" + questionId, {
             type: "GET",
             contentType: "application/json"
-        }).then(function (res) { // 템플릿을 그린다.(각종 효과 추가)
+        }).then(function (res) {
+            // 템플릿을 그린다.(각종 효과 추가)
             var result = JSON.parse(res);
             var question = result['question'];
             var answers = result['answers'];
@@ -181,7 +181,7 @@ var ViewModule = (() => {
             });
 
             question.tags = question.tags.split("/");
-            answers.forEach(element => {
+            answers.forEach(function (element) {
                 element.height = element.content.split(re).length * 21;
             });
 
@@ -212,7 +212,7 @@ var ViewModule = (() => {
                     $spanSpecial.addClass("special");
                     $spanSpecial.closest("div.page-header").find("div.img-div").removeClass("hide");
                 }
-            })
+            });
 
             // 수정/삭제 버튼 표시
             if ($("div.question.container").find(".header-group").data("id") === userId) {
@@ -248,8 +248,8 @@ var ViewModule = (() => {
                 var id = $form.closest(".container").data("id");
                 var content = $form.find("input[name='content']").val();
                 var data = {
-                    content
-                }
+                    content: content
+                };
                 if ($form.hasClass("question")) {
                     data.questionId = id;
                 } else {
@@ -270,7 +270,7 @@ var ViewModule = (() => {
                         alert("댓글 등록에 실패하였습니다.");
                     }
                 }.bind($form.closest(".opinion-list").find("ul.opinion-list")));
-            })
+            });
         });;
     }
 
@@ -281,9 +281,9 @@ var ViewModule = (() => {
             type: "PUT",
             contentType: "application/json",
             data: JSON.stringify({
-                score,
-                userId,
-                answerId
+                score: score,
+                userId: userId,
+                answerId: answerId
             })
         }).then(function (res) {
             var result = JSON.parse(res);
@@ -297,16 +297,14 @@ var ViewModule = (() => {
                 }
             }
             window.alert(result["message"]);
-        }.bind(this))
+        }.bind(this));
     }
 
     return {
-        init
-    }
-})();
+        init: init
+    };
+}();
 
 $(document).ready(function () {
-    AsideModule.init();
-    CommonModule.init();
     ViewModule.init();
 });

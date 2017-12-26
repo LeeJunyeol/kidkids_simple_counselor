@@ -1,6 +1,11 @@
-import { AsideModule, CommonModule } from './common';
+"use strict";
 
-var HomeModule = (function() {
+var _common = require("./common");
+
+$(document).ready(function () {
+    _common.AsideModule.init();
+    _common.CommonModule.init();
+
     var BASE_URL = location.origin + "/ksc";
     var API_BASE_URL = location.origin + "/ksc/api";
     var QUESTION_URL = API_BASE_URL + "/Question/";
@@ -20,6 +25,8 @@ var HomeModule = (function() {
     var categoryId = $("#rank-aside").data("category-id");
     var sortBy = "default";
     var isAsc = false;
+
+    init();
 
     function init() {
         getQuestions(1, sortBy, categoryId);
@@ -43,8 +50,8 @@ var HomeModule = (function() {
                 $.redirect("question/" + questionId, {
                     "question_id": questionId
                 });
-            })
-        })
+            });
+        });
 
         // 최신순 조회순
         $("#btn-order-box").on("click", ".btn-order", function (e) {
@@ -58,10 +65,10 @@ var HomeModule = (function() {
             $(this).hasClass("isasc") ? isAsc = true : isAsc = false;
 
             getQuestions(currentPageNum, sortBy, categoryId);
-        })
+        });
     }
 
-    function prevPage(e){
+    function prevPage(e) {
         if (currentPageNum > 1) {
             currentPageNum--;
             getQuestions(currentPageNum, sortBy, categoryId);
@@ -70,7 +77,7 @@ var HomeModule = (function() {
         }
     }
 
-    function nextPage(e){
+    function nextPage(e) {
         if (currentPageNum < lastPageNum) {
             currentPageNum++;
             getQuestions(currentPageNum, sortBy, categoryId);
@@ -79,7 +86,7 @@ var HomeModule = (function() {
         }
     }
 
-    function moveToPageNum(e){
+    function moveToPageNum(e) {
         currentPageNum = parseInt($(e.currentTarget).data("num"));
         getQuestions(currentPageNum, sortBy, categoryId);
     }
@@ -101,7 +108,7 @@ var HomeModule = (function() {
         }).then(function (res) {
             var result = JSON.parse(res);
             var questions = result['questions'];
-            
+
             for (var i = 0; i < questions.length; i++) {
                 questions[i].modify_date = Utils.getFormatDate(questions[i].modify_date);
                 questions[i].tags = questions[i].tags.split("/");
@@ -114,16 +121,7 @@ var HomeModule = (function() {
                 arr.push(lastPageNum + 1);
             }
             $("ul.pagination").html(paginationTemplate(arr));
-        })
+        });
     }
-    return {
-        init
-    }
-})();
-
-
-$(document).ready(function () {
-    AsideModule.init();
-    CommonModule.init();
-    HomeModule.init();
-});
+}); // import jQuery from "../node_modules/jquery/dist/jquery";
+// window.$ = window.jQuery = jQuery;

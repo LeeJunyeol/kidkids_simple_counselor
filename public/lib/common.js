@@ -1,7 +1,12 @@
-var AsideModule = (function () {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var AsideModule = function () {
     var BASE_URL = location.origin + "/ksc";
 
-    var init = function () {
+    var init = function init() {
         var navCategoryTemplate = handlebarsHelper("#nav-category-template");
         var categoryId = $("#rank-aside").data("category-id");
 
@@ -9,9 +14,9 @@ var AsideModule = (function () {
 
         renderCategory(navCategoryTemplate, categoryId);
         renderRankBox();
-    }
+    };
 
-    var renderCategory = function (navCategoryTemplate, categoryId) {
+    var renderCategory = function renderCategory(navCategoryTemplate, categoryId) {
         $.ajax(BASE_URL + "/api/Category", {
             type: 'GET',
             data: {
@@ -22,15 +27,15 @@ var AsideModule = (function () {
             // categories = result['categories'];
             var $categoryList = $("#category-list");
             $categoryList.append(navCategoryTemplate(result));
-        })
-    }
+        });
+    };
 
-    var goToHomeByCategory = function (e) {
+    var goToHomeByCategory = function goToHomeByCategory(e) {
         $listItem = $(e.currentTarget).closest("li");
         location.href = BASE_URL + "/home?categoryId=" + $listItem.data("id") + "&categoryName=" + $(e.currentTarget).text();
-    }
+    };
 
-    var renderRankBox = function () {
+    var renderRankBox = function renderRankBox() {
         var rankBodyTemplate = handlebarsHelper("#rank-body-template");
 
         $.ajax(BASE_URL + "/api/Rank", {
@@ -43,19 +48,17 @@ var AsideModule = (function () {
             var rankers = result['ranker'];
             rankers.map(function (v, i) {
                 v['rank'] = ++i;
-            })
+            });
             $("#rank-body").html(rankBodyTemplate(rankers));
-        })
-    }
+        });
+    };
 
     return {
         init: init
-    }
+    };
+}();
 
-})();
-
-
-var CommonModule = (function () {
+var CommonModule = function () {
     var BASE_URL = location.origin + "/ksc";
 
     function init() {
@@ -97,7 +100,15 @@ var CommonModule = (function () {
 
     return {
         init: init
-    }
-})();
+    };
+}();
 
-export { AsideModule, CommonModule };
+exports.AsideModule = AsideModule;
+exports.CommonModule = CommonModule;
+
+// $(document).ready(function () {
+//     CommonModule.init();
+
+//     // aside 템플릿이 있을 때, asdie 모듈을 초기화한다.
+//     if ($("#nav-category-template").length > 0) AsideModule.init();
+// });

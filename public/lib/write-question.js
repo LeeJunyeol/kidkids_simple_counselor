@@ -1,6 +1,6 @@
-import { AsideModule, CommonModule } from './common';
+"use strict";
 
-var WriteModule = (function () {
+var WriteModule = function () {
     var BASE_URL = location.origin + "/ksc";
     var API_BASE_URL = BASE_URL + "/api";
 
@@ -30,9 +30,9 @@ var WriteModule = (function () {
                 $("ul.tags").append(tagTemplate($(this).val()));
                 $(this).val("");
             }
-        })
+        });
 
-        $("#btn-cancel-question").on("click", function(e){
+        $("#btn-cancel-question").on("click", function (e) {
             history.back();
         });
 
@@ -48,7 +48,7 @@ var WriteModule = (function () {
                 $titleArea.val(myQuestion['title']);
                 $contentArea.val(myQuestion['content']);
                 var tags = myQuestion['tags'].split("/");
-                tags.forEach(element => {
+                tags.forEach(function (element) {
                     $ulTags.append(tagTemplate(element));
                 });
                 $btnPostQuestion.text("수정");
@@ -59,7 +59,7 @@ var WriteModule = (function () {
             }.call(this, splitedUrl[1]));
         }
 
-        $("#search-category-form").on("click", "#click-category", function(e){
+        $("#search-category-form").on("click", "#click-category", function (e) {
             var searchStr = $(e.delegateTarget).find("input").val();
             $("#modalForm").modal("show");
             $.ajax(BASE_URL + "/api/Category?search-category-string=" + searchStr, {
@@ -89,13 +89,12 @@ var WriteModule = (function () {
                         category_id_set: Array.from(idSet),
                         category_name: categoriesAll[i].category_name,
                         category_string: Array.from(nameSet).join(" > ")
-                    }
+                    };
                     resultArr2.push(dataObj);
                 }
                 $("#ul-category-all-list").html(categoryAllListTemplate(resultArr2));
             });
-
-        })
+        });
 
         // 카테고리 검색 팝업 띄우기
         $("#search-category-form").on("click", "#search-category", function (e) {
@@ -133,7 +132,7 @@ var WriteModule = (function () {
                         category_id_set: Array.from(idSet),
                         category_name: categories[i].category_name,
                         category_string: Array.from(nameSet).join(" > ")
-                    }
+                    };
                     resultArr.push(dataObj);
                 }
                 var resultArr2 = [];
@@ -158,7 +157,7 @@ var WriteModule = (function () {
                         category_id_set: Array.from(idSet),
                         category_name: categoriesAll[i].category_name,
                         category_string: Array.from(nameSet).join(" > ")
-                    }
+                    };
                     resultArr2.push(dataObj);
                 }
                 $("#ul-category-all-list").html(categoryAllListTemplate(resultArr2));
@@ -192,12 +191,12 @@ var WriteModule = (function () {
                 contentType: "application/x-www-form-urlencoded",
                 data: {
                     mydata: {
-                        category,
-                        title,
-                        content,
-                        tags,
-                        category_ids,
-                        user_id: userId,
+                        category: category,
+                        title: title,
+                        content: content,
+                        tags: tags,
+                        category_ids: category_ids,
+                        user_id: userId
                     }
                 }
             }).then(function (res) {
@@ -206,8 +205,8 @@ var WriteModule = (function () {
                 if (result["success"]) {
                     location.href = "/";
                 }
-            })
-        })
+            });
+        });
 
         // 질문 수정하기
         $("div.submit").on("click", ".update", function (e) {
@@ -228,10 +227,10 @@ var WriteModule = (function () {
                 type: "PUT",
                 contentType: "application/json",
                 data: JSON.stringify({
-                    category,
-                    title,
-                    content,
-                    tags,
+                    category: category,
+                    title: title,
+                    content: content,
+                    tags: tags,
                     user_id: userId
                 })
             }).then(function (res) {
@@ -240,9 +239,8 @@ var WriteModule = (function () {
                 if (result["success"]) {
                     location.href = result["redirectURL"];
                 }
-            })
-        })
-
+            });
+        });
 
         function validate(title, content, $categorySpan) {
             var message;
@@ -256,19 +254,18 @@ var WriteModule = (function () {
                 return {
                     isValidate: false,
                     message: "질문 내용을 입력하여 주시기 바랍니다."
-                }
+                };
             }
             if ($categorySpan.hasClass("unclicked")) {
                 return {
                     isValidate: false,
                     message: "카테고리를 지정하여 주시기 바랍니다."
-                }
+                };
             }
             return {
                 isValidate: true
-            }
+            };
         }
-
 
         function post(e) {
             alert("post");
@@ -301,13 +298,12 @@ var WriteModule = (function () {
                 if (result["success"]) {
                     location.href = "/";
                 }
-            })
+            });
         }
 
-        $(".modal-footer>button.submitBtn").on("click", function(e){
+        $(".modal-footer>button.submitBtn").on("click", function (e) {
             selectCategory();
-        })
-
+        });
     }
 
     function selectCategory() {
@@ -315,21 +311,19 @@ var WriteModule = (function () {
         var categoryId = $checkedCategory.val();
         var categoryName = $checkedCategory.data("name");
         var $selectedCategory = $(".selected-category");
-        if($selectedCategory.hasClass("hide")){
+        if ($selectedCategory.hasClass("hide")) {
             $selectedCategory.removeClass("hide");
         }
         $selectedCategory.find("h3").text(categoryName);
-        $selectedCategory.find("h3").data("category-id", categoryId); 
+        $selectedCategory.find("h3").data("category-id", categoryId);
         $selectedCategory.find("h3").data("cid-set", $checkedCategory.data("cid-set"));
         modalHide();
     }
     return {
-        init
-    }
-})();
+        init: init
+    };
+}();
 
 $(document).ready(function () {
-    CommonModule.init();
-    AsideModule.init();
     WriteModule.init();
 });

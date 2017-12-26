@@ -1,3 +1,10 @@
+import { AsideModule, CommonModule } from './common';
+
+$(document).ready(function(){
+    CommonModule.init();
+    MyModule.init();
+});
+
 var MyModule = (function(){
     var BASE_URL = location.origin + "/ksc";
     var userId = $("#welcome").data("id");
@@ -55,6 +62,3 @@ var MyModule = (function(){
     }
 })();
 
-$(document).ready(function(){
-    MyModule.init();
-});

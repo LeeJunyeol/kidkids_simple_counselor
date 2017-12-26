@@ -4,7 +4,9 @@
   "description": "this is private web project",
   "main": "index.php",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build": "babel js -d lib",
+    "webpack": "webpack --config webpack.config.js"
   },
   "author": "jylee",
   "license": "ISC",
@@ -15,6 +17,11 @@
     "jquery.redirect": "^1.1.1"
   },
   "devDependencies": {
-    "mocha": "^4.0.1"
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "mocha": "^4.0.1",
+    "webpack": "^3.10.0"
   }
 }

@@ -1,5 +1,5 @@
 var AdminModule = (function () {
-    var BASE_URL = location.origin + "/ksc";
+    var BASE_URL = location.origin;
     var QUESTION_API_URL = BASE_URL + "/api/Question"
 
     // 등록/수정/삭제 판넬

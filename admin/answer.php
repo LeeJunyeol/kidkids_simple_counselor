@@ -91,7 +91,7 @@ footer>.container {
 <script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
 <script src="<?php echo _NODE ?>/handlebars/dist/handlebars.js"></script>
 <script src="<?php echo _JS ?>/util.js"></script>
-<script src="/ksc/admin/answer.view.js"></script>
+<script src="/admin/answer.view.js"></script>
 
 </body>
 

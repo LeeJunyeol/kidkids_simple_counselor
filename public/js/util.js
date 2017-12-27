@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-function handlebarsHelper(templateId){
-    var $templateId = $(templateId);
-    if($templateId.length > 0){
-        return Handlebars.compile($templateId.html());
-    } else {
-        return {"error" : "해당하는 템플릿이 없습니다."};
-    }
-}
-=======
 import Handlebars from "handlebars";
 
 var HandlebarsHelper = function(templateId) {
@@ -25,7 +15,6 @@ var Utils = (function() {
 
   function getFormatDate(inputDate) {
     var date = new Date(inputDate);
->>>>>>> eb4f1b8704de3a19a40b53b5e5c136d0847e5201
 
     return (
       date.getFullYear() +

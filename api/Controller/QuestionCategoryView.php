@@ -18,9 +18,10 @@ $categoryQuestionModel = new CategoryQuestionModel($conn);
 $opinionModel = new OpinionModel($conn);
 $answerModel = new AnswerModel($conn);
 $voteModel = new VoteModel($conn);
+$questionCategoryView = new QuestionCategoryViewModel($conn);
 
 // 내꺼 불러오고 수정할 때
-// /ksc/api/my/Question
+// /api/my/Question
 if(isset($_GET['my'])){
     switch($_SERVER['REQUEST_METHOD']){
         case 'GET':
@@ -69,7 +70,7 @@ if(isset($_GET['my'])){
         break;
     }
 } else {
-    // /ksc/api/Question
+    // /api/Question
     switch($_SERVER['REQUEST_METHOD']){
         case 'GET':
         // 카테고리별 출력
@@ -115,7 +116,7 @@ if(isset($_GET['my'])){
                 case "cnt":
                 $sortBy = "view";
             }
-            $results = $questionModel->getForPage($offset, $limit, $sortBy, $isASC);
+            $results = $questionModel->getPaginat($offset, $limit, $sortBy, $isASC);
             $rowCount = $questionModel->count();
 
             echo json_encode([

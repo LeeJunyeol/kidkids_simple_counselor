@@ -38,7 +38,7 @@ label {
 </div>
 <script type="text/handlebars-template" id="answer-view-template">
     <h2 style="margin-bottom: 30px;">답변 목록</h2>
-    <button onclick="window.location.href='/ksc/admin'">뒤로가기</button>
+    <button onclick="window.location.href='/admin'">뒤로가기</button>
     <form class="form">
         <div class="form-group">
             <label for="Answer ID">답변 번호</label>

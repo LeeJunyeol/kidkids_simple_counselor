@@ -29,7 +29,7 @@
         </div>
         <div class="title">
             <h1>키드키즈 고민상담소!</h1>
-            <a href="/ksc/home" id="logo">
+            <a href="/home" id="logo">
                 <img id="logoimg" src="<?php echo _IMG ?>/char_hooni.png" />
             </a>
         </div>
@@ -59,7 +59,7 @@
 </header>
 <?php 
 $url = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
-$pattern = '/\/ksc\/user+|\/ksc\/my+/';
+$pattern = '/\\/user+|\\/my+/';
 ?>
 
 <div class="row <?php if(preg_match($pattern, $url)){ echo "hide"; }?>">

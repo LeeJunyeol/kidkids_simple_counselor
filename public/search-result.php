@@ -54,7 +54,7 @@ require_once "header.php";
 			<ul>
 			{{#each this}}
 			<li class="list-item">
-			<h3><a href="/ksc/question/{{question_id}}">{{title}}</a></h3>
+			<h3><a href="/question/{{question_id}}">{{title}}</a></h3>
 			{{content}}
 			</li>
 			{{/each}}
@@ -75,7 +75,7 @@ require_once "header.php";
 			<ul>
 			{{#each this}}
 			<li class="list-item">
-			<h3><a href="/ksc/question/{{question_id}}">{{question_id}}번 글 답변입니다.</a></h3>
+			<h3><a href="/question/{{question_id}}">{{question_id}}번 글 답변입니다.</a></h3>
 			{{content}}
 			</li>
 			{{/each}}

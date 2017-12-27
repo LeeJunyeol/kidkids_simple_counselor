@@ -1,6 +1,6 @@
 var ViewModule = (() => {
     var questionViewTemplate = handlebarsHelper("#question-view-template");
-    var BASE_URL = location.origin + "/ksc";
+    var BASE_URL = location.origin + "";
 
     var init = () => {
         load();

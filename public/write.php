@@ -2,7 +2,7 @@
 require_once "config.php";
 if(!isset($_SESSION["logged_in"])){
 	echo "<script>alert(\"로그인이 필요한 서비스입니다.\");
-	location.href=\"/ksc/login\"</script>";
+	location.href=\"/login\"</script>";
 }
 ?>
 <!DOCTYPE html>

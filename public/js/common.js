@@ -1,7 +1,7 @@
 import { HandlebarsHelper, Utils } from "./util";
 
 var AsideModule = (() => {
-  var BASE_URL = location.origin + "/ksc";
+  var BASE_URL = location.origin;
 
   var $categoryList = $("#category-list");
 

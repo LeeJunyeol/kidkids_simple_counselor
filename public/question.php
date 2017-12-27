@@ -88,7 +88,7 @@ require_once "header.php";
                                     <span class="label label-success user-type">{{label}}</span>
                                     <div style="display: flex; align-items: center;">
                                         <div class="img-div hide" style="width: 100px; height: 120px; margin-top: 20px; margin-right: 20px;">
-                                            <img style="width: 100%; height: 100%" src="/ksc/user_images/{{user_pic}}"/>
+                                            <img style="width: 100%; height: 100%" src="/user_images/{{user_pic}}"/>
                                         </div>
                                         <h3 class="reply title">
                                             <span><span class="answer-author">{{author}}</span>님의 답변입니다.</span>
@@ -107,10 +107,10 @@ require_once "header.php";
                                 <div class="vote-group" {{#if myvote}}data-value={{myvote}}{{/if}}>
                                     <div class="sub-vote-group">
                                         <a class="vote up btn btn-default" href="#" role="button">추천
-                                            <img src="/ksc/public/images/up.png" /><span>{{#if plus_vote_cnt}}{{plus_vote_cnt}}{{else}}0{{/if}}</span>
+                                            <img src="/public/images/up.png" /><span>{{#if plus_vote_cnt}}{{plus_vote_cnt}}{{else}}0{{/if}}</span>
                                         </a>
                                         <a class="vote down btn btn-default" href="#" role="button">
-                                            <img src="/ksc/public/images/down.png" />비추천<span>{{#if minus_vote_cnt}}{{minus_vote_cnt}}{{else}}0{{/if}}</span>
+                                            <img src="/public/images/down.png" />비추천<span>{{#if minus_vote_cnt}}{{minus_vote_cnt}}{{else}}0{{/if}}</span>
                                         </a>
                                     </div>
                                 </div>

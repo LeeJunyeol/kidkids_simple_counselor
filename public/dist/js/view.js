@@ -123,7 +123,7 @@ exports.CommonModule = exports.AsideModule = undefined;
 var _util = __webpack_require__(0);
 
 var AsideModule = function () {
-  var BASE_URL = location.origin + "/ksc";
+  var BASE_URL = location.origin;
 
   var $categoryList = $("#category-list");
 
@@ -278,8 +278,8 @@ var _common = __webpack_require__(1);
 var _util = __webpack_require__(0);
 
 var ViewModule = function () {
-    var BASE_URL = location.origin + "/ksc";
-    var API_BASE_URL = "/ksc/api";
+    var BASE_URL = location.origin + "";
+    var API_BASE_URL = "/api";
     var QUESTION_URL = API_BASE_URL + "/Question/";
     var MY_QUESTION_URL = API_BASE_URL + "/my/Question/";
 
@@ -534,7 +534,7 @@ var ViewModule = function () {
                     data.answerId = id;
                 }
 
-                $.ajax("/ksc/api/Opinion", {
+                $.ajax("/api/Opinion", {
                     type: 'POST',
                     data: data
                 }).then(function (res) {

@@ -33,7 +33,7 @@ require_once "header.php";
     <h1>회원가입</h1>
 
 
-    <form action="/ksc/api/User" enctype="multipart/form-data" method="post" autocomplete="off" accept-charset="utf-8" onsubmit="return checkForm(this);">
+    <form action="/api/User" enctype="multipart/form-data" method="post" autocomplete="off" accept-charset="utf-8" onsubmit="return checkForm(this);">
     
     <style>
     label {

@@ -2,8 +2,8 @@ import { AsideModule, CommonModule } from './common';
 import { HandlebarsHelper, Utils } from "./util";
 
 var ViewModule = (() => {
-    var BASE_URL = location.origin + "/ksc";
-    var API_BASE_URL = "/ksc/api";
+    var BASE_URL = location.origin + "";
+    var API_BASE_URL = "/api";
     var QUESTION_URL = API_BASE_URL + "/Question/";
     var MY_QUESTION_URL = API_BASE_URL + "/my/Question/";
 
@@ -93,8 +93,7 @@ var ViewModule = (() => {
                 } else {
                     alert("등록이 실패하였습니다.");
                 }
-            }, function (res) {
-            });
+            }, function (res) {});
         });
     }
 
@@ -258,7 +257,7 @@ var ViewModule = (() => {
                     data.answerId = id;
                 }
 
-                $.ajax("/ksc/api/Opinion", {
+                $.ajax("/api/Opinion", {
                     type: 'POST',
                     data: data
                 }).then(function (res) {

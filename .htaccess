@@ -4,25 +4,4 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-ErrorDocument 404     /public/404.php
-
-RewriteRule ^home$ public/home.php
-RewriteRule ^write\/?$ public/write.php
-RewriteRule ^update/([0-9]+)$ public/write.php?question_id=$1
-RewriteRule ^question/([0-9]+)$ public/question.php?question_id=$1
-RewriteRule ^my$ public/my.php
-RewriteRule ^user/([a-zA-Z]+)$ public/user.php?user_id=$1
-RewriteRule ^signup$ public/signup.php
-RewriteRule ^login$ public/login.php
-RewriteRule ^search$ public/search-result.php
-
-RewriteRule ^api/([a-zA-Z]+)\/?$ api/Controller/$1.php
-RewriteRule ^api/([a-zA-Z]+)/([0-9]+)$ api/Controller/$1.php?id=$2
-RewriteRule ^api/User/([a-zA-Z]+)\/?$ api/Controller/User.php?id=$1
-RewriteRule ^api/([a-zA-Z]+)/([0-9]+)/([a-zA-Z]+)\/?$ api/Controller/$1.php?id=$2&action=$3
-RewriteRule ^api/my/([a-zA-Z]+)/([0-9]+)$ api/Controller/$1.php?id=$2&my=true
-
-RewriteRule ^admin$ admin/index.php
-RewriteRule ^admin/question/([0-9]+)$ admin/question.php
-RewriteRule ^admin/answer/([0-9]+)$ admin/answer.php
-
+RewriteRule ^(.+)$ index.php?url=$1 [L,QSA]

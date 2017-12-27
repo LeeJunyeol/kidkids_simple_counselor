@@ -1,5 +1,5 @@
 <?php
-require_once "../Config/Database.php";
+use KCS\Config\Database;
 require_once '../Models/AnswerModel.php';
 require_once '../Models/VoteModel.php';
 require_once '../Models/QuestionModel.php';

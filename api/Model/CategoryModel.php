@@ -1,13 +1,16 @@
 <?php 
-require_once "../Domain/Category.php";
+namespace KCS\Model;
+
+use KCS\Config\Database;
+use \PDO;
 
 class CategoryModel {
     public $conn;
 
-    public function __construct($conn){
-        $this->conn = $conn;
+    public function __construct(){
+        $this->conn = Database::getConnection();
     }
-    
+
     function add($categoryName, $depth, $parentIdx){
         try {
             $stmt = $this->conn->prepare("INSERT INTO categories (`category_name`, `depth`, `parent_idx`) VALUES (?, ?, ?)");
@@ -19,7 +22,7 @@ class CategoryModel {
             } else {
                 return $stmt->errorInfo();
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             return $e->getMessage();
         }
     }
@@ -43,7 +46,7 @@ class CategoryModel {
                 print_r($stmt->errorInfo());
                 exit;
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             return $e->getMessage();
         }
     }
@@ -66,7 +69,7 @@ class CategoryModel {
                 print_r($stmt->errorInfo());
                 exit;
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             return $e->getMessage();
         }
     }
@@ -84,7 +87,7 @@ class CategoryModel {
             } else {
                 return $stmt->errorInfo();
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             return $e->getMessage();
         }
     }
@@ -101,7 +104,7 @@ class CategoryModel {
             } else {
                 return $stmt->errorInfo();
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             return $e->getMessage();
         }
     }
@@ -116,7 +119,7 @@ class CategoryModel {
             } else {
                 return $stmt->errorInfo();
             };
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             return $e->getMessage();
         }
     }
@@ -134,7 +137,7 @@ class CategoryModel {
             } else {
                 return $stmt->errorInfo();
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             print $e->getMessage();
             exit;
         }

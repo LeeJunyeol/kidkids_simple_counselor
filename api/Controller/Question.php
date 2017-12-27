@@ -19,6 +19,13 @@ $opinionModel = new OpinionModel($conn);
 $answerModel = new AnswerModel($conn);
 $voteModel = new VoteModel($conn);
 
+
+/*
+
+
+
+*/
+
 // 내꺼 불러오고 수정할 때
 // /api/my/Question
 if(isset($_GET['my'])){

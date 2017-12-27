@@ -24,11 +24,6 @@ var HomeModule = (function() {
         sortBy = "default",
         isAsc = false;
 
-<<<<<<< HEAD
-    var $questionListGroup =  $(".question.list-group");
-
-=======
->>>>>>> 77420720a99ec5964857328b9f23c8f8606679de
     function init() {
         getQuestions(1, sortBy, categoryId);
 

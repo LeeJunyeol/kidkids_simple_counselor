@@ -97,13 +97,4 @@ var CommonModule = (function () {
     }
 })();
 
-<<<<<<< HEAD
-$(document).ready(function () {
-    CommonModule.init();
-
-    // aside 템플릿이 있을 때, asdie 모듈을 초기화한다.
-    if ($("#nav-category-template").length > 0) AsideModule.init();
-});
-=======
 export { AsideModule, CommonModule };
->>>>>>> 77420720a99ec5964857328b9f23c8f8606679de

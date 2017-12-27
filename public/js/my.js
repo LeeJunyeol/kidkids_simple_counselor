@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-var MyModule = (function () {
-    var BASE_URL = location.origin + "";
-=======
 import { AsideModule, CommonModule } from './common';
 
 $(document).ready(function(){
@@ -11,7 +7,6 @@ $(document).ready(function(){
 
 var MyModule = (function(){
     var BASE_URL = location.origin + "/ksc";
->>>>>>> 77420720a99ec5964857328b9f23c8f8606679de
     var userId = $("#welcome").data("id");
 
     // 템플릿들

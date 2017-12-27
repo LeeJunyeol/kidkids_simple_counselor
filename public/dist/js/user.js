@@ -123,7 +123,7 @@ exports.CommonModule = exports.AsideModule = undefined;
 var _util = __webpack_require__(0);
 
 var AsideModule = function () {
-  var BASE_URL = location.origin + "/ksc";
+  var BASE_URL = location.origin;
 
   var $categoryList = $("#category-list");
 
@@ -277,7 +277,7 @@ var _common = __webpack_require__(1);
 var _util = __webpack_require__(0);
 
 var MyModule = function () {
-    var BASE_URL = location.origin + "/ksc";
+    var BASE_URL = location.origin + "";
 
     // 템플릿들
     var expertTemplate = (0, _util.HandlebarsHelper)("#expert-template");
@@ -317,12 +317,12 @@ var MyModule = function () {
             recentQuestions.forEach(function (element) {
                 element['content'] = element['content'].substring(0, 100) + "...";
                 element['create_date'] = _util.Utils.getFormatDate(element['create_date']);
-                element['link'] = "/ksc/question/" + element['question_id'];
+                element['link'] = "/question/" + element['question_id'];
             });
             recentAnswers.forEach(function (element) {
                 element['content'] = element['content'].substring(0, 100) + "...";
                 element['create_date'] = _util.Utils.getFormatDate(element['create_date']);
-                element['link'] = "/ksc/question/" + element['question_id'];
+                element['link'] = "/question/" + element['question_id'];
             });
 
             var scorePer = user['score'] / 500 * 100;

@@ -123,7 +123,7 @@ exports.CommonModule = exports.AsideModule = undefined;
 var _util = __webpack_require__(0);
 
 var AsideModule = function () {
-  var BASE_URL = location.origin + "/ksc";
+  var BASE_URL = location.origin;
 
   var $categoryList = $("#category-list");
 

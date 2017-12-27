@@ -123,7 +123,7 @@ exports.CommonModule = exports.AsideModule = undefined;
 var _util = __webpack_require__(0);
 
 var AsideModule = function () {
-  var BASE_URL = location.origin + "/ksc";
+  var BASE_URL = location.origin;
 
   var $categoryList = $("#category-list");
 
@@ -274,27 +274,31 @@ var _common = __webpack_require__(1);
 var _util = __webpack_require__(0);
 
 var HomeModule = function () {
-  var BASE_URL = location.origin + "/ksc";
+  var BASE_URL = location.origin;
 
-  var questionTemplate = (0, _util.HandlebarsHelper)("#questions-template");
-  var paginationTemplate = (0, _util.HandlebarsHelper)("#pagination-template");
+  var questionTemplate = (0, _util.HandlebarsHelper)("#questions-template"),
+      paginationTemplate = (0, _util.HandlebarsHelper)("#pagination-template");
 
-  var currentPageNum = 1;
-  var lastPageNum = 1;
+  var currentPageNum = 1,
+      lastPageNum = 1;
 
-  var $pageNav = $("#pageNav");
-  var categoryId = $("#rank-aside").data("category-id");
-  var sortBy = "default";
-  var isAsc = false;
+  var categoryId = $("#rank-aside").data("category-id"),
+      sortBy = "default",
+      isAsc = false;
+
+  var $questionListGroup = $(".question.list-group");
 
   function init() {
     getQuestions(1, sortBy, categoryId);
 
     // 페이지 네비게이션 이벤트
-    $pageNav.on("click", "li.previous", prevPage).on("click", "li.next", nextPage).on("click", "li.pageNum", moveToPageNum);
+    var $pageNav = $("#pageNav");
+    $pageNav.on("click", "li.previous", prevPage);
+    $pageNav.on("click", "li.next", nextPage);
+    $pageNav.on("click", "li.pageNum", moveToPageNum);
 
     // 제목 클릭하면 이동 이벤트
-    $("div.board>ul.list-group").on("click", ".list-header a", function (e) {
+    $questionListGroup.on("click", ".list-header a", function (e) {
       e.preventDefault();
       var questionId = $(this).closest("li").data("id");
       $.ajax(BASE_URL + "/api/Question/" + questionId, {
@@ -313,6 +317,7 @@ var HomeModule = function () {
     // 최신순 조회순
     $("#btn-order-box").on("click", ".btn-order", function (e) {
       e.preventDefault();
+
       if ($(this).hasClass("latest")) {
         sortBy = "latest";
       } else {
@@ -371,7 +376,7 @@ var HomeModule = function () {
         questions[i].tags = questions[i].tags.split("/");
       }
 
-      $("div.board > ul.list-group").html(questionTemplate(questions));
+      $questionListGroup.html(questionTemplate(questions));
 
       var arr = [];
       for (lastPageNum = 0; lastPageNum < parseInt(result["count"]) / 5; lastPageNum++) {

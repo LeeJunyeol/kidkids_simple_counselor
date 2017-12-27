@@ -1,15 +1,11 @@
 import { AsideModule, CommonModule } from "./common";
+import { HandlebarsHelper, Utils } from "./util";
 
 var HomeModule = (function() {
-  var BASE_URL = location.origin + "/ksc";
-  var API_BASE_URL = location.origin + "/ksc/api";
-  var QUESTION_URL = API_BASE_URL + "/Question/";
-  var MY_QUESTION_URL = API_BASE_URL + "/my/Question/";
+  var BASE_URL = location.origin;
 
-  var url = "";
-
-  var questionTemplate = handlebarsHelper("#questions-template"),
-    paginationTemplate = handlebarsHelper("#pagination-template");
+  var questionTemplate = HandlebarsHelper("#questions-template"),
+    paginationTemplate = HandlebarsHelper("#pagination-template");
 
   var currentPageNum = 1,
     lastPageNum = 1;
@@ -17,6 +13,8 @@ var HomeModule = (function() {
   var categoryId = $("#rank-aside").data("category-id"),
     sortBy = "default",
     isAsc = false;
+
+  var $questionListGroup = $(".question.list-group");
 
   function init() {
     getQuestions(1, sortBy, categoryId);

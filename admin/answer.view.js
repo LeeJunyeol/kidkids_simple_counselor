@@ -1,10 +1,6 @@
 var ViewModule = (() => {
     var answerViewTemplate = handlebarsHelper("#answer-view-template");
-<<<<<<< HEAD
     var BASE_URL = location.origin;
-=======
-    var BASE_URL = location.origin + "";
->>>>>>> a2710d18fa48c2655c6e27b1234972924ab93ae5
 
     var init = () => {
         load();

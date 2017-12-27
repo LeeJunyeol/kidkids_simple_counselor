@@ -98,7 +98,7 @@ var HomeModule = (function() {
     if (categoryId !== 0) {
       dataObj["categoryId"] = categoryId;
     }
-    $.ajax(BASE_URL + "/api/Controllers/Question.php", {
+    $.ajax(BASE_URL + "/api/Question", {
       type: "GET",
       contentType: "application/json",
       data: dataObj

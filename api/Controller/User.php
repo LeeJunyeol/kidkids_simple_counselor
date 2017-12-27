@@ -31,7 +31,6 @@ switch($_SERVER['REQUEST_METHOD']){
             "recentAnswer" => $recentAnswer,
             "recentQuestion" => $recentQuestion,
             "currentRank" => $currentRank
-
         ]);
         return;
     }

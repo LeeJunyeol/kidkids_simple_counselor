@@ -1,14 +1,15 @@
-import { AsideModule, CommonModule } from './common';
+import { CommonModule } from './common';
+import { HandlebarsHelper, Utils } from "./util";
 
 var MyModule = (function(){
     var BASE_URL = location.origin + "";
 
     // 템플릿들
-    var expertTemplate = handlebarsHelper("#expert-template");
-    var userTemplate = handlebarsHelper("#user-template");
-    var recentQuestionTemplate = handlebarsHelper("#recent-question-template");
-    var recentAnswerTemplate = handlebarsHelper("#recent-answer-template");
-    var currentRankTemplate = handlebarsHelper("#current-rank-template");
+    var expertTemplate = HandlebarsHelper("#expert-template");
+    var userTemplate = HandlebarsHelper("#user-template");
+    var recentQuestionTemplate = HandlebarsHelper("#recent-question-template");
+    var recentAnswerTemplate = HandlebarsHelper("#recent-answer-template");
+    var currentRankTemplate = HandlebarsHelper("#current-rank-template");
     var init = () => {
         load();
     }

@@ -64,9 +64,3 @@ var MyModule = (function(){
     }
 })();
 
-<<<<<<< HEAD
-$(document).ready(function () {
-    MyModule.init();
-});
-=======
->>>>>>> 77420720a99ec5964857328b9f23c8f8606679de

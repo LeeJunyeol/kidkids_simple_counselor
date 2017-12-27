@@ -1,3 +1,5 @@
+import { AsideModule, CommonModule } from './common';
+
 var SearchModule = (() => {
     var BASE_URL = location.origin + "";
     var questionResultTemplate = handlebarsHelper("#question-result-template");
@@ -31,5 +33,7 @@ var SearchModule = (() => {
 })();
 
 $(document).ready(function(){
+    AsideModule.init();
+    CommonModule.init();
     SearchModule.init();
 })

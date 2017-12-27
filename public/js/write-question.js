@@ -1,3 +1,5 @@
+import { AsideModule, CommonModule } from './common';
+
 var WriteModule = (function () {
     var BASE_URL = location.origin + "";
     var API_BASE_URL = BASE_URL + "/api";
@@ -327,5 +329,7 @@ var WriteModule = (function () {
 })();
 
 $(document).ready(function () {
+    CommonModule.init();
+    AsideModule.init();
     WriteModule.init();
 });

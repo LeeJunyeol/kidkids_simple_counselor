@@ -1,3 +1,5 @@
+import { AsideModule, CommonModule } from './common';
+
 var MyModule = (function(){
     var BASE_URL = location.origin + "";
 
@@ -67,5 +69,6 @@ var MyModule = (function(){
 })();
 
 $(document).ready(function(){
+    CommonModule.init();
     MyModule.init();
 });

@@ -1,3 +1,5 @@
+import { AsideModule, CommonModule } from './common';
+
 var ViewModule = (() => {
     var BASE_URL = location.origin + "";
     var API_BASE_URL = "/api";
@@ -303,5 +305,7 @@ var ViewModule = (() => {
 })();
 
 $(document).ready(function () {
+    AsideModule.init();
+    CommonModule.init();
     ViewModule.init();
 });

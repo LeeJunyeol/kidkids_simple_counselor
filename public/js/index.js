@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 var HomeModule = (function () {
     var BASE_URL = location.origin + "";
     var API_BASE_URL = location.origin + "/api";
+=======
+import { AsideModule, CommonModule } from './common';
+
+var HomeModule = (function() {
+    var BASE_URL = location.origin + "/ksc";
+    var API_BASE_URL = location.origin + "/ksc/api";
+>>>>>>> 77420720a99ec5964857328b9f23c8f8606679de
     var QUESTION_URL = API_BASE_URL + "/Question/";
     var MY_QUESTION_URL = API_BASE_URL + "/my/Question/";
 
@@ -16,8 +24,11 @@ var HomeModule = (function () {
         sortBy = "default",
         isAsc = false;
 
+<<<<<<< HEAD
     var $questionListGroup =  $(".question.list-group");
 
+=======
+>>>>>>> 77420720a99ec5964857328b9f23c8f8606679de
     function init() {
         getQuestions(1, sortBy, categoryId);
 
@@ -115,6 +126,10 @@ var HomeModule = (function () {
             $("ul.pagination").html(paginationTemplate(arr));
         })
     }
+    return {
+        init
+    }
+})();
 
     return {
         init
@@ -124,4 +139,8 @@ var HomeModule = (function () {
 $(document).ready(function () {
     HomeModule.init();
 
+$(document).ready(function () {
+    AsideModule.init();
+    CommonModule.init();
+    HomeModule.init();
 });

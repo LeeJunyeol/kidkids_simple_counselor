@@ -21,5 +21,10 @@ var Utils = (function(){
     return {
         getFormatDate: getFormatDate
     };
+<<<<<<< HEAD
     
 })();
+=======
+})();
+
+>>>>>>> 77420720a99ec5964857328b9f23c8f8606679de

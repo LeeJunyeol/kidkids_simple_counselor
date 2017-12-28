@@ -69,15 +69,8 @@ require_once "header.php";
 				</div>
 			</div>
 		</div>
-		<?php
-			// 네이버 로그인 접근토큰 요청 예제
-			$client_id = "cbo8Ug2OQ_WcwqcbzP0O";
-			$redirectURI = urlencode("http://localhost/naver");
-			$state = "RAMDOM_STATE";
-			$apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=".$client_id."&redirect_uri=".$redirectURI."&state=".$state;
-		?>
-		<a href="<?php echo $apiURL ?>"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
-    </article>
+		<div id="naverIdLogin"><a id="naverIdLogin_loginButton" href="#"><img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.0" height="60"></a></div>
+	</article>
 <?php
 require_once "aside.php";
 require_once "footer.php";
@@ -86,6 +79,21 @@ require_once "footer.php";
 	<script src="<?php echo _NODE ?>/jquery.redirect/jquery.redirect.js"></script>
 	<script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="<?php echo _DISTJS ?>/login.js"></script>
+	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		var naverLogin = new naver.LoginWithNaverId(
+			{
+				clientId: "cbo8Ug2OQ_WcwqcbzP0O",
+				callbackUrl: "http://localhost/naver-callback",
+				isPopup: false, /* 팝업을 통한 연동처리 여부 */
+				loginButton: {color: "green", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
+			}
+		);
+		
+		/* 설정정보를 초기화하고 연동을 준비 */
+		naverLogin.init();
+		
+	</script>
 </body>
 
 </html>

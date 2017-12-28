@@ -27,3 +27,5 @@ RewriteRule ^admin$ admin/index.php
 RewriteRule ^admin/question/([0-9]+)$ admin/question.php
 RewriteRule ^admin/answer/([0-9]+)$ admin/answer.php
 
+RewriteRule ^naverlogin$ public/naverlogin.php
+RewriteRule ^naver$ public/callback.php

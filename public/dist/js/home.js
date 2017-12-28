@@ -181,7 +181,7 @@ var AsideModule = function () {
 }();
 
 var CommonModule = function () {
-  var BASE_URL = location.origin + "/ksc";
+  var BASE_URL = location.origin;
 
   var init = function init() {
     $(".btn.login").on("click", goToLogin);

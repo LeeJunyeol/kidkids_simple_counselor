@@ -98,7 +98,7 @@ var CommonModule = (() => {
   };
 
   var logout = e => {
-    location.href = BASE_URL + "/public/logout.php";
+    location.href = BASE_URL + "/logout.php";
   };
 
   var goToSignup = () => {

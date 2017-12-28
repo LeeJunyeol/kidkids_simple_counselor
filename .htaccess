@@ -14,6 +14,7 @@ RewriteRule ^my$ public/my.php
 RewriteRule ^user/([a-zA-Z]+)$ public/user.php?user_id=$1
 RewriteRule ^signup$ public/signup.php
 RewriteRule ^login$ public/login.php
+RewriteRule ^logout$ public/logout.php
 RewriteRule ^search$ public/search-result.php
 
 RewriteRule ^api/([a-zA-Z]+)\/?$ api/Controller/$1.php

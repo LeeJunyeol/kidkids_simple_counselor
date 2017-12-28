@@ -64,7 +64,7 @@ var AsideModule = (() => {
 })();
 
 var CommonModule = (() => {
-  var BASE_URL = location.origin + "/ksc";
+  var BASE_URL = location.origin;
 
   var init = () => {
     $(".btn.login").on("click", goToLogin);
@@ -98,7 +98,7 @@ var CommonModule = (() => {
   };
 
   var logout = e => {
-    location.href = BASE_URL + "/logout.php";
+    location.href = BASE_URL + "/logout";
   };
 
   var goToSignup = () => {

@@ -209,7 +209,7 @@ var CommonModule = function () {
   };
 
   var logout = function logout(e) {
-    location.href = BASE_URL + "/public/logout.php";
+    location.href = BASE_URL + "/logout";
   };
 
   var goToSignup = function goToSignup() {

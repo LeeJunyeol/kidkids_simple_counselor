@@ -37,7 +37,7 @@ class QuestionCategoryViewModel {
             $ascChar = "ASC";
         }
         try {
-            $sql = "SELECT question_category_view WHERE category_id = :categoryId ORDER BY $sortBy $ascChar LIMIT $offset, $limit";
+            $sql = "SELECT * FROM question_category_view WHERE category_id = :categoryId ORDER BY $sortBy $ascChar LIMIT $offset, $limit";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindValue(':categoryId', $categoryId);
             if(!$stmt->execute()){

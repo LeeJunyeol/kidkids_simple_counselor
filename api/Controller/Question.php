@@ -90,8 +90,8 @@ if(isset($_GET['my'])){
                 $sortBy = "view";
             }
             
-            $questions = $questionModel->getByCategoryForPage($categoryId, $offset, $limit, $sortBy, $isASC);
-            $rowCount = $questionModel->countByCategory($categoryId);
+            $questions = $questionCategoryViewModel->getPaginationByCategoryId($categoryId, $offset, $limit, $sortBy, $isASC);
+            $rowCount = $questionCategoryViewModel->countByCategoryId($categoryId);
             
             echo json_encode([
                 'count'=> $rowCount,

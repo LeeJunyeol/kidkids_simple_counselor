@@ -13,8 +13,7 @@ class QuestionCategoryViewModel {
         }
         try {
             // 가장 상위 카테고리는 모든 질문들을 포함하고 있다.
-            $sql = "SELECT question_category_view WHERE category_id = 1 OR category_id = 2
-            ORDER BY $sortBy $ascChar LIMIT $offset, $limit";
+            $sql = "SELECT * FROM question_category_view WHERE category_id = 1 OR category_id = 2 ORDER BY $sortBy $ascChar LIMIT $offset, $limit;";
             $stmt = $this->conn->prepare($sql);
             if(!$stmt->execute()){
                 print_r($stmt->errorInfo());

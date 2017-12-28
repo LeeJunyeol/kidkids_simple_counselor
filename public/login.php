@@ -70,6 +70,7 @@ require_once "header.php";
 			</div>
 		</div>
 		<div id="naverIdLogin"><a id="naverIdLogin_loginButton" href="#"><img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.0" height="60"></a></div>
+		<div id="kakaoIdLogin"><a id="custom-login-btn" href="javascript:loginWithKakao()"><img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"></a></div>
 	</article>
 <?php
 require_once "aside.php";
@@ -80,6 +81,7 @@ require_once "footer.php";
 	<script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="<?php echo _DISTJS ?>/login.js"></script>
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 	<script type="text/javascript">
 		var naverLogin = new naver.LoginWithNaverId(
 			{
@@ -92,6 +94,22 @@ require_once "footer.php";
 		
 		/* 설정정보를 초기화하고 연동을 준비 */
 		naverLogin.init();
+
+		//<![CDATA[
+		// 사용할 앱의 JavaScript 키를 설정해 주세요.
+		Kakao.init('230e04974760af34084af78e4a6e7c37');
+		function loginWithKakao() {
+			// 로그인 창을 띄웁니다.
+			Kakao.Auth.login({
+				success: function(authObj) {
+					alert(JSON.stringify(authObj));
+				},
+				fail: function(err) {
+					alert(JSON.stringify(err));
+				}
+			});
+		};
+		//]]>
 		
 	</script>
 </body>

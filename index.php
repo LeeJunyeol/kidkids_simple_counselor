@@ -8,16 +8,21 @@ if(isset($_GET['url'])){
     $url = $_GET['url'];
 }
 
+// preg_match("/question\/([0-9+])/", $input_line, $output_array);
 $url = explode("/", $url);
 
 if($url[0] == "api"){
-    switch($url[1]){
+    array_shift($url);
+    switch($url[0]){
         case 'category':
-        $category = new CategoryController();
+        $category = new Category."Controller";
         $category->getAll();
+        break;
     }
 } else {
     switch($url[0]){
+        case 'question':
+        
         default:
         require_once 'public/home.php';
     }

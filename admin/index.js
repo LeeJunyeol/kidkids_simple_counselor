@@ -233,7 +233,7 @@ var AdminModule = (function () {
     }
 
     function getUserScores() {
-        return $.ajax(BASE_URL + "/api/Controllers/User.php", {
+        return $.ajax(BASE_URL + "/api/User", {
             type: 'GET',
             contentType: "application/json"
         }).then(function (res) {
@@ -346,7 +346,7 @@ var AnswerModule = (() => {
         dataObj['page'] = page;
         dataObj['limit'] = 10;
 
-        $.ajax(BASE_URL + "/api/Controllers/Answer.php", {
+        $.ajax(BASE_URL + "/api/Answer", {
             type: 'GET',
             contentType: "application/json",
             data: dataObj
@@ -424,7 +424,7 @@ var QuestionModule = (() => {
         dataObj['sortBy'] = "id";
         dataObj['isASC'] = "true";
         dataObj['limit'] = 10;
-        $.ajax(BASE_URL + "/api/Controllers/Question.php", {
+        $.ajax(BASE_URL + "/api/Question", {
             type: 'GET',
             contentType: "application/json",
             data: dataObj

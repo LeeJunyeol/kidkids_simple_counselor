@@ -62,7 +62,7 @@ var ViewModule = (() => {
             var title = $("div.write.header>textarea").val();
             var content = $("div.write.content>textarea").val();
 
-            $.ajax(BASE_URL + "/api/Controllers/Answer.php", {
+            $.ajax(BASE_URL + "/api/Answer", {
                 type: "POST",
                 contentType: "application/x-www-form-urlencoded",
                 data: {

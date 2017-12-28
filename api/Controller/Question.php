@@ -7,6 +7,7 @@ require_once '../Models/AnswerModel.php';
 require_once '../Models/VoteModel.php';
 require_once '../Models/CategoryModel.php';
 require_once '../Models/CategoryQuestionModel.php';
+require_once '../Models/QuestionCategoryViewModel.php';
 require_once '../Models/OpinionModel.php';
 require_once "../Util/Util.php";
 
@@ -14,6 +15,7 @@ $conn = Database::getConnection();
 
 $categoryModel = new CategoryModel($conn);
 $questionModel = new QuestionModel($conn);
+$questionCategoryViewModel = new QuestionCategoryViewModel($conn);
 $categoryQuestionModel = new CategoryQuestionModel($conn);
 $opinionModel = new OpinionModel($conn);
 $answerModel = new AnswerModel($conn);
@@ -115,7 +117,7 @@ if(isset($_GET['my'])){
                 case "cnt":
                 $sortBy = "view";
             }
-            $results = $questionModel->getForPage($offset, $limit, $sortBy, $isASC);
+            $results = $questionCategoryViewModel->getPagination($offset, $limit, $sortBy, $isASC);
             $rowCount = $questionModel->count();
 
             echo json_encode([

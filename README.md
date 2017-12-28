@@ -26,7 +26,7 @@ xampp control panel을 열어 apache 서버를 실행한 후, url에 아래의 �
 - RewriteRule ^question/([0-9]+)$ public/question.php?question_id=$1
 - RewriteRule ^admin$ public/admin.php
 
-- RewriteRule ^api/([a-zA-Z]+)\/?$ api/Controllers/$1.php
-- RewriteRule ^api/([a-zA-Z]+)/([0-9]+)$ api/Controllers/$1.php?id=$2
-- RewriteRule ^api/([a-zA-Z]+)/([0-9]+)/([a-zA-Z]+)\/?$ api/Controllers/$1.php?id=$2&action=$3
-- RewriteRule ^api/my/([a-zA-Z]+)/([0-9]+)$ api/Controllers/$1.php?id=$2&my=true
+- RewriteRule ^api/([a-zA-Z]+)\/?$ api/Controller/$1.php
+- RewriteRule ^api/([a-zA-Z]+)/([0-9]+)$ api/Controller/$1.php?id=$2
+- RewriteRule ^api/([a-zA-Z]+)/([0-9]+)/([a-zA-Z]+)\/?$ api/Controller/$1.php?id=$2&action=$3
+- RewriteRule ^api/my/([a-zA-Z]+)/([0-9]+)$ api/Controller/$1.php?id=$2&my=true

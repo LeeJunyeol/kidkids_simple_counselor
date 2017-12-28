@@ -272,19 +272,21 @@ var f=g.nameLookup(e,b[c],a);return d?[" && ",f]:[" != null ? ",f," : ",e]})},re
 
 var _common = __webpack_require__(1);
 
+var _util = __webpack_require__(0);
+
 $(document).ready(function () {
     _common.CommonModule.init();
     MyModule.init();
 });
 
 var MyModule = function () {
-    var BASE_URL = location.origin + "/ksc";
+    var BASE_URL = location.origin;
     var userId = $("#welcome").data("id");
 
     // 템플릿들
-    var recentQuestionTemplate = handlebarsHelper("#recent-question-template");
-    var recentAnswerTemplate = handlebarsHelper("#recent-answer-template");
-    var currentRankTemplate = handlebarsHelper("#current-rank-template");
+    var recentQuestionTemplate = (0, _util.HandlebarsHelper)("#recent-question-template");
+    var recentAnswerTemplate = (0, _util.HandlebarsHelper)("#recent-answer-template");
+    var currentRankTemplate = (0, _util.HandlebarsHelper)("#current-rank-template");
 
     var init = function init() {
         load();
@@ -317,12 +319,12 @@ var MyModule = function () {
 
             recentQuestions.forEach(function (element) {
                 element['content'] = element['content'].substring(0, 100) + "...";
-                element['create_date'] = Utils.getFormatDate(element['create_date']);
+                element['create_date'] = _util.Utils.getFormatDate(element['create_date']);
                 element['link'] = "/question/" + element['question_id'];
             });
             recentAnswers.forEach(function (element) {
                 element['content'] = element['content'].substring(0, 100) + "...";
-                element['create_date'] = Utils.getFormatDate(element['create_date']);
+                element['create_date'] = _util.Utils.getFormatDate(element['create_date']);
                 element['link'] = "/question/" + element['question_id'];
             });
             $("#question-box").append(recentQuestionTemplate(recentQuestions));

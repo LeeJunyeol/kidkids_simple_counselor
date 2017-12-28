@@ -1,4 +1,5 @@
 import { AsideModule, CommonModule } from './common';
+import { HandlebarsHelper, Utils } from "./util";
 
 $(document).ready(function(){
     CommonModule.init();
@@ -6,13 +7,13 @@ $(document).ready(function(){
 });
 
 var MyModule = (function(){
-    var BASE_URL = location.origin + "/ksc";
+    var BASE_URL = location.origin;
     var userId = $("#welcome").data("id");
 
     // 템플릿들
-    var recentQuestionTemplate = handlebarsHelper("#recent-question-template");
-    var recentAnswerTemplate = handlebarsHelper("#recent-answer-template");
-    var currentRankTemplate = handlebarsHelper("#current-rank-template");
+    var recentQuestionTemplate = HandlebarsHelper("#recent-question-template");
+    var recentAnswerTemplate = HandlebarsHelper("#recent-answer-template");
+    var currentRankTemplate = HandlebarsHelper("#current-rank-template");
 
     var init = () => {
         load();

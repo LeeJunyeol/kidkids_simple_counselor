@@ -1,0 +1,29 @@
+# Necessary to prevent problems when using a controller named "index" and having a root index.php
+# more here: http://httpd.apache.org/docs/2.2/content-negotiation.html
+Options -MultiViews
+# Options -MultiViews : 
+# 디렉토리(폴더)에서 url이 /index 이고 / 디렉토리 안에 index.php 파일이 있을 때,
+# index 디렉토리가 없을 경우, index.php 또는 index.html 또는 index.cgi 와 같은 파일이 실행되는 것을 방지하기 위해
+# Multiview 옵션 앞에 - 를 붙여 옵션을 해제해 주었습니다. + 를 붙여주면 다시 활성화 할 수 있습니다.
+# MVC 코드는 http://localhost/controller/home/index 와 같은 url 구조를 활용하는 사례가 많기 때문입니다.
+
+
+# Activates URL rewriting (like myproject.com/controller/action/1/2/3)
+RewriteEngine On
+
+# Prevent people from looking directly into folders
+Options -Indexes
+
+# If the following conditions are true, then rewrite the URL:
+# If the requested filename is not a directory,
+RewriteCond %{REQUEST_FILENAME} !-d
+# and if the requested filename is not a regular file that exists,
+RewriteCond %{REQUEST_FILENAME} !-f
+# and if the requested filename is not a symbolic link,
+RewriteCond %{REQUEST_FILENAME} !-l
+# then rewrite the URL in the following way:
+# Take the whole request filename and provide it as the value of a
+# "url" query parameter to index.php. Append any query string from
+# the original URL as further query parameters (QSA), and stop
+# processing this .htaccess file (L).
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]

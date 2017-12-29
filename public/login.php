@@ -19,6 +19,14 @@ if(isset($_SESSION["logged_in"])){
 </head>
 
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.11&appId=1799801130312500';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <?php
 if(isset($_SESSION["message"])){
 	$message = $_SESSION['message'];
@@ -70,7 +78,12 @@ require_once "header.php";
 			</div>
 		</div>
 		<div id="naverIdLogin"><a id="naverIdLogin_loginButton" href="#"><img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.0" height="60"></a></div>
-		<div id="kakaoIdLogin"><a id="custom-login-btn" href="javascript:loginWithKakao()"><img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"></a></div>
+		<div id="kakaoIdLogin"><a id="custom-login-btn"><img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"></a></div>
+		<div class="fb-login-button" scope="public_profile,email" onlogin="checkLoginState();"
+		data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+
+		<div id="status">
+		</div>
 	</article>
 <?php
 require_once "aside.php";
@@ -79,38 +92,46 @@ require_once "footer.php";
 	<script src="<?php echo _NODE ?>/jquery/dist/jquery.js"></script>
 	<script src="<?php echo _NODE ?>/jquery.redirect/jquery.redirect.js"></script>
 	<script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
-	<script src="<?php echo _DISTJS ?>/login.js"></script>
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-	<script type="text/javascript">
-		var naverLogin = new naver.LoginWithNaverId(
-			{
-				clientId: "cbo8Ug2OQ_WcwqcbzP0O",
-				callbackUrl: "http://localhost/naver-callback",
-				isPopup: false, /* 팝업을 통한 연동처리 여부 */
-				loginButton: {color: "green", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
-			}
-		);
-		
-		/* 설정정보를 초기화하고 연동을 준비 */
-		naverLogin.init();
+	<script src="<?php echo _DISTJS ?>/login.js"></script>
+	<script> 
+		function checkLoginState() {
+			FB.getLoginStatus(function(response) {
+				statusChangeCallback(response);
+			});
+		}
 
-		//<![CDATA[
-		// 사용할 앱의 JavaScript 키를 설정해 주세요.
-		Kakao.init('230e04974760af34084af78e4a6e7c37');
-		function loginWithKakao() {
-			// 로그인 창을 띄웁니다.
-			Kakao.Auth.login({
-				success: function(authObj) {
-					alert(JSON.stringify(authObj));
-				},
-				fail: function(err) {
-					alert(JSON.stringify(err));
-				}
+		function statusChangeCallback(response) {
+			console.log('statusChangeCallback');
+			console.log(response);
+			// The response object is returned with a status field that lets the
+			// app know the current login status of the person.
+			// Full docs on the response object can be found in the documentation
+			// for FB.getLoginStatus().
+			if (response.status === 'connected') {
+				testAPI();
+			} else {
+			// The person is not logged into your app or we are unable to tell.
+			document.getElementById('status').innerHTML = 'Please log ' +
+				'into this app.';
+			}
+		}
+
+		function testAPI() {
+			FB.api('/me', function(res) {
+				var user = {};
+				user.id = res.id;
+				user.name = res.name;
+				$.ajax(location.origin + "/api/User/fblogin", {
+					type: "POST",
+					contentType: "application/json",
+					data: JSON.stringify(user)
+				}).then(function(res) { 
+					window.location.replace("http://" + window.location.hostname + (location.port == "" || location.port == undefined ? "" : ":" + location.port) + "/home");
+				});
 			});
 		};
-		//]]>
-		
 	</script>
 </body>
 

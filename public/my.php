@@ -29,7 +29,7 @@ require_once "header.php";
                     <label class='my-label label label-info' style='display: block; padding: .3em .3em .3em; font-size: 130%;'>".$userType."</label></div>";
                     }?>
                 <div class="my-image" style="width: 200px; height: 100%; margin-top: 6px;">
-                    <img src=<?php echo "/user_images/".$_SESSION['user_image']?> style="width: 100%; height: 100%" />
+                    <img src=<?php echo $_SESSION['user_image']?> style="width: 100%; height: 100%" />
                 </div>
                 <div class="my-info" style="width: 100%; position: relative;">
                     <div class="edit-btn-group btn-group" style="position: absoulte; left: 79%; top: 0;">

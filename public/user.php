@@ -29,7 +29,7 @@ require_once "header.php";
                 </script>
                 <script type="text/handlebars-template" id="user-template">
                 <div class="my-image" style="width: 200px; height: 100%; margin-top: 6px;">
-                    <img src="/user_images/{{user_pic}}" style="width: 100%; height: 100%" />
+                    <img src="{{user_pic}}" style="width: 100%; height: 100%" />
                 </div>
                 <div class="my-info" style="width: 100%; position: relative;">
                     <div class="edit-btn-group btn-group hide" style="position: absoulte; left: 79%; top: 0;">

@@ -279,10 +279,89 @@ var _common = __webpack_require__(1);
 
 var _util = __webpack_require__(0);
 
+var _properties = __webpack_require__(10);
+
+var _properties2 = _interopRequireDefault(_properties);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 $(document).ready(function () {
-    _common.AsideModule.init();
-    _common.CommonModule.init();
+  _common.AsideModule.init();
+  _common.CommonModule.init();
+
+  NaverLogin.init();
+  Kakao.init(_properties2.default.kakaoKey);
+  KakaoLogin.init();
 });
+
+var NaverLogin = new naver.LoginWithNaverId({
+  clientId: _properties2.default.naverClientId,
+  callbackUrl: location.origin + "/naver-callback",
+  isPopup: false /* 팝업을 통한 연동처리 여부 */
+  , loginButton: {
+    color: "green",
+    type: 3,
+    height: 60 /* 로그인 버튼의 타입을 지정 */
+  } });
+
+var KakaoLogin = function () {
+  var init = function init() {
+    $("#kakaoIdLogin").on("click", loginWithKakao);
+  };
+
+  //<![CDATA[
+  // 사용할 앱의 JavaScript 키를 설정해 주세요.
+  function loginWithKakao() {
+    // 로그인 창을 띄웁니다.
+    Kakao.Auth.login({
+      success: function success(authObj) {
+        // 로그인 성공시, API를 호출합니다.
+        Kakao.API.request({
+          url: "/v1/user/me",
+          success: function success(res) {
+            var user = {};
+            user.id = res.id;
+            user.email = res.kaccount_email;
+            user.name = res.properties.nickname;
+            user.pic = res.properties.profile_image;
+
+            $.ajax(location.origin + "/api/User/kakaologin", {
+              type: "POST",
+              contentType: "application/json",
+              data: JSON.stringify(user)
+            }).then(function (res) {
+              window.location.replace("http://" + window.location.hostname + (location.port == "" || location.port == undefined ? "" : ":" + location.port) + "/home");
+            });
+          },
+          fail: function fail(error) {
+            alert(JSON.stringify(error));
+          }
+        });
+      },
+      fail: function fail(err) {
+        alert(JSON.stringify(err));
+      }
+    });
+  }
+  return {
+    init: init
+  };
+}();
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    kakaoKey: "230e04974760af34084af78e4a6e7c37",
+    naverClientId: "cbo8Ug2OQ_WcwqcbzP0O"
+};
 
 /***/ })
 /******/ ]);

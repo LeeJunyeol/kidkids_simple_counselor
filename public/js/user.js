@@ -25,6 +25,10 @@ var MyModule = (function(){
             var recentAnswers = res['recentAnswer'];
             var currentRank = res['currentRank'];
             var myIdx = 0;
+            
+            if(!user['user_id'].includes("_")){
+                user['user_pic'] = "/user_images/" + user['user_pic'] 
+            }
             currentRank.forEach((element, i) => {
                 if(element['user_id'] === user['user_id']){
                     myIdx = i;

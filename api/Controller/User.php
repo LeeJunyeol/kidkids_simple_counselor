@@ -45,6 +45,87 @@ switch($_SERVER['REQUEST_METHOD']){
         ]);
     break;
     case 'POST':
+    if(isset($_GET['kakaologin'])){
+        $user = json_decode(file_get_contents('php://input'), true);
+        $id = "KAKAO_" . $user['id'];
+        $userInfo = $userModel->getById($id);
+        if($userInfo == null){
+            $userModel->registerSNS($id, $user['name'], $user['email'], $user['pic']);
+            $userInfo = $userModel->getById($id);
+        }
+        
+        $myscore = $voteModel->getMyTotalScore($id);
+
+        $_SESSION['id'] = $userInfo->user_id;
+        $_SESSION['email'] = $userInfo->email;
+        $_SESSION['name'] = $userInfo->name;
+        $_SESSION['user_type'] = $userInfo->user_type;
+        $_SESSION['user_image'] = $userInfo->user_pic;
+        $_SESSION['myscore'] = $myscore->score;
+        
+        $_SESSION['logged_in'] = true;
+
+        if($_SESSION['id'] == 'admin'){
+            header("location: /admin");
+            return;
+        }
+        header("location: /home");
+        return;
+    }
+    if(isset($_GET['naverlogin'])){
+        $user = json_decode(file_get_contents('php://input'), true);
+        $id = "NV_" . $user['id'];
+        $userInfo = $userModel->getById($id);
+        if($userInfo == null){
+            $userModel->registerSNS($id, $user['name'], $user['email'], $user['pic']);
+            $userInfo = $userModel->getById($id);
+        }
+        
+        $myscore = $voteModel->getMyTotalScore($id);
+
+        $_SESSION['id'] = $userInfo->user_id;
+        $_SESSION['email'] = $userInfo->email;
+        $_SESSION['name'] = $userInfo->name;
+        $_SESSION['user_type'] = $userInfo->user_type;
+        $_SESSION['user_image'] = $userInfo->user_pic;
+        $_SESSION['myscore'] = $myscore->score;
+        
+        $_SESSION['logged_in'] = true;
+
+        if($_SESSION['id'] == 'admin'){
+            header("location: /admin");
+            return;
+        }
+        header("location: /home");
+        return;
+    }
+    if(isset($_GET['fblogin'])){
+        $user = json_decode(file_get_contents('php://input'), true);
+        $id = "FB_" . $user['id'];
+        $userInfo = $userModel->getById($id);
+        if($userInfo == null){
+            $userModel->registerSNS($id, $user['name'], "", $user['pic']);
+            $userInfo = $userModel->getById($id);
+        }
+        
+        $myscore = $voteModel->getMyTotalScore($id);
+
+        $_SESSION['id'] = $userInfo->user_id;
+        $_SESSION['email'] = $userInfo->email;
+        $_SESSION['name'] = $userInfo->name;
+        $_SESSION['user_type'] = $userInfo->user_type;
+        $_SESSION['user_image'] = $userInfo->user_pic;
+        $_SESSION['myscore'] = $myscore->score;
+        
+        $_SESSION['logged_in'] = true;
+
+        if($_SESSION['id'] == 'admin'){
+            header("location: /admin");
+            return;
+        }
+        header("location: /home");
+        return;
+    }
     if(isset($_POST['login'])){
         $id = $_POST['id'];
         $user = $userModel->getById($id);
@@ -59,7 +140,7 @@ switch($_SERVER['REQUEST_METHOD']){
                 $_SESSION['email'] = $user->email;
                 $_SESSION['name'] = $user->name;
                 $_SESSION['user_type'] = $user->user_type;
-                $_SESSION['user_image'] = $user->user_pic;
+                $_SESSION['user_image'] = "/user_images/" . $user->user_pic;
                 $_SESSION['myscore'] = $myscore->score;
                 
                 $_SESSION['logged_in'] = true;

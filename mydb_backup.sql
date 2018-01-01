@@ -33,7 +33,7 @@ CREATE TABLE `answers` (
   KEY `FK_answers_question_id_questions_question_id` (`question_id`),
   CONSTRAINT `FK_answers_question_id_questions_question_id` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `FK_answers_user_id_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
 
 /*Data for the table `answers` */
 
@@ -61,7 +61,9 @@ insert  into `answers`(`answer_id`,`question_id`,`user_id`,`content`,`create_dat
 (112,68,'sana','제 생각에는 원아모집방법이 아무리 특이하고 기억에 남는것보단\n\n어린이집의 특별한 무언가가 영아에게 좋은 이익을 남겨주나 라고 해야하나 ?\n\n엄마가 되보진 못했지만 엄마 하면 아이들에게 무언가 잘해주고 싶고 아껴주고 싶고\n\n뭐 하나 다치기라도 하면 잠못이루듯 영아에게 무언가 특별한 것을 해줄수 있어야\n\n더 관심을 가질것같네요.\n\n원아모집방법을 아이들이 좋아하는 장난감 형식으로 만드는 것은 어떤가요?\n\n종이장난감 같은 것을 이용하여 원아모집을 하면 오히려 아이들이 보게 되고 그러면서 \n\n엄마들도 같이 보면서 좋은 점이 이렇구나. \n\n우리아이에게 좋은걸 할수 있겠구나 라는 것을 느끼게 될것같습니다.\n\n어린이집하면 가르치기도 하니까 재미있게 놀면서 가르치는 수업방식에서 \n\n아이디어를 얻기를 바랍니다 ^ ^♡\n\n화이팅입니다 !!','2017-12-21 14:00:29','2017-12-21 14:00:29',1),
 (113,69,'nana','올 해 고등학교 졸업생이면 99년생입니다.\n\n00년생은 이제 고3으로 올라가고요.\n\n\n\n무슨 가게를 하시는지는 모르겠지만\n\n술집이라도 미성년자는 부모님동의서가 있으면 일을 시킬수 있습니다.\n\n하지만 손님들의 반응이 어떨지는 모르겠네요\n\n\n\n꼭 그런 사람 있잖아요. 별 것도 아닌걸로 딴지 거는 사람들\n\n고삐리가 술 나른다면서 사장 불러 오라고 하는 경우도 있을겁니다.\n\n\n\n생각 잘 해보시고 결정 하시면 될 것 같네요.\n\n일손 부족하면 고등학생도 무관 할 것 같네요.','2017-12-21 14:24:06','2017-12-21 14:24:06',0),
 (114,69,'mina','안녕하세요 답변자 최재환 입니다\n\n사람들이 배고프면 드시는 음식중 하나가 자장면(짜장면) 입니다\n\n그래서 사람들이 배고파서 자장면을 먹었기 때문에\n카페 게시물이나 블로그 포스트 제목(또는 내용)에《배고파서 짜장면 먹고 왔어요~^^》을 적은 것 입니다\n\n그렇기 때문에 질문자님도 배고프시면 공기 그만 마시고 자장면 시켜서 드셔보셔도 될듯 합니다\n\n감사합니다','2017-12-21 14:24:31','2017-12-21 14:24:31',0),
-(115,70,'jihyo','답변입니다.','2017-12-21 15:08:44','2017-12-21 15:08:44',0);
+(115,70,'jihyo','답변입니다.','2017-12-21 15:08:44','2017-12-21 15:08:44',0),
+(116,70,'momo','fff','2017-12-26 14:20:02','2017-12-26 14:20:02',0),
+(117,71,'NV_47229039','답변이에요','2017-12-29 13:12:13','2017-12-29 13:12:13',1);
 
 /*Table structure for table `categories` */
 
@@ -110,7 +112,7 @@ CREATE TABLE `category_question` (
   KEY `category_question_ibfk_2` (`question_id`),
   CONSTRAINT `category_question_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `category_question_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
 
 /*Data for the table `category_question` */
 
@@ -153,7 +155,9 @@ insert  into `category_question`(`category_question_id`,`category_id`,`question_
 (75,2,69),
 (76,14,69),
 (77,1,70),
-(78,12,70);
+(78,12,70),
+(79,2,71),
+(80,6,71);
 
 /*Table structure for table `opinions` */
 
@@ -174,7 +178,7 @@ CREATE TABLE `opinions` (
   KEY `FK_opinions_answer_id_answers_answer_id` (`answer_id`),
   CONSTRAINT `FK_comments_answer_id_answers_answer_id` FOREIGN KEY (`answer_id`) REFERENCES `answers` (`answer_id`) ON DELETE CASCADE,
   CONSTRAINT `FK_comments_user_id_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 
 /*Data for the table `opinions` */
 
@@ -202,7 +206,9 @@ insert  into `opinions`(`question_id`,`opinion_id`,`user_id`,`answer_id`,`conten
 (68,62,'sana',112,'화이팅!',0,0,'2017-12-21 14:01:33','2017-12-21 14:01:33'),
 (68,63,'sana',112,'감사합니다.',0,0,'2017-12-21 14:01:46','2017-12-21 14:01:46'),
 (68,64,'sana',111,'오 괜찮네요~',0,0,'2017-12-21 14:01:48','2017-12-21 14:01:48'),
-(68,65,'jihyo',112,'감사합니다',0,0,'2017-12-21 15:09:46','2017-12-21 15:09:46');
+(68,65,'jihyo',112,'감사합니다',0,0,'2017-12-21 15:09:46','2017-12-21 15:09:46'),
+(70,66,'momo',115,'',0,0,'2017-12-26 14:20:16','2017-12-26 14:20:16'),
+(70,67,'momo',116,'ee',0,0,'2017-12-26 14:20:26','2017-12-26 14:20:26');
 
 /*Table structure for table `questions` */
 
@@ -221,28 +227,44 @@ CREATE TABLE `questions` (
   PRIMARY KEY (`question_id`),
   KEY `FK_questions_user_id_users_user_id` (`user_id`),
   CONSTRAINT `FK_questions_user_id_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
 
 /*Data for the table `questions` */
 
 insert  into `questions`(`question_id`,`user_id`,`title`,`content`,`view`,`tags`,`selected_answer_id`,`create_date`,`modify_date`) values 
-(47,'momo','어린이집 실습 수업에 대해','어린이집 실습할때 수업을 진행해야한다고 들었는데요\n어떤 방식으로 수업을 해야할지 모르겠어요 ㅠ\n막막하고 걱정이 되네요..\n교사선배님들 조언 좀 부탁드려요',11,'실습/어린이집',85,'2017-12-20 09:06:05','2017-12-20 09:06:05'),
-(49,'momo','유치원실습중에 반일수업도 하나요?','안녕하세요.\n저는 유치원실습을 하고있는 실습생입니다.\n제가 실습생이 진행하는 수업 일정을 봤더니 반일수업이 있더라구요 \n근데 제가 알기론 반일수업은 어린이집실습할 때 하는걸로 알고 있는데 원래 유치원실습때도 반일수업을 하나요? \n수업준비도 그렇고 진행하는것도 너무 힘들어서 하나라도 줄었으면 좋겠습니다ㅠㅠ \n그리고 반일수업이 뭔지도 알려주세요! \n#반일수업 #유치원실습',2,'반일수업/유치원실습',101,'2017-12-20 09:08:23','2017-12-20 09:08:23'),
+(47,'momo','어린이집 실습 수업에 대해','어린이집 실습할때 수업을 진행해야한다고 들었는데요\n어떤 방식으로 수업을 해야할지 모르겠어요 ㅠ\n막막하고 걱정이 되네요..\n교사선배님들 조언 좀 부탁드려요',12,'실습/어린이집',85,'2017-12-20 09:06:05','2017-12-20 09:06:05'),
+(49,'momo','유치원실습중에 반일수업도 하나요?','안녕하세요.\n저는 유치원실습을 하고있는 실습생입니다.\n제가 실습생이 진행하는 수업 일정을 봤더니 반일수업이 있더라구요 \n근데 제가 알기론 반일수업은 어린이집실습할 때 하는걸로 알고 있는데 원래 유치원실습때도 반일수업을 하나요? \n수업준비도 그렇고 진행하는것도 너무 힘들어서 하나라도 줄었으면 좋겠습니다ㅠㅠ \n그리고 반일수업이 뭔지도 알려주세요! \n#반일수업 #유치원실습',3,'반일수업/유치원실습',101,'2017-12-20 09:08:23','2017-12-20 09:08:23'),
 (50,'momo','유치원정교사자격증 취득?','안녕하세요~ 유치원정교사자격증 취득방법에 대해서 질문드립니다 ㅠ\n\n제가 어렸을 때 부터 생각했던 유치원정교사자격증 준비하려는데\n\n몇 가지 궁금한게 있어서 지식인에 질문 드립니다. 작년에 대학을 졸업했는데\n\n제가 유치원정교사자격증 이랑은 전혀 관련 없는 전공 이라서\n\n걱정이 많이 되네요 ㅠㅠ 제가 찾아보니까 유치원정교사자격증은\n\n관련 전공으로 학사학위를 취득해야 한다고 하던데...\n\n그렇게 되면 다시 학교를 다니며 준비를 해야 하고\n\n그렇다고 이제와서 다시 편입준비는 사실상 무리가 있고\n\n다른 방법으로 유치원정교사자격증을 취득 할 수 있는 방법이\n\n없을까요 ㅜㅜ 혹시나 비록 관련이 없는 전공이지만 유치원정교사자격증을 \n\n취득 할 수 있는 방법이 있으면 그 방법으로\n\n유치원정교사자격증 취득할 수 있는 과정 좀 도와주세요!!!',12,'유치원/정교사/자격증',81,'2017-12-20 09:09:30','2017-12-20 09:09:30'),
 (51,'dahyun','유아교육과 학생인데.. 진로 고민입니다 ','저는 무얼 하던 즐거움을 추구하는 사람이고.. 제가 유아교육과에 들어간 이유는 대학에 가고싶고, 미래전망이 좋다고 생각했기 때문이죠.. \n\n나이 먹고도 유치원에서 일을 할 수 있으니까요. 그런데 저는 어릴 적부터 예술쪽에 흥미가 있었고 그림은 물론 음악을 굉장히 좋아합니다\n\n그림은 어릴 적 굉장히 좋아했지만 저보다 잘 그리는 사람이 많이 보이기 시작하자 흥미를 점차 잃게되었고 음악 또한 잘하는 사람이 많지만 음악만큼은 나도 잘한다 라고 자부할 수 있습니다. \n\n제가 노래를 잘하는건 아니지만 랩은 잘한다고 자부할 수 있고.. 래퍼를 꿈꾸기도 하였으나 대중들에게 알려지는건 너무 부담스러워서.. 그냥 평범하게 살아보자 유아교육과에 지원했고 유치원교사가 되려고 했는데\n\n솔직히 유아교육과 다녀보신 분들은 알겠지만 계획안 작성, 모의수업, 교구만들기 등 유아교육과 자체가 매우 빡셉니다. \n\n하지만 뭐든 열심히하는 스타일이고 학점 또한 굉장히여겨서 포기하지 않고 힘들어하지 않고 열심히 다니다가 모의수업을 하면서 깨닳았어요. 나랑 좀 안맞구나..\n\n제가 추구하는 것은 밝고 유쾌한 것, 활발한 것인데 유치원교사는 활발한 것보다는 차분한 것을 원하더라구요. \n\n모의수업 후 너무 활발한 것에 대해 지적받았고 그냥 저는 이런 제 모습이 장점이라고 생각하는데 유치원교사 입장에서는 단점이라고 하니 굉장히 씁쓸하죠.. 한편으로는 자존심이 상하기도 하구요. \n\n내 장점이 내가 하려는 일에서는 단점이라니.. 그럴바엔 내 장점과 맞는 일을 하는 것이 낫지않을까 싶기도 하고\n\n그래서 굉장히 고민입니다. 음악, 유치원교사 모두 돈을 잘 버는 직종이 아니고 음악이 더 힘들죠.. \n\n하지만 제가 좋아하고 잘 할 수 있는 것은 음악.. 그런데 대중들에게 알려지는 것은 부담스럽고, 미래를 생각하면 유치원교사.. 그런데 내 장점은 유치원교사 입장에서는 단점..\n\n꼭 랩이 아니더라고 악기 하나 배우고 싶은게 있습니다.. 악기를 배우더라도 돈을 벌기는 힘든거 알고요..\n너무 혼란스럽고 어떻게 진로를 정해야할지 모르겠습니다.\n\n휴학 같은거 안하고 빨리 졸업 후 취업하려고 했는데 갑자기 이런 고민이 드니 휴학을 좀 생각하고 있습니다..',17,'진로/취업/유아교육과',95,'2017-12-20 09:10:53','2017-12-20 09:10:53'),
-(52,'dahyun','유아 건강검진하는 병원','지금 제가 경기도 광주 곤지암에 살고있는데여 \n저희 아이가 건강검진을해야하는데\n제가 이번에 이사를 해서 어느병원에서 하는지 몰라서 이렇게 물어보게 됐습니다.\n아시는분 몇군데 병원 부탁드립니다.^^',2,'유아/건강검진/병원',100,'2017-12-20 09:11:46','2017-12-20 09:11:46'),
-(53,'sana','유아 장 건강이 우려되요','6살 남아 우리아이 건강이 걱정되어 글을 올리게 되었습니다.\n\n키는 또래보다 약간 큰편이구요 몸무게는 15~17kg입니다.\n\n식성이 좋아서 밥을 많이 먹는 편이나 기타 군것질은 잘 안합니다.\n\n체형은 좀 마른편입니다. 다리가 새다리,,\n\n \n질문드리겠습니다.\n\n1. 식사가 끝난 후 시간이 좀 지났는데도 아이가 뭔가 입에서 씹는것 같아 보니까 음식물 일부가 역류하는 것 같습니다. 시큼한 냄새도 종종 나고, 실제로 나물이나 음식물을 꺼억 꺼억 넘어와서 되새김하는 경우도 종종 있습니다.\n\n2. 결정적으로 대변이 대체로 질어요..\n\n아이 장건강이 매우 걱정되지만, 자주 다니는 소아과에서는 별일 아니라고 하지만, 음식물 역류하는 것을 보거나 대변을 보면 걱정을 안할수 없네요. 일전에 다른 소아과에서 약을 처방받으니 몇일간은 똥이 적당히 뭉쳐서 나오더군요.. 색깔도 좋았구요..\n\n1. 식습관을 좀 바꿔야 할까요? (음식량, 식사후 행동)\n\n2. 장건강을 위해 병원진료나 약을 처방받아야 할까요?',13,'장',108,'2017-12-20 09:16:02','2017-12-20 09:16:02'),
+(52,'dahyun','유아 건강검진하는 병원','지금 제가 경기도 광주 곤지암에 살고있는데여 \n저희 아이가 건강검진을해야하는데\n제가 이번에 이사를 해서 어느병원에서 하는지 몰라서 이렇게 물어보게 됐습니다.\n아시는분 몇군데 병원 부탁드립니다.^^',3,'유아/건강검진/병원',100,'2017-12-20 09:11:46','2017-12-20 09:11:46'),
+(53,'sana','유아 장 건강이 우려되요','6살 남아 우리아이 건강이 걱정되어 글을 올리게 되었습니다.\n\n키는 또래보다 약간 큰편이구요 몸무게는 15~17kg입니다.\n\n식성이 좋아서 밥을 많이 먹는 편이나 기타 군것질은 잘 안합니다.\n\n체형은 좀 마른편입니다. 다리가 새다리,,\n\n \n질문드리겠습니다.\n\n1. 식사가 끝난 후 시간이 좀 지났는데도 아이가 뭔가 입에서 씹는것 같아 보니까 음식물 일부가 역류하는 것 같습니다. 시큼한 냄새도 종종 나고, 실제로 나물이나 음식물을 꺼억 꺼억 넘어와서 되새김하는 경우도 종종 있습니다.\n\n2. 결정적으로 대변이 대체로 질어요..\n\n아이 장건강이 매우 걱정되지만, 자주 다니는 소아과에서는 별일 아니라고 하지만, 음식물 역류하는 것을 보거나 대변을 보면 걱정을 안할수 없네요. 일전에 다른 소아과에서 약을 처방받으니 몇일간은 똥이 적당히 뭉쳐서 나오더군요.. 색깔도 좋았구요..\n\n1. 식습관을 좀 바꿔야 할까요? (음식량, 식사후 행동)\n\n2. 장건강을 위해 병원진료나 약을 처방받아야 할까요?',14,'장',108,'2017-12-20 09:16:02','2017-12-20 09:16:02'),
 (54,'sana','어린이집 평가인증','이제 돌 된아들을 100일때부터 어린이집에 보내고 있는맘입니다..\n한창 평가인증을 한다고 부수고 뒤집고 난리를 치더라구요..어차피 원장좋으라고 하는것 아닙니까..\n심지어는 울 아들이 낮을가리는데 평가인증하는 사람들보고 울지 모른다고 아이를 보내지 말라고 하더군여..\n어이가 없어서..맞길때가 있으면 누가 돌된 금쪽같은 아들을 기관에 맞기겠어요..더웃긴것은 제가 어이없어 말을 안하니 선생님들까지 합세하여...\n내일은 평가인증사람들 오는날이라고 아이를 늦게 보내라는둥 아님 그사람들 가고 보내라는둥..이래도 돼는건지..\n그럼 저는 그날 출근하지 말라는건지..그래도 저 암말도 뫃ㅅ했어요...넘 속상해도 한바탕 싸우면 울아들 미운털 밖힐까봐...흑흑흑',13,'',0,'2017-12-20 09:25:46','2017-12-20 09:25:46'),
-(59,'momo','어린이집 평가인증받으신 보육교사선생님!수정','어린이집 평가인증받으신 보육교사선생님!\n \n\n1. 평가인증제받으실때 어떠셨나요?\n\n2. 인증받고 달라진 점이 있으신가요?\n\n3. 평가인증제에 대해 어떻게 생각하시나요?\n4. 평가인증제의 장점은?\n5. 평가인증제의 단점은?\n\n \n\n \n\n질문에 답해주시면 감사하겠습니다\n\n \n - 보육교사 실습생 -',16,'평가인증/보육실습',88,'2017-12-20 15:22:26','2017-12-20 15:22:26'),
-(60,'tzuyu','2014 국비지원해외연수(보육교사)','국비지원으로 호주나 캐나다 미국 등으로 해외취업을 하고싶은\n\n보육교사 입니다.\n\n보육교사 경력은 올해 5년으로 시설장(원장) 자격이 되는데...\n\n이정도 하다보니 해외의 보육시설은 어떤지 궁굼해져서요...\n\n하지만 비용도 ... 영어실력도 부족하네요\n\n필리핀 연계 등 이것저것 알아보는데 비용이 만만치가 않더라구요^^\n\n저렴한 비용으로 실속있게 다녀오고 싶은데.. \n\n검색어에 국비지원 해외연수(취업)  을 검색해 보았는데\n\n정신없는 광고 뿐이라 솔직히 믿음이 안가네요....\n\n \n\n해외보육교사공부와 수입을 병행할 수 있는 방법이 없을까요?\n\n광고글은 사절입니다. ',4,'보육교사/해외/연수/국비',0,'2017-12-20 17:36:37','2017-12-20 17:36:37'),
+(59,'momo','어린이집 평가인증받으신 보육교사선생님!수정','어린이집 평가인증받으신 보육교사선생님!\n \n\n1. 평가인증제받으실때 어떠셨나요?\n\n2. 인증받고 달라진 점이 있으신가요?\n\n3. 평가인증제에 대해 어떻게 생각하시나요?\n4. 평가인증제의 장점은?\n5. 평가인증제의 단점은?\n\n \n\n \n\n질문에 답해주시면 감사하겠습니다\n\n \n - 보육교사 실습생 -',19,'평가인증/보육실습',88,'2017-12-20 15:22:26','2017-12-20 15:22:26'),
+(60,'tzuyu','2014 국비지원해외연수(보육교사)','국비지원으로 호주나 캐나다 미국 등으로 해외취업을 하고싶은\n\n보육교사 입니다.\n\n보육교사 경력은 올해 5년으로 시설장(원장) 자격이 되는데...\n\n이정도 하다보니 해외의 보육시설은 어떤지 궁굼해져서요...\n\n하지만 비용도 ... 영어실력도 부족하네요\n\n필리핀 연계 등 이것저것 알아보는데 비용이 만만치가 않더라구요^^\n\n저렴한 비용으로 실속있게 다녀오고 싶은데.. \n\n검색어에 국비지원 해외연수(취업)  을 검색해 보았는데\n\n정신없는 광고 뿐이라 솔직히 믿음이 안가네요....\n\n \n\n해외보육교사공부와 수입을 병행할 수 있는 방법이 없을까요?\n\n광고글은 사절입니다. ',5,'보육교사/해외/연수/국비',0,'2017-12-20 17:36:37','2017-12-20 17:36:37'),
 (61,'tzuyu','맞벌이 부부를 위해 육아지원 제도','저는 고1이구요\n\n가정 수행평가 때문에\n\n글을 씁니다.\n\n수행평가 문제는\n\n- 맞벌이 부부를 위해 육아를 지원해 주는 법적 제도에 대해 조사해 보자.\n\n이거 인데요\n\n예로는 ) 모성보호제도 남녀고용평등법 영 유아 보육법 근로기준법 등이 있다네요\n\n내일 까지인데 아무리 네이버에 검색해도 나오질 않네요\n\n좀 가르쳐 주시면 정말 감사하겠습니다.',4,'육아지원/제도/모성보호/제도/남녀고용평등법',0,'2017-12-20 17:38:32','2017-12-20 17:38:32'),
 (62,'hooni','6살아이와가족여행','6살아이와함께제주로첫가족여행을갑니다가보고싶은곳은많은데 제주지역이나가고싶은곳들위치를모르니숙소를정할수가없어서질문드립니다. \n저희가가보고싶은곳을나열해보자면 이호테우해변,사려니숲길,코코몽에코파크에코랜드,미니랜드,개똥이동물원이구요\n이곳들을경유하는코스와 숙소를잡을경우이동하기편한지역 을알려주시면감사하겠습니다~\n참고로저희는11월11일오전10시도착 13일오후출발입니다~숙소는제가몸이불펀하고아이도있는관계로조식이있는호텔이었으면좋겠습니다~',8,'가족여행/추천',89,'2017-12-20 17:40:09','2017-12-20 17:40:09'),
-(64,'jeongyeon','검색어에 이건 왜 있는지?','배고파를 쳤는데 이 배고파서 짜장면 먹고 왔어요~^^\n이건뭐죠?',10,'이건 뭐지',0,'2017-12-21 10:16:15','2017-12-21 10:16:15'),
-(65,'jeongyeon','중등정교사2급 자격소지하고 있는데... 유치원이나 어린이집을 운영하는게 최종 목표면 어떤걸 준비하면 될까요?','중등정교사 2급 자격 소지하고 있구요... 사범대학 나왔구요...\n\n유치원이나 어린이집 운영에 관심이 있어서...준비를 해볼까하는데요...\n\n학점은행제나 방통대로도 가능한가요?\n\n아님 편입이나 대학원을 진학해야하나요?\n\n어떤 방법이 있는지를 잘 몰라서... 혹시 자세히 아시는 분 무엇부터 알아봐야하는지 좀 알려주세요.\n\n지역은 부산입니다.',13,'',0,'2017-12-21 10:17:33','2017-12-21 10:17:33'),
-(67,'momo','5세 훈육 어떻게 하나요?','5세 여아를 키우는 아빠입니다.\n\n문제는 출생후 지금까지 오냐오냐하며 해 달라는것도 다 해주고\n\n말하지않아도 모두 다 해주었습니다.\n\n지금은 너무 버릇이 없어요.\n\n아빠 아니 할매,할배,엄마\n\n친한사람(어른)에게는 조금만 마음에 안들면\n\n만만한 친구 대하듯이 \"야!\"\"하지마!\"버릇없는말투\n\n또는 고개 숙이고 째려보는행동,어른처럼 허리 손 올리고 \n\n막 머라하는행동....등\n\n그래서 엄마가 심하게 막 때리고 혼내고나서 진정 하고는\n\n존댓말부터 습관 들여줄려고 좀 나아질까 싶어서\n\n말할때마다 \"~요! 해야지~\"라고 갑자기 교육을했어요.\n\n처음엔 요!자를 붙이더니 나중에 엄마아빠가 한마디할때마다\n\n계속 터치를 하니 이게 스트레쓰였는가 평소 분이 안풀릴때하는\n\n행동을(자기옷 목카라를 잡고는 막 늘리고 당기고)응~응~ 거리면\n\n서 이런행동을 하는거에요\n\n이러면 또 혼을 내는겁니다 \"누가 옷 당기고 그러라고 했어?\"\n\n\"엄마가 하지마라고 그랬지? 아빠 엄마 뭐뭐 해주세요~\n\n뭐뭐하고싶어요~ 라고 말하면 다 해준다고 했잖아\n\n왜 짜증내고 말도 안하고 끙끙거려~ 말 안하면 아무도 니마음을\n\n모른다고 했잖아~\"\n\n이런식으로 하루에도 몇번씩 전쟁입니다\n\n우선 존댓말부터 가르치고싶네요\n\n죽일놈의 5살이라는 말도있던데 엄마의분노는 최고치까지 \n\n올라가는군요 ㅠㅠ\n\n아빠로써의 역활을 잘 못했는지라 아빠인 저랑만 있음\n\n이런일이 더욱 많이 일어나네요\n\n안되는행동들 범위도 안정해주고 하지마 또는 위험하게 왜그래?\n\n이렇게 혼내기만했네요\n\n아이가 크고있다는걸 모르고 너무 아기인듯 대했는것같아\n\n아이에게 너무 미안하네요 \n\n한번은 아이가 친구에게 말도 못하고 친구가 우리아빠 무서워\n\n우리아빠 힘쎄다 이런말들을 들으면서 우리아빠도 무서워\n\n이렇게 말을 할만도한데 아무말도 못했다는 엄마말을 듣고는\n\n너무 힘없는 아빠로 인식이 되어 있는것같아 속상하고\n\n아이에게 힘없는아빠라서 미안한 마음에 \n\n아이 잘되라고 하는거니까 아빠의훈육법 좀 알려주세요~',3,'훈육',0,'2017-12-21 13:26:39','2017-12-21 13:26:39'),
-(68,'jihyo','어린이집 원아모집 방법...뭐가 좋을까요','아파트에 영아를 전문으로하는 어린이집을 오픈 하였습니다...\n\n그런데 입주한지 3달정도 되었지만 원아모집이 잘되지 않아서 ...걱정입니다.\n\n그래서 원아모집방법이 독특하고 엄마들이 관심이 가질 만한그런방법이 없을까요?\n\n지식인님들의 좋은 아이디어가 있으면 알려주세요',13,'어린이집/원아/모집',112,'2017-12-21 13:58:56','2017-12-21 13:58:56'),
-(69,'sana','알바 모집중인데..','알바를 모집중인데 올해 고등학교 졸업예정인 00년생인 분이 요청을 하셨어요.\n술도 팔고 12시에 마치다보니 조심스럽긴한데.. 부모님은 된다고 하셨다고 하는데.. 부모님동의서를 받는다고치면 알바로 채용 할 수 있을까요?',14,'',0,'2017-12-21 14:03:35','2017-12-21 14:03:35'),
-(70,'happa','원아모집어떻게?','원아모집어떻게?',5,'원아/모집',0,'2017-12-21 15:07:59','2017-12-21 15:07:59');
+(64,'jeongyeon','검색어에 이건 왜 있는지?','배고파를 쳤는데 이 배고파서 짜장면 먹고 왔어요~^^\n이건뭐죠?',11,'이건 뭐지',0,'2017-12-21 10:16:15','2017-12-21 10:16:15'),
+(65,'jeongyeon','중등정교사2급 자격소지하고 있는데... 유치원이나 어린이집을 운영하는게 최종 목표면 어떤걸 준비하면 될까요?','중등정교사 2급 자격 소지하고 있구요... 사범대학 나왔구요...\n\n유치원이나 어린이집 운영에 관심이 있어서...준비를 해볼까하는데요...\n\n학점은행제나 방통대로도 가능한가요?\n\n아님 편입이나 대학원을 진학해야하나요?\n\n어떤 방법이 있는지를 잘 몰라서... 혹시 자세히 아시는 분 무엇부터 알아봐야하는지 좀 알려주세요.\n\n지역은 부산입니다.',15,'',0,'2017-12-21 10:17:33','2017-12-21 10:17:33'),
+(67,'momo','5세 훈육 어떻게 하나요?','5세 여아를 키우는 아빠입니다.\n\n문제는 출생후 지금까지 오냐오냐하며 해 달라는것도 다 해주고\n\n말하지않아도 모두 다 해주었습니다.\n\n지금은 너무 버릇이 없어요.\n\n아빠 아니 할매,할배,엄마\n\n친한사람(어른)에게는 조금만 마음에 안들면\n\n만만한 친구 대하듯이 \"야!\"\"하지마!\"버릇없는말투\n\n또는 고개 숙이고 째려보는행동,어른처럼 허리 손 올리고 \n\n막 머라하는행동....등\n\n그래서 엄마가 심하게 막 때리고 혼내고나서 진정 하고는\n\n존댓말부터 습관 들여줄려고 좀 나아질까 싶어서\n\n말할때마다 \"~요! 해야지~\"라고 갑자기 교육을했어요.\n\n처음엔 요!자를 붙이더니 나중에 엄마아빠가 한마디할때마다\n\n계속 터치를 하니 이게 스트레쓰였는가 평소 분이 안풀릴때하는\n\n행동을(자기옷 목카라를 잡고는 막 늘리고 당기고)응~응~ 거리면\n\n서 이런행동을 하는거에요\n\n이러면 또 혼을 내는겁니다 \"누가 옷 당기고 그러라고 했어?\"\n\n\"엄마가 하지마라고 그랬지? 아빠 엄마 뭐뭐 해주세요~\n\n뭐뭐하고싶어요~ 라고 말하면 다 해준다고 했잖아\n\n왜 짜증내고 말도 안하고 끙끙거려~ 말 안하면 아무도 니마음을\n\n모른다고 했잖아~\"\n\n이런식으로 하루에도 몇번씩 전쟁입니다\n\n우선 존댓말부터 가르치고싶네요\n\n죽일놈의 5살이라는 말도있던데 엄마의분노는 최고치까지 \n\n올라가는군요 ㅠㅠ\n\n아빠로써의 역활을 잘 못했는지라 아빠인 저랑만 있음\n\n이런일이 더욱 많이 일어나네요\n\n안되는행동들 범위도 안정해주고 하지마 또는 위험하게 왜그래?\n\n이렇게 혼내기만했네요\n\n아이가 크고있다는걸 모르고 너무 아기인듯 대했는것같아\n\n아이에게 너무 미안하네요 \n\n한번은 아이가 친구에게 말도 못하고 친구가 우리아빠 무서워\n\n우리아빠 힘쎄다 이런말들을 들으면서 우리아빠도 무서워\n\n이렇게 말을 할만도한데 아무말도 못했다는 엄마말을 듣고는\n\n너무 힘없는 아빠로 인식이 되어 있는것같아 속상하고\n\n아이에게 힘없는아빠라서 미안한 마음에 \n\n아이 잘되라고 하는거니까 아빠의훈육법 좀 알려주세요~',5,'훈육',0,'2017-12-21 13:26:39','2017-12-21 13:26:39'),
+(68,'jihyo','어린이집 원아모집 방법...뭐가 좋을까요','아파트에 영아를 전문으로하는 어린이집을 오픈 하였습니다...\n\n그런데 입주한지 3달정도 되었지만 원아모집이 잘되지 않아서 ...걱정입니다.\n\n그래서 원아모집방법이 독특하고 엄마들이 관심이 가질 만한그런방법이 없을까요?\n\n지식인님들의 좋은 아이디어가 있으면 알려주세요',19,'어린이집/원아/모집',112,'2017-12-21 13:58:56','2017-12-21 13:58:56'),
+(69,'sana','알바 모집중인데..','알바를 모집중인데 올해 고등학교 졸업예정인 00년생인 분이 요청을 하셨어요.\n술도 팔고 12시에 마치다보니 조심스럽긴한데.. 부모님은 된다고 하셨다고 하는데.. 부모님동의서를 받는다고치면 알바로 채용 할 수 있을까요?',20,'',0,'2017-12-21 14:03:35','2017-12-21 14:03:35'),
+(70,'happa','원아모집어떻게?','원아모집어떻게?',15,'원아/모집',0,'2017-12-21 15:07:59','2017-12-21 15:07:59'),
+(71,'momo','질문있는데요','질문있어요rrr',12,'',117,'2017-12-26 16:21:24','2017-12-26 16:21:24');
+
+/*Table structure for table `sns_info` */
+
+DROP TABLE IF EXISTS `sns_info`;
+
+CREATE TABLE `sns_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sns_id` varchar(45) DEFAULT NULL,
+  `sns_type` varchar(45) DEFAULT NULL,
+  `sns_name` varchar(45) DEFAULT NULL,
+  `sns_connected_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `sns_info` */
 
 /*Table structure for table `users` */
 
@@ -250,11 +272,12 @@ DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `user_id` varchar(45) NOT NULL,
+  `sns_id` varchar(100) DEFAULT NULL,
   `name` varchar(50) NOT NULL,
-  `password` varchar(100) NOT NULL,
+  `password` varchar(100) DEFAULT NULL,
   `user_type` enum('일반','전문가','우수') NOT NULL DEFAULT '일반',
   `email` varchar(100) NOT NULL,
-  `hash` varchar(32) NOT NULL,
+  `hash` varchar(32) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `user_pic` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
@@ -262,27 +285,31 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`user_id`,`name`,`password`,`user_type`,`email`,`hash`,`active`,`user_pic`) values 
-('admin','관리자','$2y$10$jobNMegqGzcIWFs93z/UVOHz/nkpAZ7XiwgcSm94CSwrwU.EmtVpS','일반','admin@kidkids.net','4c56ff4ce4aaf9573aa5dff913df997a',0,'223248.png'),
-('chaeyoung','채영','$2y$10$3nohkNsvu7hd4qiDRq0taeDDPgE7RXSx0PoPjP71xikn8e9WvkKoS','일반','chaeyoung@kidkids.net','f9b902fc3289af4dd08de5d1de54f68f',0,'7.jpg'),
-('dahyun','다현','$2y$10$PvlZ7oq7ZhMlZzX2p4RwauPtn1GN9tB.2448XT3hpKIW6SULTgMHe','전문가','dahyun@kidkids.net','e97ee2054defb209c35fe4dc94599061',0,'9.jpg'),
-('ee','ee','$2y$10$UtPI.ajCgWWbpsi0QaT9peJWmz4ERmLz8LhNcc8bPPzzgKT.azXhi','일반','ee@kidkid.net','3b3dbaf68507998acd6a5a5254ab2d76',0,'936378.png'),
-('happa','이준열','$2y$10$jl0voVlehK3AXb7IFg6EsOxzL.QYT0vZcu1ifumiVwIB.7kEFMM9S','일반','chljy33@naver.com','051e4e127b92f5d98d3c79b195f2b291',0,'507036.png'),
-('hooni','후니','$2y$10$cLO1qqhWYoeRJMZAIvkoY.Ib5VOGiprEe4Lsn1YD55iXppDWoLVp2','일반','hooni@naver.com','96ea64f3a1aa2fd00c72faacf0cb8ac9',0,'412601.png'),
-('jeongyeon','정연','$2y$10$TcJfNG/sINN0xV6Azto9K.x0k8ZgVVnacZQNwt6ccApL3pYBm1lj.','일반','jeongyeon@kidkids.net','da4fb5c6e93e74d3df8527599fa62642',0,'2.jpg'),
-('jihyo','지효','$2y$10$0MtH3Kssi/c.j6hX8/94CuzFf9abbGjoiiDLdP9OJ0xHW21ecJTPO','전문가','jihyo@kidkids.net','6ea9ab1baa0efb9e19094440c317e21b',0,'5.jpg'),
-('junyeol','준열','$2y$10$qJ5IZkdBF26bwsJ6Mg3dq.0H5aUEOPDZjZQJZz5faeguI.OgWjwyi','일반','chljy33@naver.com','dc6a70712a252123c40d2adba6a11d84',0,'93759.png'),
-('leejunyeol','이준열','$2y$10$19q/ozTFeNnrwpgKROL0veGiLypNAx42wV.9mZzCVhkDdgIBztZSu','일반','ljy@naver.com','f770b62bc8f42a0b66751fe636fc6eb0',0,'37367.png'),
-('mina','미나','$2y$10$9w3KmGazjE377M9G4CDTYuMGlA41j/SgZ44ZuE.GWA9NKwC.Vd5/.','전문가','mina@kidkids.net','31839b036f63806cba3f47b93af8ccb5',0,'6.jpg'),
-('momo','모모','$2y$10$iOYIbp4.5MeJb0dQj9EDBedWkNrzjZ2.f763g6LOvKBtTY69Eu.vq','일반','momo@kidkids.net','69adc1e107f7f7d035d7baf04342e1ca',0,'3.jpg'),
-('nana','나나','$2y$10$6DYQqYK78ZFZ4vDUr/DOqexgYo6aCYcm.mxJLFXmBngQ6Vt5g2HiW','일반','nana@naver.com','48aedb8880cab8c45637abc7493ecddd',0,'412601.png'),
-('nayeon','나연','$2y$10$2kiR.iBQ0jc7jDb.9vDDTuMYWDyLukGNfxRIyo4bY/HeddfXIp/A.','일반','nayeon@kidkids.net','01f78be6f7cad02658508fe4616098a9',0,'1.jpg'),
-('oooooo','teepa','$2y$10$weylLDdwaE/fYnRvzlLKKeHVEBZabE9G15Z8h7AKeHxu3i/kZ6OVG','일반','chljy33@naver.com','c9f0f895fb98ab9159f51fd0297e236d',0,'887368.png'),
-('qweqwe','qweqwe','$2y$10$yGyp8WpWNORGUEhYY5jw5.o4zNSCq.txv.szq5m30.giNaEedm1tG','일반','qweqwe@naver.com','fe9fc289c3ff0af142b6d3bead98a923',0,'907256.png'),
-('sana','사나','$2y$10$r29dBL2TAEhMyMxURnL5ae1cdwr5PKDDGIl85DZ3hAwuhzXbeD/Yi','전문가','sana@kidkids.net','fe8c15fed5f808006ce95eddb7366e35',0,'4.jpg'),
-('tzuyu','쯔위','$2y$10$DkumTGjfOH/TPHkjjonINOl9SVWpgyNPAhsRENnj.dzng4mUr2lk6','일반','tzuyu@kidkids.net','edfbe1afcf9246bb0d40eb4d8027d90f',0,'8.jpg'),
-('user','쥰욜','$2y$10$GIjDiHGSWu9A5Yk8w4QhGu5MKiGldoZxVjTHstYewkynAG6G1cbZm','일반','user@naver.com','51ef186e18dc00c2d31982567235c559',0,NULL),
-('user1','모모','$2y$10$AynTjUYXyN5aNb.d8MT0K.171/uG7WJ0gawNtMAAQMW2JvE7e.W.a','일반','mommo@naver.com','c6e19e830859f2cb9f7c8f8cacb8d2a6',0,'526907.png');
+insert  into `users`(`user_id`,`sns_id`,`name`,`password`,`user_type`,`email`,`hash`,`active`,`user_pic`) values 
+('admin',NULL,'관리자','$2y$10$jobNMegqGzcIWFs93z/UVOHz/nkpAZ7XiwgcSm94CSwrwU.EmtVpS','일반','admin@kidkids.net','4c56ff4ce4aaf9573aa5dff913df997a',0,'223248.png'),
+('chaeyoung',NULL,'채영','$2y$10$3nohkNsvu7hd4qiDRq0taeDDPgE7RXSx0PoPjP71xikn8e9WvkKoS','일반','chaeyoung@kidkids.net','f9b902fc3289af4dd08de5d1de54f68f',0,'7.jpg'),
+('dahyun',NULL,'다현','$2y$10$PvlZ7oq7ZhMlZzX2p4RwauPtn1GN9tB.2448XT3hpKIW6SULTgMHe','전문가','dahyun@kidkids.net','e97ee2054defb209c35fe4dc94599061',0,'9.jpg'),
+('ee',NULL,'ee','$2y$10$UtPI.ajCgWWbpsi0QaT9peJWmz4ERmLz8LhNcc8bPPzzgKT.azXhi','일반','ee@kidkid.net','3b3dbaf68507998acd6a5a5254ab2d76',0,'936378.png'),
+('happa',NULL,'이준열','$2y$10$jl0voVlehK3AXb7IFg6EsOxzL.QYT0vZcu1ifumiVwIB.7kEFMM9S','일반','chljy33@naver.com','051e4e127b92f5d98d3c79b195f2b291',0,'507036.png'),
+('hooni',NULL,'후니','$2y$10$cLO1qqhWYoeRJMZAIvkoY.Ib5VOGiprEe4Lsn1YD55iXppDWoLVp2','일반','hooni@naver.com','96ea64f3a1aa2fd00c72faacf0cb8ac9',0,'412601.png'),
+('jeongyeon',NULL,'정연','$2y$10$TcJfNG/sINN0xV6Azto9K.x0k8ZgVVnacZQNwt6ccApL3pYBm1lj.','일반','jeongyeon@kidkids.net','da4fb5c6e93e74d3df8527599fa62642',0,'2.jpg'),
+('jihyo',NULL,'지효','$2y$10$0MtH3Kssi/c.j6hX8/94CuzFf9abbGjoiiDLdP9OJ0xHW21ecJTPO','전문가','jihyo@kidkids.net','6ea9ab1baa0efb9e19094440c317e21b',0,'5.jpg'),
+('junyeol',NULL,'준열','$2y$10$qJ5IZkdBF26bwsJ6Mg3dq.0H5aUEOPDZjZQJZz5faeguI.OgWjwyi','일반','chljy33@naver.com','dc6a70712a252123c40d2adba6a11d84',0,'93759.png'),
+('KAKAO_684828080',NULL,'준열',NULL,'일반','chljy33@naver.com',NULL,0,'http://k.kakaocdn.net/dn/bWDDb3/btqjevg3xBA/FuSEVksnLJYWE02McFfO8K/profile_640x640s.jpg'),
+('KAKAO_685376645',NULL,'김선율',NULL,'일반','ksyu3830@naver.com',NULL,0,'http://k.kakaocdn.net/dn/qoPsT/btqjdGwPQ57/SbMbRMwafCYporBnkAmJrk/profile_640x640s.jpg'),
+('leejunyeol',NULL,'이준열','$2y$10$19q/ozTFeNnrwpgKROL0veGiLypNAx42wV.9mZzCVhkDdgIBztZSu','일반','ljy@naver.com','f770b62bc8f42a0b66751fe636fc6eb0',0,'37367.png'),
+('mina',NULL,'미나','$2y$10$9w3KmGazjE377M9G4CDTYuMGlA41j/SgZ44ZuE.GWA9NKwC.Vd5/.','전문가','mina@kidkids.net','31839b036f63806cba3f47b93af8ccb5',0,'6.jpg'),
+('momo',NULL,'모모','$2y$10$iOYIbp4.5MeJb0dQj9EDBedWkNrzjZ2.f763g6LOvKBtTY69Eu.vq','일반','momo@kidkids.net','69adc1e107f7f7d035d7baf04342e1ca',0,'3.jpg'),
+('nana',NULL,'나나','$2y$10$6DYQqYK78ZFZ4vDUr/DOqexgYo6aCYcm.mxJLFXmBngQ6Vt5g2HiW','일반','nana@naver.com','48aedb8880cab8c45637abc7493ecddd',0,'412601.png'),
+('nayeon',NULL,'나연','$2y$10$2kiR.iBQ0jc7jDb.9vDDTuMYWDyLukGNfxRIyo4bY/HeddfXIp/A.','일반','nayeon@kidkids.net','01f78be6f7cad02658508fe4616098a9',0,'1.jpg'),
+('NV_47229039',NULL,'주뇨르',NULL,'일반','chljy33@naver.com',NULL,0,'https://phinf.pstatic.net/contact/20170627_101/1498530782084MuOXe_PNG/avatar_profile.png'),
+('NV_86246686',NULL,'멜로디',NULL,'일반','music3830@naver.com',NULL,0,'https://ssl.pstatic.net/static/pwe/address/img_profile.png'),
+('oooooo',NULL,'teepa','$2y$10$weylLDdwaE/fYnRvzlLKKeHVEBZabE9G15Z8h7AKeHxu3i/kZ6OVG','일반','chljy33@naver.com','c9f0f895fb98ab9159f51fd0297e236d',0,'887368.png'),
+('qweqwe',NULL,'qweqwe','$2y$10$yGyp8WpWNORGUEhYY5jw5.o4zNSCq.txv.szq5m30.giNaEedm1tG','일반','qweqwe@naver.com','fe9fc289c3ff0af142b6d3bead98a923',0,'907256.png'),
+('sana',NULL,'사나','$2y$10$r29dBL2TAEhMyMxURnL5ae1cdwr5PKDDGIl85DZ3hAwuhzXbeD/Yi','전문가','sana@kidkids.net','fe8c15fed5f808006ce95eddb7366e35',0,'4.jpg'),
+('tzuyu',NULL,'쯔위','$2y$10$DkumTGjfOH/TPHkjjonINOl9SVWpgyNPAhsRENnj.dzng4mUr2lk6','일반','tzuyu@kidkids.net','edfbe1afcf9246bb0d40eb4d8027d90f',0,'8.jpg'),
+('user',NULL,'쥰욜','$2y$10$GIjDiHGSWu9A5Yk8w4QhGu5MKiGldoZxVjTHstYewkynAG6G1cbZm','일반','user@naver.com','51ef186e18dc00c2d31982567235c559',0,NULL),
+('user1',NULL,'모모','$2y$10$AynTjUYXyN5aNb.d8MT0K.171/uG7WJ0gawNtMAAQMW2JvE7e.W.a','일반','mommo@naver.com','c6e19e830859f2cb9f7c8f8cacb8d2a6',0,'526907.png');
 
 /*Table structure for table `votes` */
 
@@ -340,7 +367,36 @@ insert  into `votes`(`answer_id`,`user_id`,`vote`) values
 (112,'sana',1),
 (113,'sana',1),
 (114,'sana',1),
-(115,'sana',1);
+(115,'sana',1),
+(117,'NV_47229039',1);
+
+/*Table structure for table `question_category_view` */
+
+DROP TABLE IF EXISTS `question_category_view`;
+
+/*!50001 DROP VIEW IF EXISTS `question_category_view` */;
+/*!50001 DROP TABLE IF EXISTS `question_category_view` */;
+
+/*!50001 CREATE TABLE  `question_category_view`(
+ `question_id` int(11) ,
+ `user_id` varchar(45) ,
+ `title` varchar(200) ,
+ `content` text ,
+ `view` int(11) ,
+ `tags` varchar(100) ,
+ `selected_answer_id` int(11) ,
+ `create_date` datetime ,
+ `modify_date` datetime ,
+ `category` varchar(45) ,
+ `category_id` int(11) 
+)*/;
+
+/*View structure for view question_category_view */
+
+/*!50001 DROP TABLE IF EXISTS `question_category_view` */;
+/*!50001 DROP VIEW IF EXISTS `question_category_view` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `question_category_view` AS (select `q`.`question_id` AS `question_id`,`q`.`user_id` AS `user_id`,`q`.`title` AS `title`,`q`.`content` AS `content`,`q`.`view` AS `view`,`q`.`tags` AS `tags`,`q`.`selected_answer_id` AS `selected_answer_id`,`q`.`create_date` AS `create_date`,`q`.`modify_date` AS `modify_date`,`c`.`category_name` AS `category`,`c`.`category_id` AS `category_id` from ((`category_question` `cq` join `questions` `q`) join `categories` `c`) where ((`q`.`question_id` = `cq`.`question_id`) and (`c`.`category_id` = `cq`.`category_id`))) */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

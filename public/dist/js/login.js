@@ -314,7 +314,7 @@ var NaverConnect = function () {
   };
 
   var naverDisconn = function naverDisconn(e) {
-    var url = location.origin + "/naverdisconn";
+    var url = location.origin + "/api/User/naverdisconn";
 
     $.ajax(url, {
       type: "PUT",

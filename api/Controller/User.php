@@ -271,12 +271,13 @@ switch($_SERVER['REQUEST_METHOD']){
     break;
     case 'PUT':
     if(isset($_GET['naverdisconn'])){
-        $userModel->$_SESSION['id'];
-        
+        $userModel->disconnectSNS($_SESSION['id'], "naver_id");
+        return;
+    } else {
+        $user = json_decode(file_get_contents('php://input'));
+        $userModel -> updateUserType($user->user_id, $user->user_type);
+        echo json_encode("success");
     }
-    $user = json_decode(file_get_contents('php://input'));
-    $userModel -> updateUserType($user->user_id, $user->user_type);
-    echo json_encode("success");
     break;
 }
 

@@ -173,4 +173,20 @@ class UserModel {
             exit;
         }
     }
+
+    function disconnectSNS($id, $sns_id){
+        try {
+            $sql = "UPDATE users SET $sns_id = NULL WHERE user_id = :user_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(":user_id", $id);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            };
+            return true;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
 }

@@ -20,9 +20,18 @@ RewriteRule ^search$ public/search-result.php
 RewriteRule ^api/([a-zA-Z]+)\/?$ api/Controller/$1.php
 RewriteRule ^api/([a-zA-Z]+)/([0-9]+)$ api/Controller/$1.php?id=$2
 
-RewriteRule ^api/User/kakaologin$ api/Controller/User.php?kakaologin=true
 RewriteRule ^api/User/naverlogin$ api/Controller/User.php?naverlogin=true
+RewriteRule ^api/User/kakaologin$ api/Controller/User.php?kakaologin=true
 RewriteRule ^api/User/fblogin$ api/Controller/User.php?fblogin=true
+
+RewriteRule ^api/User/naverconn$ api/Controller/User.php?naverconn=true
+RewriteRule ^api/User/kakaoconn$ api/Controller/User.php?kakaoconn=true
+RewriteRule ^api/User/fbconn$ api/Controller/User.php?fbconn=true
+
+RewriteRule ^api/User/naverdisconn$ api/Controller/User.php?naverdisconn=true
+RewriteRule ^api/User/kakaodisconn$ api/Controller/User.php?kakaodisconn=true
+RewriteRule ^api/User/fbdisconn$ api/Controller/User.php?fbdisconn=true
+
 RewriteRule ^api/User/(.+)\/?$ api/Controller/User.php?id=$1
 
 RewriteRule ^api/([a-zA-Z]+)/([0-9]+)/([a-zA-Z]+)\/?$ api/Controller/$1.php?id=$2&action=$3
@@ -32,8 +41,8 @@ RewriteRule ^admin$ admin/index.php
 RewriteRule ^admin/question/([0-9]+)$ admin/question.php
 RewriteRule ^admin/answer/([0-9]+)$ admin/answer.php
 
-RewriteRule ^naverlogin$ public/naverlogin.php
 RewriteRule ^naver-callback$ public/naver-callback.php
+RewriteRule ^naver-connect-callback$ public/naver-connect-callback.php
 
 <Files properties.js>
 Order Allow,Deny

@@ -1,9 +1,15 @@
 import { AsideModule, CommonModule } from './common';
 import { HandlebarsHelper, Utils } from "./util";
+import { NaverConnect, KakaoLogin } from "./snslogin"
+import Properties from "../properties";
 
 $(document).ready(function(){
     CommonModule.init();
     MyModule.init();
+
+    NaverConnect.init();
+    Kakao.init(Properties.kakaoKey);
+    KakaoLogin.init(2);
 });
 
 var MyModule = (function(){
@@ -14,6 +20,7 @@ var MyModule = (function(){
     var recentQuestionTemplate = HandlebarsHelper("#recent-question-template");
     var recentAnswerTemplate = HandlebarsHelper("#recent-answer-template");
     var currentRankTemplate = HandlebarsHelper("#current-rank-template");
+    var snsConnTemplate = HandlebarsHelper("#sns-conn-template");
 
     var init = () => {
         load();
@@ -26,7 +33,8 @@ var MyModule = (function(){
             res = JSON.parse(res);
             var recentQuestions = res['recentQuestion'],
                 recentAnswers = res['recentAnswer'],
-                currentRank = res['currentRank'];
+                currentRank = res['currentRank'],
+                me = res['user'];
 
             var myIdx = 0;
             
@@ -57,6 +65,7 @@ var MyModule = (function(){
             $("#question-box").append(recentQuestionTemplate(recentQuestions));
             $("#answer-box").append(recentAnswerTemplate(recentAnswers));
             $("#rank-box>.box").html(currentRankTemplate(currentRank));
+            $("#sns-body").html(snsConnTemplate(me));
         })
     }
 

@@ -17,12 +17,14 @@ $voteModel = new VoteModel($conn);
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
     if(isset($_GET['all']) && $_SESSION['logged_in']){
+        $user = $userModel->getById($_SESSION['id']);
         $recentAnswer = $answerModel->getMyAnswerRecent5($_SESSION['id']);
         $recentQuestion = $questionModel->getMyQuestionRecent5($_SESSION['id']);
         $currentRank = $userModel->getCurrentRank($_SESSION['id']);
         
         echo json_encode([
             "success" => true,
+            "user" => $user,
             "recentAnswer" => $recentAnswer,
             "recentQuestion" => $recentQuestion,
             "currentRank" => $currentRank

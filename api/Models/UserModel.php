@@ -31,7 +31,7 @@ class UserModel {
     }
 
     function getById($id){
-        $stmt = $this->conn->prepare("SELECT * FROM users WHERE user_id=:user_id");
+        $stmt = $this->conn->prepare("SELECT `user_id`, `naver_id`, `kakao_id`, `fb_id`, `email`, `name`, `user_pic`, `user_type` FROM users WHERE user_id=:user_id");
         $stmt->bindParam(':user_id', $id);
         if(!$stmt->execute()){
             print_r($stmt->errorInfo());
@@ -137,6 +137,40 @@ class UserModel {
             return true;
         } else {
             return false;
+        }
+    }
+
+    function updateMyKakao($kcsid, $snsid){
+        try {
+            $sql = "UPDATE users SET kakao_id = :kakao_id WHERE user_id = :user_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(":user_id", $kcsid);
+            $stmt->bindParam(":kakao_id", $snsid);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            };
+            return true;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+
+    function updateMyNaver($kcsid, $snsid){
+        try {
+            $sql = "UPDATE users SET naver_id = :naver_id WHERE user_id = :user_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(":user_id", $kcsid);
+            $stmt->bindParam(":naver_id", $snsid);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            };
+            return true;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
         }
     }
 }

@@ -18,9 +18,9 @@ require_once "config.php";
 require_once "header.php";
 ?>
 <article>
-    <div id="top-container">
-        <div id="profile-box" style:>
-            <div class="box" style="position: relative">
+    <div id="top-container" class="wrapper-container">
+        <div id="profile-box" class="box-wrapper">
+            <div class="box">
             <?php 
                 $userType = $_SESSION['user_type'];
                 if($userType == '전문가'){
@@ -99,7 +99,7 @@ require_once "header.php";
         </div>
     </div>
     <div id="second-container">
-        <div>
+        <div class="box-wrapper">
             <div id="question-box" class="box">
                 <h2>최근 질문</h2>
                 <script type="text/handlebars-template" id="recent-question-template">
@@ -122,7 +122,7 @@ require_once "header.php";
                 </script>
             </div>
         </div>
-        <div>
+        <div class="box-wrapper">
             <div id="answer-box" class="box">
                 <h2>최근 답변</h2>
                 <script type="text/handlebars-template" id="recent-answer-template">
@@ -146,6 +146,57 @@ require_once "header.php";
             </div>
         </div>
     </div>
+    <div id="third-container" class="wrapper-container">
+        <div id="sns-box" class="box-wrapper">
+            <div class="box">
+                <div id="sns-header">
+                    <h1>SNS 계정 연동관리</h1>
+                </div>
+                <section id="sns-body">
+                <script type="text/handlebars-template" id="sns-conn-template">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>SNS 구분</th>
+                                <th>연동정보</th>
+                                <th>연결</th>
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="/public/images/naver.png" /></td>
+                                <td></td>
+                                {{#if naver_id}}
+                                <td><div id="naverIdDisconn"><button class="btn btn-danger">연동해제</button></div></td>
+                                {{else}}
+                                <td><div id="naverIdConn"><button class="btn btn-default">연결하기</button></div></td>
+                                {{/if}}
+                            </tr>
+                            <tr>
+                                <td><img src="/public/images/kakao.png" /></td>
+                                <td></td>
+                                {{#if kakao_id}}
+                                <td><div id="kakaoIdDisconn"><button class="btn btn-danger">연동해제</button></div></td>
+                                {{else}}
+                                <td><div id="kakaoIdLogin"><button class="btn btn-default">연결하기</button></div></td>
+                                {{/if}}
+                            </tr>
+                            <tr>
+                                <td><img src="/public/images/facebook.png" /></td>
+                                <td></td>
+                                {{#if fb_id}}
+                                <td><div id="fbIdDisconn"><button class="btn btn-danger">연동해제</button></div></td>
+                                {{else}}
+                                <td><div id="fbIdLogin"><button class="btn btn-default">연결하기</button></div></td>
+                                {{/if}}
+                            </tr>
+                        <tbody>
+                    </table>
+                </script>
+                </section>
+            </div>
+        </div>
+    </div>
 
 </article>
 </div>
@@ -157,8 +208,47 @@ require_once "footer.php";
     <script src="<?php echo _NODE ?>/jquery/dist/jquery.js"></script>
     <script src="<?php echo _NODE ?>/jquery.redirect/jquery.redirect.js"></script>
     <script src="<?php echo _NODE ?>/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script src="<?php echo _DISTJS ?>/my.js"></script>
+    <script> 
+		function checkLoginState() {
+			FB.getLoginStatus(function(response) {
+				statusChangeCallback(response);
+			});
+		}
 
+		function statusChangeCallback(response) {
+			console.log('statusChangeCallback');
+			console.log(response);
+			// The response object is returned with a status field that lets the
+			// app know the current login status of the person.
+			// Full docs on the response object can be found in the documentation
+			// for FB.getLoginStatus().
+			if (response.status === 'connected') {
+				testAPI();
+			} else {
+			// The person is not logged into your app or we are unable to tell.
+			document.getElementById('status').innerHTML = 'Please log ' +
+				'into this app.';
+			}
+		}
+
+		function testAPI() {
+			FB.api('/me', function(res) {
+				var user = {};
+				user.id = res.id;
+				user.name = res.name;
+				$.ajax(location.origin + "/api/User/fblogin", {
+					type: "POST",
+					contentType: "application/json",
+					data: JSON.stringify(user)
+				}).then(function(res) { 
+					window.location.replace("http://" + window.location.hostname + (location.port == "" || location.port == undefined ? "" : ":" + location.port) + "/home");
+				});
+			});
+		};
+	</script>
 </body>
 
 </html>

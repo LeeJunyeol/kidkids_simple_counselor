@@ -31,7 +31,7 @@ class UserModel {
     }
 
     function getById($id){
-        $stmt = $this->conn->prepare("SELECT `user_id`, `naver_id`, `kakao_id`, `fb_id`, `email`, `name`, `user_pic`, `user_type` FROM users WHERE user_id=:user_id");
+        $stmt = $this->conn->prepare("SELECT `user_id`, `password`, `naver_id`, `kakao_id`, `fb_id`, `email`, `name`, `user_pic`, `user_type` FROM users WHERE user_id=:user_id");
         $stmt->bindParam(':user_id', $id);
         if(!$stmt->execute()){
             print_r($stmt->errorInfo());

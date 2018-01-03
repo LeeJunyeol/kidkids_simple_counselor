@@ -157,6 +157,23 @@ class UserModel {
         }
     }
 
+    function updateMyFacebook($kcsid, $snsid){
+        try {
+            $sql = "UPDATE users SET fb_id = :fb_id WHERE user_id = :user_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(":user_id", $kcsid);
+            $stmt->bindParam(":fb_id", $snsid);
+            if(!$stmt->execute()){
+                print_r($stmt->errorInfo());
+                exit;
+            };
+            return true;
+        } catch (PDOException $e) {
+            print $e->getMessage();
+            exit;
+        }
+    }
+
     function updateMyNaver($kcsid, $snsid){
         try {
             $sql = "UPDATE users SET naver_id = :naver_id WHERE user_id = :user_id";

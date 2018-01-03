@@ -82,6 +82,25 @@ switch($_SERVER['REQUEST_METHOD']){
         };
         return;
     }
+    if(isset($_GET['fbconn'])){
+        $user = json_decode(file_get_contents('php://input'), true);
+        $snsid = "FB_" . $user['id'];
+        $kcsid = $_SESSION['id'];
+
+        if($userModel->updateMyFacebook($kcsid, $snsid)){
+            echo json_encode([
+                "success" => true,
+                "message" => "연동에 성공했습니다."
+                ]);
+        } else {
+            echo json_encode([
+                "success" => false,
+                "message" => "연동에 실패했습니다."
+                ]);
+        };
+        return;
+    }
+
     if(isset($_GET['kakaologin'])){
         $user = json_decode(file_get_contents('php://input'), true);
         $id = "KAKAO_" . $user['id'];

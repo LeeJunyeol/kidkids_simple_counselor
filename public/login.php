@@ -78,7 +78,7 @@ require_once "header.php";
 			</div>
 		</div>
 		<div id="naverIdLogin"><a id="naverIdLogin_loginButton" href="#"><img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.0" height="60"></a></div>
-		<div id="kakaoIdLogin"><a id="custom-login-btn"><img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"></a></div>
+		<div><a id="custom-login-btn"><img id="kakaoIdLogin" src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"></a></div>
 		<div class="fb-login-button" scope="public_profile,email" onlogin="checkLoginState();"
 		data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
 

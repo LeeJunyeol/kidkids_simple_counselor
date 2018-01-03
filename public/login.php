@@ -110,15 +110,19 @@ require_once "footer.php";
 			// Full docs on the response object can be found in the documentation
 			// for FB.getLoginStatus().
 			if (response.status === 'connected') {
-				testAPI();
+				facebookLogin();
 			} else {
-			// The person is not logged into your app or we are unable to tell.
-			document.getElementById('status').innerHTML = 'Please log ' +
-				'into this app.';
+				FB.login(function(response) {
+					if (response.status === 'connected') {
+						// Logged into your app and Facebook.
+					} else {
+						// The person is not logged into this app or we are unable to tell. 
+					}
+				});
 			}
 		}
 
-		function testAPI() {
+		function facebookLogin() {
 			FB.api('/me', function(res) {
 				var user = {};
 				user.id = res.id;

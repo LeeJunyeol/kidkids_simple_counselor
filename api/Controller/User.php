@@ -64,6 +64,24 @@ switch($_SERVER['REQUEST_METHOD']){
         
         return;
     }
+    if(isset($_GET['naverconn'])){
+        $user = json_decode(file_get_contents('php://input'), true);
+        $snsid = "NV_" . $user['id'];
+        $kcsid = $_SESSION['id'];
+
+        if($userModel->updateMyNaver($kcsid, $snsid)){
+            echo json_encode([
+                "success" => true,
+                "message" => "연동에 성공했습니다."
+                ]);
+        } else {
+            echo json_encode([
+                "success" => false,
+                "message" => "연동에 실패했습니다."
+                ]);
+        };
+        return;
+    }
     if(isset($_GET['kakaologin'])){
         $user = json_decode(file_get_contents('php://input'), true);
         $id = "KAKAO_" . $user['id'];
@@ -89,24 +107,6 @@ switch($_SERVER['REQUEST_METHOD']){
             return;
         }
         header("location: /home");
-        return;
-    }
-    if(isset($_GET['naverconn'])){
-        $user = json_decode(file_get_contents('php://input'), true);
-        $snsid = "NV_" . $user['id'];
-        $kcsid = $_SESSION['id'];
-
-        if($userModel->updateMyNaver($kcsid, $snsid)){
-            echo json_encode([
-                "success" => true,
-                "message" => "연동에 성공했습니다."
-                ]);
-        } else {
-            echo json_encode([
-                "success" => false,
-                "message" => "연동에 실패했습니다."
-                ]);
-        };
         return;
     }
     if(isset($_GET['naverlogin'])){
@@ -141,7 +141,7 @@ switch($_SERVER['REQUEST_METHOD']){
         $id = "FB_" . $user['id'];
         $userInfo = $userModel->getById($id);
         if($userInfo == null){
-            $userModel->registerSNS($id, $user['name'], "", $user['pic']);
+            $userModel->registerSNS($id, $user['name'], "", "");
             $userInfo = $userModel->getById($id);
         }
         
